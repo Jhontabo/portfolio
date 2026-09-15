@@ -29,6 +29,7 @@ interface Translations {
     backend: string;
     mobile: string;
     tools: string;
+    marketing: string;
     showMore: string;
     showLess: string;
   };

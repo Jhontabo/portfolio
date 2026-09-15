@@ -4,8 +4,8 @@ export const personalInfo = {
   email: "jhon.tajumbina@email.com",
   linkedin: "https://www.linkedin.com/in/jhon-tajumbina-8917922a3",
   github: "https://github.com/Jhontabo",
-  bioEs: "Soy Jhon Tajumbina, desarrollador Full-Stack con sede en Pasto, Colombia. He trabajado en una amplia gama de proyectos, desde aplicaciones móviles para unidades de cuidados intensivos hasta sistemas de gestión de inventarios para laboratorios universitarios, con un enfoque en crear interfaces limpias y funcionales que no solo se ven bien, sino que también brindan una experiencia de usuario fluida.",
-  bioEn: "I'm Jhon Tajumbina, a Full-Stack Developer based in Pasto, Colombia. I have worked on a wide range of projects, from mobile applications for intensive care units to inventory management systems for university laboratories, with a focus on creating clean, well-crafted interfaces that not only look great but also provide a seamless user experience.",
+  bioEs: "Soy Jhon Tajumbina, desarrollador Full-Stack con sede en Pasto, Colombia. He trabajado en una amplia gama de proyectos, desde aplicaciones móviles para unidades de cuidados intensivos hasta sistemas de gestión de inventarios para laboratorios universitarios, con un enfoque en crear interfaces limpias y funcionales que no solo se ven bien, sino que también brindan una experiencia de usuario fluida. Actualmente también me desempeño como pitcher de marketing digital en Valencia One, gestionando campañas de Meta Ads para impulsar resultados de clientes.",
+  bioEn: "I'm Jhon Tajumbina, a Full-Stack Developer based in Pasto, Colombia. I have worked on a wide range of projects, from mobile applications for intensive care units to inventory management systems for university laboratories, with a focus on creating clean, well-crafted interfaces that not only look great but also provide a seamless user experience. I'm also currently working as a digital marketing pitcher at Valencia One, managing Meta Ads campaigns to drive client results.",
 };
 
 export const projects = [
@@ -86,6 +86,13 @@ export const skills = {
     { name: "Neovim", icon: "neovim" },
     { name: "AWS", icon: "aws" },
     { name: "WSL", icon: "windows" },
+  ],
+  marketing: [
+    { name: "Meta Ads", icon: "meta" },
+    { name: "Facebook Ads", icon: "facebook" },
+    { name: "Instagram Ads", icon: "instagram" },
+    { name: "TikTok Ads", icon: "tiktok" },
+    { name: "Google Ads", icon: "googleads" },
   ],
 };
 
@@ -240,6 +247,17 @@ export const journeyTimeline = [
       "Recibí el título universitario como Ingeniero de Sistemas, cerrando mi ciclo académico con enfoque en desarrollo full-stack y experiencia aplicada en proyectos reales.",
     descriptionEn:
       "Received my university degree as a Systems Engineer, closing my academic cycle with a focus on full-stack development and applied experience in real projects.",
+  },
+  {
+    id: 7,
+    dateEs: "Septiembre 2026",
+    dateEn: "September 2026",
+    titleEs: "Pitcher de marketing con Meta Ads en Valencia One",
+    titleEn: "Marketing pitcher with Meta Ads at Valencia One",
+    descriptionEs:
+      "Ingresé en Valencia One como pitcher de marketing, gestionando campañas publicitarias de Meta Ads (Facebook e Instagram) para impulsar clientes y resultados.",
+    descriptionEn:
+      "Joined Valencia One as a marketing pitcher, managing Meta Ads campaigns (Facebook and Instagram) to drive client growth and results.",
   },
 ];
 

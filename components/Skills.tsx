@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { Terminal, Server, Wrench, Smartphone, Code2, ChevronDown } from "lucide-react";
+import { Terminal, Server, Wrench, Smartphone, Code2, Megaphone, ChevronDown } from "lucide-react";
 import type { IconType } from "react-icons";
 import {
   SiReact,
@@ -27,6 +27,11 @@ import {
   SiPython,
   SiHtml5,
   SiCss,
+  SiMeta,
+  SiFacebook,
+  SiInstagram,
+  SiTiktok,
+  SiGoogleads,
 } from "react-icons/si";
 import { FaAws, FaWindows } from "react-icons/fa6";
 import { skills } from "@/lib/data";
@@ -57,6 +62,11 @@ const skillIcons: Record<string, { Icon: IconType; color?: string }> = {
   css3: { Icon: SiCss, color: "#663399" },
   aws: { Icon: FaAws, color: "#FF9900" },
   windows: { Icon: FaWindows, color: "#0078D4" },
+  meta: { Icon: SiMeta, color: "#0081FB" },
+  facebook: { Icon: SiFacebook, color: "#1877F2" },
+  instagram: { Icon: SiInstagram, color: "#E4405F" },
+  tiktok: { Icon: SiTiktok, color: "#FE2C55" },
+  googleads: { Icon: SiGoogleads, color: "#4285F4" },
 };
 
 const categoryIcons = {
@@ -65,6 +75,7 @@ const categoryIcons = {
   backend: Server,
   mobile: Smartphone,
   tools: Wrench,
+  marketing: Megaphone,
 };
 
 const VISIBLE_COUNT = 4;
@@ -79,6 +90,7 @@ export default function Skills() {
     backend: t.skills.backend,
     mobile: t.skills.mobile,
     tools: t.skills.tools,
+    marketing: t.skills.marketing,
   };
 
   return (
