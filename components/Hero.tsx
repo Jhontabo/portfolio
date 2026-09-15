@@ -29,8 +29,10 @@ export default function Hero() {
     if (!deleting && text === current) {
       timeout = setTimeout(() => setDeleting(true), 2000);
     } else if (deleting && text === "") {
-      setDeleting(false);
-      setIdx((prev) => (prev + 1) % roles.length);
+      timeout = setTimeout(() => {
+        setDeleting(false);
+        setIdx((prev) => (prev + 1) % roles.length);
+      }, 400);
     } else {
       timeout = setTimeout(
         () => {
@@ -41,7 +43,7 @@ export default function Hero() {
     }
 
     return () => clearTimeout(timeout);
-  }, [text, deleting, idx]);
+  }, [text, deleting, idx, roles]);
 
   return (
     <section
