@@ -152,7 +152,7 @@ export default function JourneyTimeline() {
                     </div>
                   ) : (
                     <div
-                      className="group w-48 sm:w-56 h-48 sm:h-56 rounded-full flex flex-col items-center justify-center p-4 sm:p-6 text-center border-2 transition-all duration-500 hover:scale-105 bg-[#0b0c10]/90 cursor-pointer"
+                      className="group w-44 h-44 sm:w-56 sm:h-56 rounded-full flex flex-col items-center justify-center p-3 sm:p-6 text-center border-2 transition-all duration-500 hover:scale-105 bg-[#0b0c10]/90 cursor-pointer"
                       style={{
                         borderColor: `${color}60`,
                         boxShadow: `0 0 15px ${color}15, 0 4px 20px rgba(0,0,0,0.4)`,
@@ -178,7 +178,7 @@ export default function JourneyTimeline() {
                       >
                         {locale === "en" ? item.dateEn : item.dateEs}
                       </span>
-                      <h3 className="text-sm font-semibold text-zinc-200 mb-3 leading-tight line-clamp-2 max-w-[20ch]">
+                      <h3 className="text-sm font-semibold text-zinc-200 mb-3 leading-tight line-clamp-2 max-w-[15ch]">
                         {locale === "en" ? item.titleEn : item.titleEs}
                       </h3>
                       <span
@@ -226,16 +226,14 @@ export default function JourneyTimeline() {
                   </div>
 
                   {/* Mobile */}
-                  <div className="flex md:hidden items-start gap-3">
-                    <div className="flex flex-col items-center shrink-0">
+                  <div className="flex md:hidden flex-col items-center">
+                    {index > 0 && (
                       <div
-                        className="w-3 h-3 rounded-full border-2 shrink-0"
-                        style={{ borderColor: color, boxShadow: `0 0 8px ${color}60` }}
+                        className="w-0.5 h-8 mb-4"
+                        style={{ background: `linear-gradient(to bottom, ${color}30, ${color}70)` }}
                       />
-                    </div>
-                    <div className="flex-1 -mt-0.5">
-                      <MobileBubble />
-                    </div>
+                    )}
+                    <MobileBubble />
                   </div>
                 </div>
               );
