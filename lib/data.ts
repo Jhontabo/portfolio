@@ -4,8 +4,8 @@ export const personalInfo = {
   email: "jhon.tajumbina@email.com",
   linkedin: "https://www.linkedin.com/in/jhon-tajumbina-8917922a3",
   github: "https://github.com/Jhontabo",
-  bioEs: "Soy Jhon Tajumbina, desarrollador Full-Stack con sede en Pasto, Colombia. He trabajado en una amplia gama de proyectos, desde aplicaciones móviles para unidades de cuidados intensivos hasta sistemas de gestión de inventarios para laboratorios universitarios, con un enfoque en crear interfaces limpias y funcionales que no solo se ven bien, sino que también brindan una experiencia de usuario fluida. Actualmente también me desempeño como pitcher de marketing digital en Valencia One, gestionando campañas de Meta Ads para impulsar resultados de clientes.",
-  bioEn: "I'm Jhon Tajumbina, a Full-Stack Developer based in Pasto, Colombia. I have worked on a wide range of projects, from mobile applications for intensive care units to inventory management systems for university laboratories, with a focus on creating clean, well-crafted interfaces that not only look great but also provide a seamless user experience. I'm also currently working as a digital marketing pitcher at Valencia One, managing Meta Ads campaigns to drive client results.",
+  bioEs: "Soy Jhon Tajumbina, Ingeniero de Sistemas y desarrollador Full-Stack con sede en Pasto, Colombia. Construyo productos digitales que resuelven problemas reales: apps móviles, sitios web y sistemas a la medida, siempre con interfaces limpias y una experiencia de usuario fluida. Últimamente estoy enfocado en el marketing digital como pitcher, gestionando campañas de Meta Ads para convertir atención en resultados concretos para los clientes.",
+  bioEn: "I'm Jhon Tajumbina, a Systems Engineer and Full-Stack Developer based in Pasto, Colombia. I build digital products that solve real problems—mobile apps, websites, and custom systems—always with clean interfaces and a smooth user experience. Lately I've been focused on digital marketing as a pitcher, managing Meta Ads campaigns to turn attention into concrete results for clients.",
 };
 
 export const projects = [
