@@ -8,6 +8,21 @@ const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const key = process.env.SUPABASE_SERVICE_ROLE_KEY!;
 const supabase = createClient(url, key);
 
+async function replaceTable(table: string, rows: unknown[]) {
+  const { data: existing } = await supabase.from(table).select("id");
+  if (existing && existing.length > 0) {
+    const ids = existing.map((r) => r.id);
+    for (let i = 0; i < ids.length; i += 100) {
+      const { error: delError } = await supabase.from(table).delete().in("id", ids.slice(i, i + 100));
+      if (delError) console.error(`${table} delete:`, delError.message);
+    }
+  }
+  if (rows.length > 0) {
+    const { error } = await supabase.from(table).insert(rows);
+    if (error) console.error(`${table}:`, error.message);
+  }
+}
+
 async function seed() {
   console.log("Seeding personal_info...");
   const { error: e1 } = await supabase.from("personal_info").upsert({
@@ -24,7 +39,7 @@ async function seed() {
   if (e1) console.error("personal_info:", e1.message);
 
   console.log("Seeding projects...");
-  const { error: e2 } = await supabase.from("projects").upsert([
+  await replaceTable("projects", [
     {
       name: "BSPWM Dotfiles", name_en: "BSPWM Dotfiles",
       description: "Pacman/arcade-themed BSPWM dotfiles para Ubuntu/Debian con instalador automático de BSPWM, Polybar, Picom, Kitty, Rofi, Zsh + Powerlevel10k, scripts personalizados, wallpapers y Nerd Fonts.",
@@ -50,10 +65,9 @@ async function seed() {
       technologies: ["React", "Node.js", "Tailwind CSS"], demo: "#", github: "https://github.com/Jhontabo/bitebox", sort_order: 4,
     },
   ]);
-  if (e2) console.error("projects:", e2.message);
 
   console.log("Seeding certificates...");
-  const { error: e3 } = await supabase.from("certificates").upsert([
+  await replaceTable("certificates", [
     { name: "Fundamentos de Ingeniería de Software", name_en: "Software Engineering Fundamentals", issuer: "Platzi", date: "", description: "Fundamentos de ingeniería de software, metodologías de desarrollo, y mejores prácticas para la construcción de sistemas de software.", description_en: "Foundations of software engineering, development methodologies, and best practices for building software systems.", link: "https://drive.google.com/file/d/1uRp9XQsNpzLzEe4x0h6vGzWOOSwLkYg-/view", sort_order: 1 },
     { name: "Algoritmos y Diagramas de Flujo", name_en: "Algorithms and Flowcharts", issuer: "Platzi", date: "", description: "Fundamentos de algoritmos, diagramas de flujo y lógica de programación.", description_en: "Fundamentals of algorithms, flowcharts, and programming logic.", link: "https://drive.google.com/file/d/1bQn9GvEEYcbpoDFkV8Z7ypb7lgL4I8JG/view", sort_order: 2 },
     { name: "Manejo de Datos, Estructuras y Funciones", name_en: "Data Handling, Structures and Functions", issuer: "Platzi", date: "", description: "Manejo de datos, estructuras de datos y funciones en programación.", description_en: "Data handling, data structures, and functions in programming.", link: "https://drive.google.com/file/d/193eI8SHPKmAfkap4JljYG92l68_WBw_7/view", sort_order: 3 },
@@ -62,8 +76,7 @@ async function seed() {
     { name: "Fundamentos de Python", name_en: "Python Fundamentals", issuer: "Platzi", date: "", description: "Fundamentos del lenguaje Python, sintaxis y estructuras básicas.", description_en: "Python language fundamentals, syntax, and basic structures.", link: "https://drive.google.com/file/d/1iipUKTE1-FuOsiTO12cIoSQD5VOfmePx/view", sort_order: 6 },
     { name: "Introducción a la Terminal y Línea de Comandos", name_en: "Introduction to the Terminal and Command Line", issuer: "Platzi", date: "", description: "Uso de la terminal, comandos básicos y navegación por el sistema de archivos.", description_en: "Terminal usage, basic commands, and file system navigation.", link: "https://drive.google.com/file/d/1XauTADGUwiFcQXsBoXgqDSTcq7_FeRkm/view", sort_order: 7 },
     { name: "NDG Linux Essentials", name_en: "NDG Linux Essentials", issuer: "Cisco Networking Academy", date: "", description: "Curso Linux Essentials de Cisco Networking Academy, fundamentos del sistema operativo Linux.", description_en: "Cisco Networking Academy Linux Essentials course, Linux OS fundamentals.", link: "https://drive.google.com/file/d/1jR9lv1E1Za22wFuZoPCT9AOx2uTygtsU/view", sort_order: 8 },
-  ]);
-  if (e3) console.error("certificates:", e3.message);
+    ]);
 
   console.log("Seeding skills...");
   const skillsData = [
@@ -93,29 +106,41 @@ async function seed() {
     { name: "AWS", icon: "aws", category: "tools", sort_order: 6 },
     { name: "WSL", icon: "windows", category: "tools", sort_order: 7 },
   ];
-  const { error: e4 } = await supabase.from("skills").upsert(skillsData);
-  if (e4) console.error("skills:", e4.message);
+  await replaceTable("skills", skillsData);
 
   console.log("Seeding journey_entries...");
-  const { error: e5 } = await supabase.from("journey_entries").upsert([
+  await replaceTable("journey_entries", [
     { date_es: "2021", date_en: "2021", title_es: "Inicio en la Universidad Mariana", title_en: "Started at Universidad Mariana", description_es: "Comencé Ingeniería de Sistemas en la Universidad Mariana, enfocado en construir bases sólidas en software y redes.", description_en: "Started Systems Engineering at Universidad Mariana, focused on building strong foundations in software and networking.", sort_order: 1 },
     { date_es: "Febrero - Mayo 2025", date_en: "February - May 2025", title_es: "Prácticas en hospital como desarrollador Flutter", title_en: "Hospital internship as Flutter developer", description_es: "Desarrollé una aplicación de enfermería con Flutter para apoyar procesos clínicos y flujo operativo del equipo de salud.", description_en: "Built a nursing app with Flutter to support clinical processes and operational workflows for healthcare teams.", link_type: "github", link: "https://github.com/Jhontabo/Registro-UCI", sort_order: 2 },
     { date_es: "Mayo 2025", date_en: "May 2025", title_es: "Encuentro Departamental de Semilleros de Investigación", title_en: "Departmental Research Seedbed Meeting", description_es: "Presentación del trabajo de grado 'Sistema de Información para la Gestión de los Laboratorios de la Universidad Mariana' en el Encuentro Departamental de Semilleros de Investigación.", description_en: "Presentation of the thesis 'Information System for Laboratory Management at Universidad Mariana' at the Departmental Research Seedbed Meeting.", sort_order: 3 },
     { date_es: "Octubre 2025", date_en: "October 2025", title_es: "Encuentro Departamental de Semilleros de Investigación", title_en: "Departmental Research Seedbed Meeting", description_es: "Segunda presentación del trabajo de grado 'Sistema de Información para la Gestión de los Laboratorios de la Universidad Mariana' en el Encuentro Departamental de Semilleros de Investigación.", description_en: "Second presentation of the thesis 'Information System for Laboratory Management at Universidad Mariana' at the Departmental Research Seedbed Meeting.", sort_order: 4 },
     { date_es: "Agosto 2025 - Abril 2026", date_en: "August 2025 - April 2026", title_es: "Auxiliar de crédito en Cofinal", title_en: "Credit assistant at Cofinal", description_es: "Trabajé en el área de créditos, apoyando en procesos administrativos y financieros. Además, ayudaba a mis compañeros con problemas técnicos, soporte en Excel y optimización de tareas cotidianas.", description_en: "Worked in the credit area, supporting administrative and financial processes. I also helped colleagues with technical issues, Excel support, and optimization of daily tasks.", sort_order: 5 },
     { date_es: "Junio 2026", date_en: "June 2026", title_es: "Grado como Ingeniero de Sistemas", title_en: "Systems Engineering degree", description_es: "Recibí el título universitario como Ingeniero de Sistemas, cerrando mi ciclo académico con enfoque en desarrollo full-stack y experiencia aplicada en proyectos reales.", description_en: "Received my university degree as a Systems Engineer, closing my academic cycle with a focus on full-stack development and applied experience in real projects.", sort_order: 6 },
-  ]);
-  if (e5) console.error("journey:", e5.message);
+    ]);
 
   console.log("Seeding admin_users...");
   const adminPassword = process.env.ADMIN_PASSWORD ?? "admin123";
   const passwordHash = bcrypt.hashSync(adminPassword, 10);
-  const { error: e6 } = await supabase.from("admin_users").upsert({
-    id: "00000000-0000-0000-0000-000000000002",
-    username: "admin",
-    password_hash: passwordHash,
-  });
-  if (e6) console.error("admin_users:", e6.message);
+  const { data: existingAdmin } = await supabase
+    .from("admin_users")
+    .select("id")
+    .eq("username", "admin")
+    .maybeSingle();
+  if (existingAdmin) {
+    const { error: e6 } = await supabase
+      .from("admin_users")
+      .update({ password_hash: passwordHash })
+      .eq("id", existingAdmin.id);
+    if (e6) console.error("admin_users:", e6.message);
+    else console.log("admin_users: contraseña actualizada");
+  } else {
+    const { error: e6 } = await supabase.from("admin_users").insert({
+      id: "00000000-0000-0000-0000-000000000002",
+      username: "admin",
+      password_hash: passwordHash,
+    });
+    if (e6) console.error("admin_users:", e6.message);
+  }
 
   console.log("Seed completo!");
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
+import { getDriveImageUrl } from "@/lib/drive";
 
 interface Project {
   id: string;
@@ -160,18 +161,16 @@ export default function ProjectsPage() {
                   {uploading ? "Subiendo..." : "Subir imagen"}
                 </button>
                 {form.image_url && (
-                  <img src={form.image_url} alt="Preview" className="h-10 w-10 rounded object-cover border border-zinc-700" />
+                  <img src={getDriveImageUrl(form.image_url) ?? form.image_url} alt="Preview" className="h-10 w-10 rounded object-cover border border-zinc-700" />
                 )}
               </div>
-              {form.image_url && (
                 <input
                   type="text"
                   value={form.image_url}
                   onChange={(e) => setForm({ ...form, image_url: e.target.value })}
                   className="w-full mt-2 bg-zinc-800 border border-zinc-700 rounded-lg px-4 py-2.5 text-white text-sm focus:outline-none focus:border-emerald-500 transition-colors"
-                  placeholder="O pega una URL directamente"
+                  placeholder="O pega una URL directamente (ej. Google Drive)"
                 />
-              )}
             </div>
             <Field label="Orden" value={String(form.sort_order)} onChange={(v) => setForm({ ...form, sort_order: Number(v) })} />
           </div>

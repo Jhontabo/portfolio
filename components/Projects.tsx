@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { ExternalLink, Folder } from "lucide-react";
 import { projects as fallbackProjects } from "@/lib/data";
 import { useLocale } from "./LocaleProvider";
+import { getDriveImageUrl } from "@/lib/drive";
 
 interface Project {
   id: string;
@@ -71,19 +72,22 @@ export default function Projects() {
               className="bg-zinc-900 border border-zinc-800 rounded-xl overflow-hidden hover:border-emerald-500/50 transition-colors group"
             >
               <div className="h-48 bg-zinc-800 flex items-center justify-center relative overflow-hidden">
-                {project.image_url ? (
-                  <img
-                    src={project.image_url}
-                    alt={project.name}
-                    className="w-full h-full object-cover cursor-pointer hover:opacity-80 transition-opacity"
-                    onClick={() => setModalImage({ src: project.image_url!, alt: project.name })}
-                  />
-                ) : (
-                  <>
-                    <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-transparent" />
-                    <Folder size={48} className="text-zinc-600 group-hover:text-emerald-500 transition-colors" />
-                  </>
-                )}
+                {(() => {
+                  const imgSrc = project.image_url ? getDriveImageUrl(project.image_url) : null;
+                  return imgSrc ? (
+                    <img
+                      src={imgSrc}
+                      alt={project.name}
+                      className="w-full h-full object-cover cursor-pointer hover:opacity-80 transition-opacity"
+                      onClick={() => setModalImage({ src: imgSrc, alt: project.name })}
+                    />
+                  ) : (
+                    <>
+                      <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/10 to-transparent" />
+                      <Folder size={48} className="text-zinc-600 group-hover:text-emerald-500 transition-colors" />
+                    </>
+                  );
+                })()}
               </div>
 
               <div className="p-6">

@@ -8,6 +8,7 @@ import {
 } from "lucide-react";
 import { projects as fallbackProjects } from "@/lib/data";
 import { useLocale } from "./LocaleProvider";
+import { getDriveImageUrl } from "@/lib/drive";
 
 interface Project {
   id: string;
@@ -90,19 +91,22 @@ export default function PortfolioSection() {
               </div>
 
               <div className="h-32 sm:h-40 bg-zinc-900/60 flex items-center justify-center relative overflow-hidden">
-                {project.image_url ? (
-                  <img
-                    src={project.image_url}
-                    alt={project.name}
-                    className="w-full h-full object-cover cursor-pointer hover:opacity-80 transition-opacity"
-                    onClick={() => setModalImage({ src: project.image_url!, alt: project.name })}
-                  />
-                ) : (
-                  <>
-                    <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-purple-500/5 to-transparent" />
-                    <Folder className="w-10 h-10 text-zinc-600 group-hover:text-cyan-400 transition-colors duration-300" />
-                  </>
-                )}
+                {(() => {
+                  const imgSrc = project.image_url ? getDriveImageUrl(project.image_url) : null;
+                  return imgSrc ? (
+                    <img
+                      src={imgSrc}
+                      alt={project.name}
+                      className="w-full h-full object-cover cursor-pointer hover:opacity-80 transition-opacity"
+                      onClick={() => setModalImage({ src: imgSrc, alt: project.name })}
+                    />
+                  ) : (
+                    <>
+                      <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-purple-500/5 to-transparent" />
+                      <Folder className="w-10 h-10 text-zinc-600 group-hover:text-cyan-400 transition-colors duration-300" />
+                    </>
+                  );
+                })()}
               </div>
 
               <div className="p-5 sm:p-6 flex-1 flex flex-col">
