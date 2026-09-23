@@ -4,8 +4,8 @@ export const personalInfo = {
   email: "jhon.tajumbina@email.com",
   linkedin: "https://www.linkedin.com/in/jhon-tajumbina-8917922a3",
   github: "https://github.com/Jhontabo",
-  bioEs: "Soy Jhon Tajumbina, Ingeniero de Sistemas y desarrollador Full-Stack con sede en Pasto, Colombia. Construyo productos digitales que resuelven problemas reales: apps móviles, sitios web y sistemas a la medida, siempre con interfaces limpias y una experiencia de usuario fluida. Últimamente estoy enfocado en el marketing digital como pitcher, gestionando campañas de Meta Ads para convertir atención en resultados concretos para los clientes.",
-  bioEn: "I'm Jhon Tajumbina, a Systems Engineer and Full-Stack Developer based in Pasto, Colombia. I build digital products that solve real problems—mobile apps, websites, and custom systems—always with clean interfaces and a smooth user experience. Lately I've been focused on digital marketing as a pitcher, managing Meta Ads campaigns to turn attention into concrete results for clients.",
+  bioEs: "Soy Jhon Tajumbina, Ingeniero de Sistemas de Colombia. Construyo productos digitales que resuelven problemas reales: apps móviles, sitios web y sistemas a la medida, siempre con interfaces limpias y una experiencia de usuario fluida. Actualmente estoy enfocado en marketing digital como trafficker, gestionando campañas de Meta Ads para convertir atención en resultados concretos para los clientes.",
+  bioEn: "I'm Jhon Tajumbina, a Systems Engineer from Colombia. I build digital products that solve real problems—mobile apps, websites, and custom systems—always with clean interfaces and a smooth user experience. I'm currently focused on digital marketing as a trafficker, managing Meta Ads campaigns to turn attention into concrete results for clients.",
 };
 
 export const projects = [
