@@ -2,6 +2,7 @@ import { config } from "dotenv";
 import { resolve } from "path";
 config({ path: resolve(process.cwd(), ".env.local") });
 import { createClient } from "@supabase/supabase-js";
+import bcrypt from "bcryptjs";
 
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const key = process.env.SUPABASE_SERVICE_ROLE_KEY!;
@@ -105,6 +106,16 @@ async function seed() {
     { date_es: "Junio 2026", date_en: "June 2026", title_es: "Grado como Ingeniero de Sistemas", title_en: "Systems Engineering degree", description_es: "Recibí el título universitario como Ingeniero de Sistemas, cerrando mi ciclo académico con enfoque en desarrollo full-stack y experiencia aplicada en proyectos reales.", description_en: "Received my university degree as a Systems Engineer, closing my academic cycle with a focus on full-stack development and applied experience in real projects.", sort_order: 6 },
   ]);
   if (e5) console.error("journey:", e5.message);
+
+  console.log("Seeding admin_users...");
+  const adminPassword = process.env.ADMIN_PASSWORD ?? "admin123";
+  const passwordHash = bcrypt.hashSync(adminPassword, 10);
+  const { error: e6 } = await supabase.from("admin_users").upsert({
+    id: "00000000-0000-0000-0000-000000000002",
+    username: "admin",
+    password_hash: passwordHash,
+  });
+  if (e6) console.error("admin_users:", e6.message);
 
   console.log("Seed completo!");
 }
