@@ -1,11 +1,26 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import { defaultLocale } from '../i18n';
+import { SITE_URL } from '../lib/seo';
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+const target = new URL(`/${defaultLocale}/`, Astro.site ?? new URL(SITE_URL));
 ---
 
-<Layout>
-	<Welcome />
-</Layout>
+<!doctype html>
+<html lang="es-CO" translate="no">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, follow" />
+    <link rel="canonical" href={target.href} />
+    <meta http-equiv="refresh" content={`0; url=${target.pathname}`} />
+    <title>Jhon Tajumbina | Full-Stack Developer</title>
+  </head>
+  <body
+    style="background:#040406;color:#e2e8f0;font-family:ui-monospace,monospace;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0"
+  >
+    <p>
+      <span style="color:#00e5d0">&gt; </span>redirigiendo a
+      <a href={`/${defaultLocale}/`} style="color:#a855f7">/{defaultLocale}/</a>…
+    </p>
+  </body>
+</html>

@@ -1,0 +1,87 @@
+---
+import TilingWindow from '../ui/TilingWindow.astro';
+import Modal from '../ui/Modal.astro';
+import Icon from '../ui/Icon.astro';
+import { getPreviewUrl, getThumbnailUrl } from '../../lib/drive';
+import type { Certificate } from '../../data/types';
+import type { Locale } from '../../i18n';
+
+export interface Props {
+  cert: Certificate;
+  locale: Locale;
+  revealDelay?: string;
+}
+
+const { cert, locale, revealDelay } = Astro.props;
+
+const name = locale === 'en' ? cert.nameEn || cert.name : cert.name;
+const modalId = `cert-modal-${cert.id}`;
+const thumb = getThumbnailUrl(cert.link);
+---
+
+<div data-reveal={revealDelay ? '' : undefined} style={revealDelay ? `--reveal-delay:${revealDelay}` : undefined}>
+  <TilingWindow variant="purple" title={`cert_credential_${cert.id}.pdf`}>
+    <div class="p-5 sm:p-6 flex-1 flex flex-col">
+      <div class="flex items-start gap-4 mb-4">
+        <div class="p-2.5 bg-purple-500/10 rounded-lg shrink-0 border border-purple-300/15">
+          <Icon name="award" size={20} class="w-5 h-5 text-purple-400" />
+        </div>
+        <div class="min-w-0">
+          <h3
+            class="text-base sm:text-lg font-semibold text-white group-hover:text-purple-300 transition-colors line-clamp-2"
+          >
+            {name}
+          </h3>
+          <p class="text-purple-400 text-xs sm:text-sm font-medium mt-0.5">{cert.issuer}</p>
+        </div>
+      </div>
+
+      {
+        thumb && (
+          <div class="mb-4 rounded-lg overflow-hidden border border-purple-300/15">
+            <img
+              src={thumb}
+              alt={name}
+              width={400}
+              height={300}
+              loading="lazy"
+              decoding="async"
+              class="w-full max-h-64 object-contain bg-zinc-900/50 rounded-lg"
+            />
+          </div>
+        )
+      }
+
+      <div class="flex items-center justify-between mt-auto pt-4 border-t border-white/5">
+        {
+          cert.date ? (
+            <div class="flex items-center gap-1.5 text-zinc-500 font-mono text-xs">
+              <Icon name="calendar" size={13} />
+              <span>{cert.date}</span>
+            </div>
+          ) : (
+            <div />
+          )
+        }
+        <button
+          type="button"
+          data-modal-open={modalId}
+          class="flex items-center gap-1.5 text-xs font-mono text-purple-400 hover:text-purple-300 transition-colors"
+        >
+          <Icon name="external-link" size={14} />
+          [view_doc]
+        </button>
+      </div>
+    </div>
+  </TilingWindow>
+
+  <Modal id={modalId} title={name} bodyClass="flex-1 min-h-0 bg-zinc-800">
+    <iframe
+      src={getPreviewUrl(cert.link) ?? cert.link}
+      title={name}
+      class="w-full h-full min-h-0 flex-1"
+      allow="autoplay"
+      loading="lazy"
+    ></iframe>
+  </Modal>
+</div>

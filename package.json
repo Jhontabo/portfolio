@@ -2,19 +2,26 @@
   "name": "portfolio",
   "type": "module",
   "version": "0.0.1",
+  "private": true,
   "engines": {
     "node": ">=22.12.0"
   },
+  "packageManager": "pnpm@12.8.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro check && astro build",
     "preview": "astro preview",
+    "check": "astro check",
     "astro": "astro"
   },
   "dependencies": {
-    "astro": "^7.3.5"
+    "@astrojs/sitemap": "^3.6.0",
+    "@tailwindcss/vite": "^4.1.14",
+    "astro": "^7.3.5",
+    "tailwindcss": "^4.1.14"
   },
-  "allowScripts": {
-    "esbuild": true
+  "devDependencies": {
+    "@astrojs/check": "^0.9.4",
+    "typescript": "^5.9.3"
   }
 }

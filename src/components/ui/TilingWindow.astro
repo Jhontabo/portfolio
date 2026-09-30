@@ -1,0 +1,36 @@
+---
+import WindowDots from './WindowDots.astro';
+
+export interface Props {
+  variant?: 'cyan' | 'purple' | 'blue' | 'default';
+  title?: string;
+  hoverable?: boolean;
+  class?: string;
+  style?: string;
+}
+
+const { variant = 'default', title, hoverable = false, class: className, style } = Astro.props;
+
+const variantClass = {
+  cyan: 'active-cyan',
+  purple: 'active-purple',
+  blue: 'active-blue',
+  default: '',
+}[variant];
+---
+
+<div
+  class:list={['tiling-window', variantClass, hoverable && 'hover:active-cyan', 'flex flex-col h-full', className]}
+  style={style}
+>
+  {
+    title && (
+      <div class="h-8 bg-zinc-950 px-4 border-b border-white/5 flex items-center justify-between shrink-0">
+        <WindowDots />
+        <span class="text-[10px] font-mono text-zinc-500 truncate px-2">{title}</span>
+        <div class="w-8 shrink-0" />
+      </div>
+    )
+  }
+  <slot />
+</div>

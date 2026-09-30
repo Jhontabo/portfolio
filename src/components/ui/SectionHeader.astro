@@ -1,0 +1,25 @@
+---
+export interface Props {
+  title: string;
+  subtitle?: string;
+  gradient?: 'cyan' | 'purple';
+  id?: string;
+  class?: string;
+}
+
+const { title, subtitle, gradient = 'cyan', id, class: className } = Astro.props;
+
+const textClass = gradient === 'purple' ? 'hypr-gradient-text-purple' : 'hypr-gradient-text';
+const barClass =
+  gradient === 'purple'
+    ? 'bg-gradient-to-r from-purple-500 to-cyan-400'
+    : 'bg-gradient-to-r from-cyan-400 to-purple-400';
+---
+
+<div class:list={['text-center mb-12', className]}>
+  <h2 id={id} class="text-3xl sm:text-4xl font-extrabold font-black mb-4">
+    <span class={textClass}>{title}</span>
+  </h2>
+  {subtitle && <p class="max-w-2xl mx-auto text-sm sm:text-base text-zinc-400 mb-8">{subtitle}</p>}
+  <div class:list={['w-16 sm:w-20 h-1 mx-auto rounded mb-8', barClass]}></div>
+</div>

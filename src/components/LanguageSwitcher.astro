@@ -1,0 +1,114 @@
+---
+import Icon from './ui/Icon.astro';
+import type { Locale } from '../i18n';
+
+export interface Props {
+  locale: Locale;
+  label?: string;
+}
+
+const { locale, label } = Astro.props;
+
+const options: { code: Locale; name: string; flag: string }[] = [
+  { code: 'es', name: 'Español', flag: '🇨🇴' },
+  { code: 'en', name: 'English', flag: '🇺🇸' },
+];
+
+const current = options.find((o) => o.code === locale) ?? options[0];
+---
+
+<div class="flex items-center gap-3">
+  {label && <span class="text-zinc-500 font-mono text-xs">{label}</span>}
+  <div class="relative" data-lang-switcher>
+    <button
+      type="button"
+      data-lang-toggle
+      aria-expanded="false"
+      aria-haspopup="true"
+      aria-label="Select language"
+      class="flex items-center gap-2 text-zinc-300 hover:text-emerald-500 transition-colors text-sm font-medium py-2 px-3 rounded-lg hover:bg-zinc-800/50"
+    >
+      <span class="text-lg" aria-hidden="true">{current.flag}</span>
+      <span class="uppercase">{current.code}</span>
+      <Icon name="chevron-down" size={14} class="transition-transform duration-200" data-lang-chevron />
+    </button>
+
+    <div
+      data-lang-menu
+      hidden
+      class="absolute top-full right-0 mt-2 w-40 bg-zinc-800 border border-zinc-700 rounded-lg shadow-lg overflow-hidden z-50"
+    >
+      {
+        options.map((option) => (
+          <a
+            href={`/${option.code}/`}
+            data-lang-option
+            hreflang={option.code}
+            lang={option.code}
+            aria-current={option.code === locale ? 'true' : undefined}
+            class:list={[
+              'w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-zinc-700 hover:text-emerald-500 hover:bg-zinc-800/50 transition-colors',
+              option.code === locale && 'bg-zinc-700/50',
+            ]}
+          >
+            <span class="text-lg" aria-hidden="true">
+              {option.flag}
+            </span>
+            <span class="text-zinc-300 text-sm">{option.name}</span>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-lang-switcher]').forEach((switcher) => {
+    const toggle = switcher.querySelector<HTMLButtonElement>('[data-lang-toggle]');
+    const menu = switcher.querySelector<HTMLElement>('[data-lang-menu]');
+    const chevron = switcher.querySelector<HTMLElement>('[data-lang-chevron]');
+    if (!toggle || !menu) return;
+
+    const setOpen = (open: boolean): void => {
+      menu.hidden = !open;
+      toggle.setAttribute('aria-expanded', String(open));
+      chevron?.classList.toggle('rotate-180', open);
+    };
+
+    toggle.addEventListener('click', (event) => {
+      event.stopPropagation();
+      setOpen(menu.hidden);
+    });
+
+    const options = [...menu.querySelectorAll<HTMLAnchorElement>('[data-lang-option]')];
+    const withHash = (): string => window.location.hash;
+
+    options.forEach((option) => {
+      option.addEventListener('click', () => {
+        window.location.href = `${option.getAttribute('href') ?? '/'}${withHash()}`;
+      });
+    });
+
+    const syncHref = (): void => {
+      options.forEach((option) => {
+        const base = option.getAttribute('href')?.split('#')[0] ?? '/';
+        option.href = `${base}${withHash()}`;
+      });
+    };
+
+    syncHref();
+    window.addEventListener('hashchange', syncHref);
+
+    document.addEventListener('mousedown', (event) => {
+      if (menu.hidden) return;
+      if (!switcher.contains(event.target as Node)) setOpen(false);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !menu.hidden) {
+        setOpen(false);
+        toggle.focus();
+      }
+    });
+  });
+</script>

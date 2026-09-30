@@ -1,0 +1,309 @@
+@import 'tailwindcss';
+
+:root {
+  --background: #040406;
+  --foreground: #e2e8f0;
+  --accent-cyan: #00e5d0;
+  --accent-blue: #00a8f4;
+  --accent-purple: #a855f7;
+  --accent-pink: #ec4899;
+  --surface: #0b0c10;
+  --border-color: rgba(255, 255, 255, 0.08);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-cyan-glow: var(--accent-cyan);
+  --color-blue-glow: var(--accent-blue);
+  --color-purple-glow: var(--accent-purple);
+  --color-pink-glow: var(--accent-pink);
+  --color-surface: var(--surface);
+  --font-sans: var(--font-sora, system-ui);
+  --font-mono: var(--font-space-grotesk, ui-monospace);
+}
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--background);
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(0, 168, 244, 0.07), transparent 35%),
+    radial-gradient(circle at 85% 15%, rgba(168, 85, 247, 0.07), transparent 35%),
+    radial-gradient(circle at 50% 80%, rgba(0, 229, 208, 0.05), transparent 45%);
+  color: var(--foreground);
+  font-family: var(--font-sora, system-ui), sans-serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--accent-cyan);
+  color: #040406;
+}
+
+:where(a, button, [tabindex]):focus-visible {
+  outline: 2px solid var(--accent-cyan);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Hyprland Text Gradients */
+.hypr-gradient-text {
+  background: linear-gradient(90deg, #00a8f4 0%, #00e5d0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hypr-gradient-text-purple {
+  background: linear-gradient(90deg, #a855f7 0%, #ec4899 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hypr-gradient-border {
+  border-image: linear-gradient(to right, #00a8f4, #00e5d0) 1;
+}
+
+/* Simulated Tiling Windows */
+.tiling-window {
+  background: rgba(11, 12, 16, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(16px);
+  transition: all 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow: hidden;
+}
+
+.tiling-window:hover {
+  transform: translateY(-2px);
+}
+
+.tiling-window.active-cyan {
+  border-color: rgba(0, 229, 208, 0.4);
+  box-shadow:
+    0 0 15px rgba(0, 229, 208, 0.12),
+    0 10px 35px rgba(0, 0, 0, 0.7);
+}
+
+.tiling-window.active-purple {
+  border-color: rgba(168, 85, 247, 0.4);
+  box-shadow:
+    0 0 15px rgba(168, 85, 247, 0.12),
+    0 10px 35px rgba(0, 0, 0, 0.7);
+}
+
+.tiling-window.active-blue {
+  border-color: rgba(0, 168, 244, 0.4);
+  box-shadow:
+    0 0 15px rgba(0, 168, 244, 0.12),
+    0 10px 35px rgba(0, 0, 0, 0.7);
+}
+
+/* Custom Buttons with Glow */
+.glow-btn-cyan {
+  position: relative;
+  background: rgba(0, 229, 208, 0.15);
+  border: 1px solid rgba(0, 229, 208, 0.4);
+  color: #fff;
+  transition: all 0.25s ease;
+}
+
+.glow-btn-cyan:hover {
+  background: rgba(0, 229, 208, 0.25);
+  border-color: rgba(0, 229, 208, 0.8);
+  box-shadow: 0 0 20px rgba(0, 229, 208, 0.3);
+  transform: scale(1.02);
+}
+
+.glow-btn-purple {
+  position: relative;
+  background: rgba(168, 85, 247, 0.15);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+  color: #fff;
+  transition: all 0.25s ease;
+}
+
+.glow-btn-purple:hover {
+  background: rgba(168, 85, 247, 0.25);
+  border-color: rgba(168, 85, 247, 0.8);
+  box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+  transform: scale(1.02);
+}
+
+/* Accent Grid / Dot Effects */
+.dot-grid {
+  background-size: 24px 24px;
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+}
+
+/* Hide scrollbar */
+@utility scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Navbar pill */
+.navbar-pill {
+  background: rgba(11, 12, 16, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  transition:
+    background 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.navbar-pill.is-scrolled {
+  background: rgba(11, 12, 16, 0.8);
+  border-color: rgba(0, 229, 208, 0.2);
+  box-shadow: 0 10px 30px rgba(0, 229, 208, 0.05);
+}
+
+/* Reveal on scroll */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.5s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.js [data-reveal='left'] {
+  transform: translateX(-30px);
+}
+
+.js [data-reveal='right'] {
+  transform: translateX(30px);
+}
+
+.js [data-reveal='slide-left'] {
+  transform: translateX(-10px);
+}
+
+/* Entrances */
+@keyframes nav-drop {
+  from {
+    opacity: 0;
+    transform: translateY(-100px);
+  }
+}
+
+.animate-nav-drop {
+  animation: nav-drop 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes fade-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+}
+
+@keyframes fade-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+}
+
+.animate-fade-in-left {
+  animation: fade-in-left 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+.animate-fade-in-right {
+  animation: fade-in-right 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s both;
+}
+
+@keyframes drawer-in {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.95);
+  }
+}
+
+.nav-drawer {
+  display: none;
+}
+
+.nav-drawer.is-open {
+  display: flex;
+  animation: drawer-in 0.2s ease both;
+}
+
+/* Modal */
+dialog.modal {
+  opacity: 0;
+  transform: scale(0.95);
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
+}
+
+dialog.modal[open] {
+  opacity: 1;
+  transform: scale(1);
+}
+
+dialog.modal::backdrop {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(4px);
+}
+
+dialog.modal > .modal-panel {
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+dialog.modal[open] > .modal-panel {
+  transform: none;
+}
+
+/* Expandable grid: 0fr -> 1fr avoids the max-height hack */
+.expandable {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.expandable > * {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.expandable.is-open {
+  grid-template-rows: 1fr;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+}

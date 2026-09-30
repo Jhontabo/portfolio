@@ -1,0 +1,62 @@
+---
+import BaseHead from '../../components/layout/BaseHead.astro';
+import Navbar from '../../components/layout/Navbar.astro';
+import Hero from '../../components/sections/Hero.astro';
+import Projects from '../../components/sections/Projects.astro';
+import Journey from '../../components/sections/Journey.astro';
+import Certificates from '../../components/sections/Certificates.astro';
+import Skills from '../../components/sections/Skills.astro';
+import Footer from '../../components/layout/Footer.astro';
+import { isLocale, htmlLang, locales, t, type Locale } from '../../i18n';
+import '../../styles/global.css';
+
+export function getStaticPaths() {
+  return locales.map((lang) => ({ params: { lang }, props: { locale: lang } }));
+}
+
+const { lang } = Astro.params;
+
+if (!isLocale(lang)) {
+  return Astro.redirect('/404', 302);
+}
+
+const locale = lang as Locale;
+const messages = t(locale);
+---
+
+<!doctype html>
+<html lang={htmlLang[locale]} translate="no" class="scroll-smooth">
+  <head>
+    <BaseHead locale={locale} />
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+  </head>
+  <body class="antialiased">
+    <main class="min-h-screen relative overflow-hidden">
+      <div class="pointer-events-none absolute inset-0">
+        <div
+          class="absolute top-24 left-0 h-72 w-72 rounded-full bg-emerald-500/15 blur-[120px]"
+        >
+        </div>
+        <div
+          class="absolute bottom-20 right-0 h-72 w-72 rounded-full bg-sky-400/15 blur-[120px]"
+        >
+        </div>
+      </div>
+      <Navbar locale={locale} t={messages} />
+      <Hero locale={locale} t={messages} />
+      <Projects locale={locale} t={messages} />
+      <Journey locale={locale} t={messages} />
+      <Certificates locale={locale} t={messages} />
+      <Skills locale={locale} t={messages} />
+      <Footer locale={locale} t={messages} />
+    </main>
+
+    <script>
+      import { initReveal } from '../../scripts/reveal';
+
+      initReveal();
+    </script>
+  </body>
+</html>

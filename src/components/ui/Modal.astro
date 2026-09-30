@@ -1,0 +1,72 @@
+---
+import WindowDots from './WindowDots.astro';
+import Icon from './Icon.astro';
+
+export interface Props {
+  id: string;
+  title?: string;
+  variant?: 'window' | 'plain';
+  panelClass?: string;
+  bodyClass?: string;
+}
+
+const {
+  id,
+  title,
+  variant = 'window',
+  panelClass = 'w-full max-w-4xl h-[85vh] bg-zinc-900 rounded-xl border border-zinc-700 overflow-hidden flex flex-col',
+  bodyClass = '',
+} = Astro.props;
+
+const labelledBy = `modal-title-${id}`;
+---
+
+<dialog
+  {id}
+  class="modal fixed inset-0 z-50 m-0 h-full max-h-none w-full max-w-none bg-transparent p-4 backdrop:bg-transparent"
+  aria-labelledby={title ? labelledBy : undefined}
+  aria-label={title ? undefined : 'Vista ampliada'}
+>
+  <div
+    class:list={[
+      'modal-panel relative mx-auto flex min-h-0',
+      variant === 'plain' ? 'w-full h-full items-center justify-center' : panelClass,
+    ]}
+  >
+    {
+      title && (
+        <div class="h-10 bg-zinc-950 px-4 flex items-center justify-between border-b border-zinc-800 shrink-0">
+          <WindowDots size="md" />
+          <span id={labelledBy} class="text-xs font-mono text-zinc-500 truncate px-2">
+            {title}
+          </span>
+          <button
+            type="button"
+            data-modal-close
+            class="shrink-0 text-zinc-400 hover:text-white transition-colors"
+            aria-label="Cerrar"
+          >
+            <Icon name="x" size={16} />
+          </button>
+        </div>
+      )
+    }
+
+    {
+      variant === 'plain' && (
+        <button
+          type="button"
+          data-modal-close
+          class="absolute top-0 right-0 z-10 -mt-2 -mr-2 text-white/60 hover:text-white text-3xl leading-none"
+          aria-label="Cerrar"
+        >
+          &times;
+        </button>
+      )
+    }
+
+    <div class:list={['flex flex-col min-h-0', bodyClass]}>
+      <slot />
+    </div>
+  </div>
+</dialog>

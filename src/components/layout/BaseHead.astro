@@ -1,0 +1,48 @@
+---
+import { Font } from 'astro:assets';
+import { ogLocale, type Locale } from '../../i18n';
+import { META, SITE_NAME, SITE_URL } from '../../lib/seo';
+
+export interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+
+const origin = Astro.site ?? new URL(SITE_URL);
+const canonical = new URL(`/${locale}/`, origin);
+const esUrl = new URL('/es/', origin);
+const enUrl = new URL('/en/', origin);
+---
+
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+<meta name="google" content="notranslate" />
+
+<title>{META.title}</title>
+<meta name="description" content={META.description} />
+<meta name="author" content="Jhon Tajumbina" />
+<meta name="robots" content="index, follow" />
+<link rel="canonical" href={canonical.href} />
+
+<link rel="alternate" hreflang="es" href={esUrl.href} />
+<link rel="alternate" hreflang="en" href={enUrl.href} />
+<link rel="alternate" hreflang="x-default" href={esUrl.href} />
+
+<meta property="og:type" content="website" />
+<meta property="og:title" content={META.title} />
+<meta property="og:description" content={META.description} />
+<meta property="og:url" content={canonical.href} />
+<meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:locale" content={ogLocale[locale]} />
+<meta property="og:locale:alternate" content={ogLocale[locale === 'es' ? 'en' : 'es']} />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={META.title} />
+<meta name="twitter:description" content={META.description} />
+
+<Font cssVariable="--font-sora" preload />
+<Font cssVariable="--font-space-grotesk" preload />
+
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />

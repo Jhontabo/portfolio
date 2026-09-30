@@ -1,0 +1,105 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import BrandIcon from '../ui/BrandIcon.astro';
+import Icon from '../ui/Icon.astro';
+import { CATEGORY_ORDER, VISIBLE_SKILL_COUNT, skills } from '../../data/skills';
+import type { SkillCategory } from '../../data/types';
+import type { Locale, Messages } from '../../i18n';
+
+export interface Props {
+  locale: Locale;
+  t: Messages;
+}
+
+const { t } = Astro.props;
+
+const categoryIcons: Record<SkillCategory, string> = {
+  languages: 'code-xml',
+  frontend: 'terminal',
+  backend: 'server',
+  mobile: 'smartphone',
+  tools: 'wrench',
+  marketing: 'megaphone',
+};
+---
+
+<section id="skills" class="py-20 bg-zinc-900/50 scroll-mt-24">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div data-reveal>
+      <SectionHeader title={t.skills.title} />
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {
+        CATEGORY_ORDER.map((category, catIndex) => {
+          const list = skills[category];
+          const first = list.slice(0, VISIBLE_SKILL_COUNT);
+          const rest = list.slice(VISIBLE_SKILL_COUNT);
+          const panelId = `skills-extra-${category}`;
+
+          const row = (skill: { name: string; icon: string }, index: number) => (
+            <div
+              data-reveal="slide-left"
+              class="flex items-center gap-3 p-3 bg-zinc-800/50 rounded-lg hover:bg-zinc-800 transition-colors"
+              style={`--reveal-delay: ${catIndex * 100 + index * 50}ms`}
+            >
+              <span class="shrink-0 flex items-center justify-center w-8 h-8 rounded-md bg-zinc-900/80">
+                <BrandIcon name={skill.icon} size={20} />
+              </span>
+              <span class="text-zinc-300 text-sm">{skill.name}</span>
+            </div>
+          );
+
+          return (
+            <div
+              data-reveal
+              class="bg-zinc-900 border border-zinc-800 rounded-xl p-6 flex flex-col h-full"
+              style={`--reveal-delay: ${catIndex * 100}ms`}
+            >
+              <div class="flex items-center gap-3 mb-6">
+                <div class="p-2 bg-emerald-500/10 rounded-lg">
+                  <Icon name={categoryIcons[category]} size={24} class="text-emerald-500" />
+                </div>
+                <h3 class="text-xl font-semibold text-white">{t.skills[category]}</h3>
+              </div>
+
+              <div class="space-y-3 flex-1">
+                {first.map(row)}
+
+                {rest.length > 0 && (
+                  <div id={panelId} class="expandable">
+                    <div class="space-y-3">
+                      {rest.map((skill, index) => row(skill, VISIBLE_SKILL_COUNT + index))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {rest.length > 0 && (
+                <button
+                  type="button"
+                  data-skills-toggle
+                  aria-expanded="false"
+                  aria-controls={panelId}
+                  class="mt-4 inline-flex items-center justify-center gap-1.5 w-full py-2 text-sm font-medium text-emerald-500 bg-emerald-500/10 hover:bg-emerald-500/20 border border-emerald-500/30 rounded-lg transition-colors"
+                >
+                  <span data-skills-label-more>{t.skills.showMore}</span>
+                  <span data-skills-label-less hidden>{t.skills.showLess}</span>
+                  <span data-skills-chevron class="transition-transform duration-300 inline-flex">
+                    <Icon name="chevron-down" size={16} />
+                  </span>
+                </button>
+              )}
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initSkills } from '../../scripts/skills';
+
+  initSkills();
+</script>

@@ -1,0 +1,57 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "journey": "Ruta",
+    "portfolio": "Portafolio"
+  },
+  "hero": {
+    "role": "Full-Stack Developer",
+    "roles": ["Full-Stack Developer", "Ingeniero de Sistemas", "Software Engineer", "React · Express · Laravel", "Pitcher de Marketing · Meta Ads"],
+    "viewProjects": "Ver proyectos",
+    "downloadCV": "Descargar CV",
+    "contactMe": "Contactarme"
+  },
+  "projects": {
+    "title": "Proyectos",
+    "demo": "Demo",
+    "github": "GitHub"
+  },
+  "skills": {
+    "title": "Habilidades",
+    "languages": "Lenguajes",
+    "frontend": "Frontend",
+    "backend": "Backend",
+    "mobile": "Móvil",
+    "tools": "Herramientas",
+    "marketing": "Marketing Digital",
+    "showMore": "Ver más",
+    "showLess": "Ver menos"
+  },
+  "certificates": {
+    "title": "Certificaciones",
+    "showMore": "Mostrar más",
+    "showLess": "Mostrar menos"
+  },
+  "portfolio": {
+    "title": "Portafolio",
+    "subtitle": "Proyectos, certificaciones y stack técnico con enfoque en producto real.",
+    "tabs": {
+      "projects": "Proyectos",
+      "certificates": "Certificados",
+      "skills": "Habilidades"
+    },
+    "viewCredential": "Ver credencial",
+    "setupTitle": "Mi Setup de Desarrollo",
+    "setupDescription": "Trabajo con Linux Arch, BSPWM y NvChad para mantener velocidad y foco. En entornos Windows uso WSL para conservar un flujo nativo de desarrollo."
+  },
+  "journey": {
+    "title": "Ruta Profesional",
+    "subtitle": "Línea de tiempo de formación, representación académica y experiencia aplicada.",
+    "viewGithub": "Ver en GitHub",
+    "githubProfile": "Ir a mi perfil de GitHub"
+  },
+  "footer": {
+    "rights": "Todos los derechos reservados.",
+    "madeWith": "Hecho con"
+  }
+}

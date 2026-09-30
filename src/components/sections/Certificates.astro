@@ -1,0 +1,76 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import CertificateCard from './CertificateCard.astro';
+import { certificates } from '../../data/certificates';
+import { INITIAL_CERT_COUNT } from '../../scripts/certificates';
+import type { Locale, Messages } from '../../i18n';
+
+export interface Props {
+  locale: Locale;
+  t: Messages;
+}
+
+const { locale, t } = Astro.props;
+
+const visible = certificates.slice(0, INITIAL_CERT_COUNT);
+const hidden = certificates.slice(INITIAL_CERT_COUNT);
+---
+
+<section id="certificates" class="py-16 sm:py-24 bg-zinc-900/30 scroll-mt-24">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div data-reveal>
+      <SectionHeader title={t.certificates.title} />
+    </div>
+
+    <div class="grid sm:grid-cols-2 gap-6">
+      {
+        visible.map((cert, index) => (
+          <CertificateCard cert={cert} locale={locale} revealDelay={`${index * 80}ms`} />
+        ))
+      }
+    </div>
+
+    {
+      hidden.length > 0 && (
+        <div id="cert-extra" data-cert-panel class="cert-panel expandable">
+          <div class="grid sm:grid-cols-2 gap-6">
+            {hidden.map((cert) => (
+              <CertificateCard cert={cert} locale={locale} />
+            ))}
+          </div>
+        </div>
+      )
+    }
+
+    {
+      hidden.length > 0 && (
+        <div class="flex justify-center mt-10">
+          <button
+            type="button"
+            data-cert-toggle
+            aria-expanded="false"
+            aria-controls="cert-extra"
+            class="font-mono text-xl px-8 sm:px-12 py-4 rounded-xl border-2 border-purple-400 text-white bg-purple-500/20 hover:bg-purple-500/40 hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all font-semibold"
+          >
+            <span data-cert-label-more>{t.certificates.showMore}</span>
+            <span data-cert-label-less hidden>{t.certificates.showLess}</span>
+          </button>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+<style>
+  .cert-panel.is-open {
+    margin-top: 1.5rem;
+  }
+</style>
+
+<script>
+  import { initCertificates } from '../../scripts/certificates';
+  import { initModals } from '../../scripts/modal';
+
+  initCertificates();
+  initModals();
+</script>
