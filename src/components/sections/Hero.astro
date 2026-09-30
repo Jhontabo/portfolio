@@ -89,19 +89,19 @@ const linkedinPath =
 
       <div class="lg:col-span-5 flex justify-center animate-fade-in-right">
         <div
-          class="w-72 h-72 sm:w-80 sm:h-80 max-w-full rounded-full overflow-hidden border-2 border-cyan-400/30 shadow-[0_0_60px_rgba(34,211,238,0.15)] bg-zinc-900"
+          class="relative w-72 h-72 sm:w-80 sm:h-80 max-w-full rounded-full overflow-hidden border-2 border-cyan-400/30 shadow-[0_0_60px_rgba(34,211,238,0.15)] bg-zinc-900"
         >
           <Image
             src={jhon}
             alt="Jhon Tajumbina"
-            width={320}
-            height={320}
+            width={896}
+            height={1251}
+            widths={[384, 640, 896]}
+            sizes="(min-width: 640px) 643px, 579px"
             loading="eager"
             fetchpriority="high"
-            widths={[320, 480, 640]}
-            sizes="(min-width: 1024px) 320px, (min-width: 640px) 320px, 288px"
-            class="w-full h-full object-cover"
-            style="object-position: center 10%"
+            class="absolute max-w-none h-auto"
+            style="width: 134%; left: -17%; top: -2%;"
           />
         </div>
       </div>
