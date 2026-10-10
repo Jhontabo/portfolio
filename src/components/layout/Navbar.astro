@@ -58,14 +58,23 @@ const allNavLinks = [...leftLinks, ...rightLinks];
     <!-- BLOQUE 3 (Derecha): Enlaces restantes + Selector de Idioma -->
     <div class="hidden md:flex items-center gap-8 justify-end flex-1">
       {
-        rightLinks.map((link) => (
-          <a
-            href={link.href}
-            class="text-[11px] font-medium uppercase tracking-[0.25em] text-neutral-400 hover:text-white transition-colors duration-200"
-          >
-            {link.name}
-          </a>
-        ))
+        rightLinks.map((link) =>
+          link.href.startsWith('mailto:') ? (
+            <a
+              href={link.href}
+              class="btn btn-secondary btn-sm"
+            >
+              {link.name}
+            </a>
+          ) : (
+            <a
+              href={link.href}
+              class="text-[11px] font-medium uppercase tracking-[0.25em] text-neutral-400 hover:text-white transition-colors duration-200"
+            >
+              {link.name}
+            </a>
+          )
+        )
       }
       <div class="h-3 w-px bg-white/10" aria-hidden="true"></div>
       <LanguageSwitcher locale={locale} />

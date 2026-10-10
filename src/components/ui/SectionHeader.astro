@@ -13,13 +13,13 @@ const { title, subtitle, kicker, id, class: className } = Astro.props;
 
 <div class:list={['text-center mb-16 sm:mb-20', className]}>
   {kicker && (
-    <p class="text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.3em] text-neutral-400 mb-3">
+    <p class="text-[11px] sm:text-xs font-medium uppercase tracking-[0.3em] text-neutral-300 mb-4">
       {kicker}
     </p>
   )}
   <h2
     id={id}
-    class="font-serif text-3xl sm:text-4xl md:text-5xl font-light tracking-[0.12em] text-white uppercase drop-shadow-sm mb-4"
+    class="font-serif text-4xl sm:text-5xl md:text-6xl font-light tracking-[0.1em] uppercase hypr-gradient-text drop-shadow-[0_2px_24px_rgba(255,255,255,0.12)] mb-5"
   >
     {title}
   </h2>
@@ -28,5 +28,9 @@ const { title, subtitle, kicker, id, class: className } = Astro.props;
       {subtitle}
     </p>
   )}
-  <div class="w-10 h-[1px] bg-white/20 mx-auto mt-6" aria-hidden="true"></div>
+  <div
+    class="w-14 h-[2px] bg-gradient-to-r from-transparent via-white/50 to-transparent mx-auto mt-7"
+    aria-hidden="true"
+  >
+  </div>
 </div>
