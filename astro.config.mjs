@@ -28,5 +28,23 @@ export default defineConfig({
       subsets: ['latin'],
       display: 'swap',
     },
+    {
+      name: 'Cinzel',
+      cssVariable: '--font-cinzel',
+      provider: fontProviders.google(),
+      weights: [400, 500, 600, 700],
+      styles: ['normal'],
+      subsets: ['latin'],
+      display: 'swap',
+    },
+    {
+      name: 'Playfair Display',
+      cssVariable: '--font-playfair',
+      provider: fontProviders.google(),
+      weights: [400, 500, 600, 700],
+      styles: ['normal'],
+      subsets: ['latin'],
+      display: 'swap',
+    },
   ],
 });

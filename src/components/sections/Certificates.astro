@@ -16,13 +16,16 @@ const visible = certificates.slice(0, INITIAL_CERT_COUNT);
 const hidden = certificates.slice(INITIAL_CERT_COUNT);
 ---
 
-<section id="certificates" class="py-16 sm:py-24 bg-zinc-900/30 scroll-mt-24">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<section id="certificates" class="py-24 sm:py-32 bg-[#050505] scroll-mt-24 border-t border-white/5">
+  <div class="max-w-6xl mx-auto px-6 lg:px-12">
     <div data-reveal>
-      <SectionHeader title={t.certificates.title} />
+      <SectionHeader
+        kicker={locale === 'en' ? 'ACCREDITATIONS' : 'RECONOCIMIENTO'}
+        title={t.certificates.title}
+      />
     </div>
 
-    <div class="grid sm:grid-cols-2 gap-6">
+    <div class="grid sm:grid-cols-2 gap-8 lg:gap-10">
       {
         visible.map((cert, index) => (
           <CertificateCard cert={cert} locale={locale} revealDelay={`${index * 80}ms`} />
@@ -33,7 +36,7 @@ const hidden = certificates.slice(INITIAL_CERT_COUNT);
     {
       hidden.length > 0 && (
         <div id="cert-extra" data-cert-panel class="cert-panel expandable">
-          <div class="grid sm:grid-cols-2 gap-6">
+          <div class="grid sm:grid-cols-2 gap-8 lg:gap-10">
             {hidden.map((cert) => (
               <CertificateCard cert={cert} locale={locale} />
             ))}
@@ -44,13 +47,13 @@ const hidden = certificates.slice(INITIAL_CERT_COUNT);
 
     {
       hidden.length > 0 && (
-        <div class="flex justify-center mt-10">
+        <div class="flex justify-center mt-12 sm:mt-16">
           <button
             type="button"
             data-cert-toggle
             aria-expanded="false"
             aria-controls="cert-extra"
-            class="font-mono text-xl px-8 sm:px-12 py-4 rounded-xl border-2 border-purple-400 text-white bg-purple-500/20 hover:bg-purple-500/40 hover:shadow-[0_0_20px_rgba(168,85,247,0.3)] transition-all font-semibold"
+            class="inline-flex items-center justify-center gap-2 border border-white/20 hover:border-white text-white rounded-full px-8 py-3.5 text-xs uppercase tracking-[0.25em] font-medium transition-all duration-300 hover:bg-white/5"
           >
             <span data-cert-label-more>{t.certificates.showMore}</span>
             <span data-cert-label-less hidden>{t.certificates.showLess}</span>
@@ -63,7 +66,7 @@ const hidden = certificates.slice(INITIAL_CERT_COUNT);
 
 <style>
   .cert-panel.is-open {
-    margin-top: 1.5rem;
+    margin-top: 2rem;
   }
 </style>
 

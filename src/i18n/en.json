@@ -1,8 +1,10 @@
 {
   "nav": {
     "home": "Home",
+    "about": "About",
     "journey": "Journey",
-    "portfolio": "Portfolio"
+    "portfolio": "Portfolio",
+    "contact": "Contact"
   },
   "hero": {
     "role": "Full-Stack Developer",

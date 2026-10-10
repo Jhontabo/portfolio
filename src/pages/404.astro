@@ -1,6 +1,5 @@
 ---
 import '../styles/global.css';
-import Icon from '../components/ui/Icon.astro';
 import { SITE_NAME } from '../lib/seo';
 ---
 
@@ -13,59 +12,32 @@ import { SITE_NAME } from '../lib/seo';
     <title>404 | {SITE_NAME}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   </head>
-  <body class="antialiased font-mono">
-    <div class="min-h-screen flex items-center justify-center dot-grid px-4 relative">
-      <div
-        class="absolute top-1/4 left-1/4 w-[280px] h-[280px] bg-cyan-500/10 rounded-full blur-[100px] pointer-events-none"
-      >
-      </div>
-      <div
-        class="absolute bottom-1/4 right-1/4 w-[320px] h-[320px] bg-purple-500/10 rounded-full blur-[120px] pointer-events-none"
-      >
-      </div>
+  <body class="antialiased bg-[#050505] text-neutral-200 selection:bg-white selection:text-black">
+    <div class="min-h-screen flex items-center justify-center px-6 relative overflow-hidden">
+      <!-- Backlight sutil -->
+      <div class="w-[500px] h-[500px] rounded-full bg-white/[0.02] blur-[140px] pointer-events-none absolute -z-10"></div>
 
-      <div class="relative tiling-window active-blue w-full max-w-lg">
-        <div
-          class="h-8 bg-zinc-950 px-4 border-b border-white/5 flex items-center justify-between"
-        >
-          <div class="flex gap-1.5">
-            <span class="w-2 h-2 rounded-full" style="background:#ff5f56"></span>
-            <span class="w-2 h-2 rounded-full" style="background:#ffbd2e"></span>
-            <span class="w-2 h-2 rounded-full" style="background:#27c93f"></span>
-          </div>
-          <span class="text-[10px] font-mono text-zinc-500">error_404</span>
-          <div class="w-8"></div>
-        </div>
+      <div class="max-w-md w-full text-center">
+        <p class="text-[11px] uppercase tracking-[0.3em] text-neutral-400 mb-3">
+          ERROR 404
+        </p>
+        <p class="font-serif text-7xl sm:text-8xl font-light tracking-[0.15em] text-white mb-4">
+          404
+        </p>
+        <h1 class="font-serif text-xl sm:text-2xl text-neutral-200 font-light tracking-wide mb-3">
+          Página no encontrada
+        </h1>
+        <p class="text-neutral-400 text-sm font-light leading-relaxed mb-8">
+          La página solicitada no está disponible o ha sido trasladada.
+        </p>
 
-        <div class="p-8 sm:p-10 text-center">
-          <p class="text-6xl sm:text-7xl font-bold hypr-gradient-text mb-4">404</p>
-          <h1 class="text-xl sm:text-2xl font-bold text-white mb-3 font-sans">
-            Page not found
-          </h1>
-          <p class="text-zinc-400 text-sm mb-8 font-mono">
-            <span class="text-red-400">$</span> ls: cannot access &apos;page&apos;: No such file or
-            directory
-          </p>
-
-          <div class="flex flex-wrap items-center justify-center gap-4">
-            <a
-              href="/es/"
-              class="inline-flex items-center gap-2 px-6 py-3 bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 rounded-xl font-mono text-sm hover:bg-cyan-500/20 transition-colors"
-            >
-              <span class="text-cyan-400">cd</span> ~/es
-            </a>
-            <a
-              href="/en/"
-              class="inline-flex items-center gap-2 px-6 py-3 bg-purple-500/10 border border-purple-400/30 text-purple-300 rounded-xl font-mono text-sm hover:bg-purple-500/20 transition-colors"
-            >
-              <span class="text-purple-400">cd</span> ~/en
-            </a>
-          </div>
-
-          <p class="mt-8 text-zinc-600 text-xs font-mono flex items-center justify-center gap-2">
-            <Icon name="chevron-down" size={12} />
-            hyprctl dispatch exit
-          </p>
+        <div class="flex items-center justify-center gap-4">
+          <a
+            href="/es/"
+            class="inline-flex items-center border border-white/20 hover:border-white text-white rounded-full px-8 py-3.5 text-xs uppercase tracking-[0.25em] font-medium transition-all duration-300 hover:bg-white/5"
+          >
+            Volver al inicio
+          </a>
         </div>
       </div>
     </div>

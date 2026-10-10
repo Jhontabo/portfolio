@@ -1,8 +1,10 @@
 {
   "nav": {
     "home": "Inicio",
+    "about": "Sobre Mí",
     "journey": "Ruta",
-    "portfolio": "Portafolio"
+    "portfolio": "Portafolio",
+    "contact": "Contacto"
   },
   "hero": {
     "role": "Full-Stack Developer",

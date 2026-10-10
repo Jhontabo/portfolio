@@ -1,6 +1,5 @@
 ---
 import SectionHeader from '../ui/SectionHeader.astro';
-import TilingWindow from '../ui/TilingWindow.astro';
 import Modal from '../ui/Modal.astro';
 import Icon from '../ui/Icon.astro';
 import { projects } from '../../data/projects';
@@ -18,13 +17,17 @@ const githubPath =
   'M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.11.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z';
 ---
 
-<section id="portfolio" class="py-16 sm:py-24 scroll-mt-24">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+<section id="portfolio" class="py-24 sm:py-32 bg-[#050505] scroll-mt-24 border-t border-white/5">
+  <div class="max-w-6xl mx-auto px-6 lg:px-12">
     <div data-reveal>
-      <SectionHeader title={t.portfolio.title} subtitle={t.portfolio.subtitle} />
+      <SectionHeader
+        kicker={locale === 'en' ? 'SELECTED WORKS' : 'TRABAJOS SELECCIONADOS'}
+        title={t.portfolio.title}
+        subtitle={t.portfolio.subtitle}
+      />
     </div>
 
-    <div class="grid sm:grid-cols-2 gap-6">
+    <div class="grid sm:grid-cols-2 gap-8 lg:gap-10">
       {
         projects.map((project, index) => {
           const name = locale === 'en' ? (project.nameEn ?? project.name) : project.name;
@@ -37,12 +40,12 @@ const githubPath =
 
           return (
             <div data-reveal style={`--reveal-delay: ${index * 80}ms`}>
-              <TilingWindow variant="cyan" title={`project_record_${project.id}.json`} hoverable>
+              <div class="bg-neutral-950/70 border border-white/10 hover:border-white/25 rounded-2xl overflow-hidden transition-all duration-500 flex flex-col h-full group">
                 {image ? (
                   <button
                     type="button"
                     data-modal-open={modalId}
-                    class="h-56 sm:h-64 lg:h-72 bg-zinc-900/60 flex items-center justify-center relative overflow-hidden w-full cursor-zoom-in"
+                    class="h-60 sm:h-72 bg-neutral-900/60 flex items-center justify-center relative overflow-hidden w-full cursor-zoom-in"
                     aria-label={`Ampliar imagen de ${name}`}
                   >
                     <img
@@ -52,44 +55,46 @@ const githubPath =
                       height={420}
                       loading="lazy"
                       decoding="async"
-                      class="w-full h-full object-cover hover:opacity-80 transition-opacity"
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
+                    <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent opacity-60" />
                   </button>
                 ) : (
-                  <div class="h-56 sm:h-64 lg:h-72 bg-zinc-900/60 flex items-center justify-center relative overflow-hidden">
-                    <div class="absolute inset-0 bg-gradient-to-br from-cyan-500/10 via-purple-500/5 to-transparent" />
+                  <div class="h-60 sm:h-72 bg-neutral-900/40 flex items-center justify-center relative overflow-hidden">
                     <Icon
                       name="folder"
-                      size={40}
-                      class="w-10 h-10 text-zinc-600 group-hover:text-cyan-400 transition-colors duration-300"
+                      size={36}
+                      class="text-neutral-600 group-hover:text-neutral-300 transition-colors duration-300"
                     />
                   </div>
                 )}
 
-                <div class="p-5 sm:p-6 flex-1 flex flex-col">
-                  <h3 class="text-lg sm:text-xl font-semibold text-white mb-2 group-hover:text-cyan-300 transition-colors line-clamp-1">
+                <div class="p-6 sm:p-8 flex-1 flex flex-col">
+                  <h3 class="font-serif text-xl sm:text-2xl font-light text-white mb-3 group-hover:text-neutral-200 transition-colors line-clamp-1">
                     {name}
                   </h3>
-                  <p class="text-zinc-400 text-sm leading-relaxed mb-4 line-clamp-3">{description}</p>
+                  <p class="text-neutral-400 text-sm font-light leading-relaxed mb-6 line-clamp-3">
+                    {description}
+                  </p>
 
-                  <div class="flex flex-wrap gap-1.5 mb-5 mt-auto">
+                  <div class="flex flex-wrap gap-2 mb-6 mt-auto">
                     {project.technologies.map((tech) => (
-                      <span class="text-[11px] font-mono px-2 py-0.5 bg-zinc-900 border border-white/5 text-zinc-400 rounded-md">
+                      <span class="text-[10px] uppercase tracking-[0.2em] font-medium px-2.5 py-1 bg-white/[0.03] border border-white/10 text-neutral-400 rounded">
                         {tech}
                       </span>
                     ))}
                   </div>
 
-                  <div class="flex gap-4 pt-4 border-t border-white/5">
+                  <div class="flex items-center gap-6 pt-5 border-t border-white/10">
                     {project.demo !== '#' && (
                       <a
                         href={project.demo}
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="flex items-center gap-1.5 text-base font-mono text-cyan-400 hover:text-cyan-300 transition-colors"
+                        class="inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.22em] font-medium text-white hover:text-neutral-300 transition-colors"
                       >
-                        <Icon name="external-link" size={20} />
-                        [live_demo]
+                        <span>{locale === 'en' ? 'LIVE DEMO' : 'DEMO EN VIVO'}</span>
+                        <Icon name="external-link" size={13} />
                       </a>
                     )}
                     {project.github !== '#' && (
@@ -97,17 +102,17 @@ const githubPath =
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="flex items-center gap-1.5 text-base font-mono text-zinc-400 hover:text-zinc-200 transition-colors"
+                        class="inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.22em] font-medium text-neutral-400 hover:text-white transition-colors"
                       >
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                           <path d={githubPath} />
                         </svg>
-                        [src_code]
+                        <span>{locale === 'en' ? 'CODE' : 'CÓDIGO'}</span>
                       </a>
                     )}
                   </div>
                 </div>
-              </TilingWindow>
+              </div>
 
               {image && (
                 <Modal id={modalId} variant="plain">
@@ -117,7 +122,7 @@ const githubPath =
                     width={1200}
                     height={800}
                     decoding="async"
-                    class="max-h-[85vh] max-w-full object-contain shadow-2xl"
+                    class="max-h-[85vh] max-w-full object-contain shadow-2xl rounded-lg"
                   />
                 </Modal>
               )}
