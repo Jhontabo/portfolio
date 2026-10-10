@@ -18,16 +18,19 @@ const { locale } = Astro.props;
 
   <!-- 1. Banner con wrapper que adapta dimensiones exactas en cualquier dispositivo -->
   <div class="hero-image-wrapper relative z-0 w-full flex items-center justify-center select-none">
-    <img
-      src="/Desing-final.webp"
-      alt="Jhon Tajumbina"
-      width="2400"
-      height="1260"
-      loading="eager"
-      fetchpriority="high"
-      decoding="sync"
-      class="hero-banner object-center pointer-events-none"
-    />
+    <picture class="contents">
+      <source media="(max-width: 767px)" srcset="/desing-mobil.webp" />
+      <img
+        src="/Desing-final.webp"
+        alt="Jhon Tajumbina"
+        width="2400"
+        height="1260"
+        loading="eager"
+        fetchpriority="high"
+        decoding="sync"
+        class="hero-banner object-center pointer-events-none"
+      />
+    </picture>
 
     <!-- Fundido perimetral superior (suaviza el borde superior del banner con #050505) -->
     <div
@@ -85,6 +88,13 @@ const { locale } = Astro.props;
     max-height: 85vh;
     object-fit: contain;
     display: block;
+  }
+
+  /* En móvil se usa el diseño vertical (Desing mobil) */
+  @media (max-width: 767px) {
+    .hero-banner {
+      aspect-ratio: 1191 / 1260;
+    }
   }
 
   /* En pantallas panorámicas (widescreen desktop/laptop): cubre toda la pantalla */
