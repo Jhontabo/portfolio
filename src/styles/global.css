@@ -155,6 +155,42 @@ body {
   width: 100%;
 }
 
+/* Banner del hero (compartido entre Hero y Footer) */
+.hero-image-wrapper {
+  height: auto;
+  max-width: 100%;
+}
+
+.hero-banner {
+  width: 100%;
+  height: auto;
+  max-height: 85vh;
+  object-fit: contain;
+  display: block;
+}
+
+/* En móvil se usa el diseño vertical (Desing mobil) */
+@media (max-width: 767px) {
+  .hero-banner {
+    aspect-ratio: 1191 / 1260;
+  }
+}
+
+/* En pantallas panorámicas (widescreen desktop/laptop): cubre toda la pantalla */
+@media (min-aspect-ratio: 16/10) {
+  .hero-image-wrapper {
+    height: 100%;
+    width: 100%;
+  }
+
+  .hero-banner {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    object-fit: cover;
+  }
+}
+
 /* Accent Grid / Dot Effects */
 .dot-grid {
   background-size: 24px 24px;
