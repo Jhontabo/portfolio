@@ -1,7 +1,9 @@
 ---
 import SectionHeader from '../ui/SectionHeader.astro';
+import Icon from '../ui/Icon.astro';
 import { journeyTimeline } from '../../data/journey';
 import { personalInfo } from '../../data/personal';
+import type { JourneyCategory } from '../../data/types';
 import type { Locale, Messages } from '../../i18n';
 
 export interface Props {
@@ -14,13 +16,45 @@ const { locale, t } = Astro.props;
 const githubPath =
   'M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.6.11.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z';
 
+interface CategoryStyle {
+  icon: string;
+  chip: string;
+  dot: string;
+}
+
+const categoryStyles: Record<JourneyCategory, CategoryStyle> = {
+  education: {
+    icon: 'graduation-cap',
+    chip: 'text-cyan-300 bg-cyan-400/10 border-cyan-400/30',
+    dot: 'border-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.5)]',
+  },
+  work: {
+    icon: 'briefcase',
+    chip: 'text-sky-300 bg-sky-400/10 border-sky-400/30',
+    dot: 'border-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.5)]',
+  },
+  research: {
+    icon: 'award',
+    chip: 'text-amber-300 bg-amber-400/10 border-amber-400/30',
+    dot: 'border-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.5)]',
+  },
+  marketing: {
+    icon: 'megaphone',
+    chip: 'text-rose-300 bg-rose-400/10 border-rose-400/30',
+    dot: 'border-rose-400 shadow-[0_0_12px_rgba(251,113,133,0.5)]',
+  },
+};
+
 const entries = journeyTimeline.map((item, index) => {
+  const category = categoryStyles[item.category];
   return {
     ...item,
-    isLeft: index % 2 === 0,
+    category,
+    delay: index * 60,
     date: locale === 'en' ? item.dateEn : item.dateEs,
     title: locale === 'en' ? item.titleEn : item.titleEs,
     description: locale === 'en' ? item.descriptionEn : item.descriptionEs,
+    label: t.journey.categories[item.category],
     href: item.link ?? personalInfo.github,
     hasLink: item.linkType === 'github' || !!item.link,
   };
@@ -28,7 +62,7 @@ const entries = journeyTimeline.map((item, index) => {
 ---
 
 <section id="journey" class="py-24 sm:py-32 bg-[#050505] overflow-hidden scroll-mt-24 border-t border-white/5">
-  <div class="max-w-5xl mx-auto px-6 lg:px-12">
+  <div class="max-w-3xl mx-auto px-6 sm:px-8">
     <div data-reveal>
       <SectionHeader
         kicker={locale === 'en' ? 'CHRONOLOGY' : 'TRAYECTORIA'}
@@ -37,134 +71,67 @@ const entries = journeyTimeline.map((item, index) => {
       />
     </div>
 
-    <div class="relative mt-12 sm:mt-16">
-      <!-- Línea central en desktop -->
+    <div class="relative mt-12 sm:mt-14">
+      <!-- Línea vertical de la ruta -->
       <div
-        class="absolute left-1/2 top-0 bottom-0 w-[1px] -translate-x-1/2 bg-white/10 hidden md:block"
+        class="absolute left-2.5 top-3 bottom-3 w-[2px] bg-gradient-to-b from-white/30 via-white/20 to-white/5"
         aria-hidden="true"
       >
       </div>
 
-      <!-- Línea lateral en móvil -->
-      <div
-        class="absolute left-4 top-0 bottom-0 w-[1px] bg-white/10 md:hidden"
-        aria-hidden="true"
-      >
-      </div>
-
-      <div class="space-y-12 md:space-y-16">
+      <ol class="relative space-y-7 sm:space-y-9">
         {
-          entries.map((item, index) => (
-            <div class="relative" data-reveal style={`--reveal-delay: ${index * 60}ms`}>
-              <!-- Versión Desktop (Línea central alternada) -->
-              <div class="hidden md:flex items-center justify-center">
-                {item.isLeft ? (
-                  <>
-                    <div class="flex-[0_0_calc(50%-32px)] flex justify-end pr-8">
-                      <div class="bg-neutral-950/70 border border-white/10 hover:border-white/20 p-6 sm:p-7 rounded-2xl w-full max-w-md transition-all duration-300">
-                        <span class="inline-block text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-400 bg-white/[0.04] border border-white/10 px-3 py-1 rounded-full mb-3">
-                          {item.date}
-                        </span>
-                        <h3 class="font-serif text-lg font-light text-white mb-2 tracking-wide">
-                          {item.title}
-                        </h3>
-                        <p class="text-neutral-400 text-sm font-light leading-relaxed mb-4">
-                          {item.description}
-                        </p>
-                        {item.hasLink && (
-                          <div class="pt-3 border-t border-white/10">
-                            <a
-                              href={item.href}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              class="inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.2em] font-medium text-neutral-300 hover:text-white transition-colors"
-                            >
-                              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                <path d={githubPath} />
-                              </svg>
-                              <span>{locale === 'en' ? 'VIEW REPO' : 'VER REPOSITORIO'}</span>
-                            </a>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    <div class="shrink-0 w-16 flex justify-center relative z-10">
-                      <div class="w-3 h-3 rounded-full border border-white/40 bg-[#050505] shadow-[0_0_12px_rgba(255,255,255,0.2)]" />
-                    </div>
-                    <div class="flex-[0_0_calc(50%-32px)]" />
-                  </>
-                ) : (
-                  <>
-                    <div class="flex-[0_0_calc(50%-32px)]" />
-                    <div class="shrink-0 w-16 flex justify-center relative z-10">
-                      <div class="w-3 h-3 rounded-full border border-white/40 bg-[#050505] shadow-[0_0_12px_rgba(255,255,255,0.2)]" />
-                    </div>
-                    <div class="flex-[0_0_calc(50%-32px)] flex justify-start pl-8">
-                      <div class="bg-neutral-950/70 border border-white/10 hover:border-white/20 p-6 sm:p-7 rounded-2xl w-full max-w-md transition-all duration-300">
-                        <span class="inline-block text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-400 bg-white/[0.04] border border-white/10 px-3 py-1 rounded-full mb-3">
-                          {item.date}
-                        </span>
-                        <h3 class="font-serif text-lg font-light text-white mb-2 tracking-wide">
-                          {item.title}
-                        </h3>
-                        <p class="text-neutral-400 text-sm font-light leading-relaxed mb-4">
-                          {item.description}
-                        </p>
-                        {item.hasLink && (
-                          <div class="pt-3 border-t border-white/10">
-                            <a
-                              href={item.href}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              class="inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.2em] font-medium text-neutral-300 hover:text-white transition-colors"
-                            >
-                              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                <path d={githubPath} />
-                              </svg>
-                              <span>{locale === 'en' ? 'VIEW REPO' : 'VER REPOSITORIO'}</span>
-                            </a>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  </>
-                )}
-              </div>
+          entries.map((item) => (
+            <li
+              class="relative pl-9 sm:pl-12"
+              data-reveal
+              style={`--reveal-delay: ${item.delay}ms`}
+            >
+              <span
+                class={`absolute left-2.5 top-7 sm:top-8 -translate-x-1/2 w-3.5 h-3.5 rounded-full border-2 bg-[#050505] ${item.category.dot}`}
+                aria-hidden="true"
+              />
 
-              <!-- Versión Móvil (Línea lateral continua) -->
-              <div class="flex md:hidden items-start pl-10 relative">
-                <div class="absolute left-4 top-6 -translate-x-1/2 w-3 h-3 rounded-full border border-white/40 bg-[#050505]" />
-                <div class="bg-neutral-950/70 border border-white/10 p-5 rounded-2xl w-full">
-                  <span class="inline-block text-[10px] font-mono uppercase tracking-[0.2em] text-neutral-400 bg-white/[0.04] border border-white/10 px-2.5 py-0.5 rounded-full mb-2">
+              <article class="group bg-neutral-900/60 border border-white/15 hover:border-white/30 rounded-2xl p-5 sm:p-7 transition-colors duration-300">
+                <div class="flex flex-wrap items-center gap-2.5 mb-3.5">
+                  <span
+                    class={`inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.18em] px-2.5 py-1 rounded-full border ${item.category.chip}`}
+                  >
+                    <Icon name={item.category.icon} size={13} />
+                    {item.label}
+                  </span>
+                  <span class="text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em] text-neutral-300 bg-white/[0.06] border border-white/15 px-2.5 py-1 rounded-full">
                     {item.date}
                   </span>
-                  <h3 class="font-serif text-base font-light text-white mb-2 tracking-wide">
-                    {item.title}
-                  </h3>
-                  <p class="text-neutral-400 text-xs font-light leading-relaxed mb-3">
-                    {item.description}
-                  </p>
-                  {item.hasLink && (
-                    <div class="pt-2.5 border-t border-white/10">
-                      <a
-                        href={item.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-[0.2em] font-medium text-neutral-300 hover:text-white transition-colors"
-                      >
-                        <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                          <path d={githubPath} />
-                        </svg>
-                        <span>{locale === 'en' ? 'VIEW REPO' : 'VER REPO'}</span>
-                      </a>
-                    </div>
-                  )}
                 </div>
-              </div>
-            </div>
+
+                <h3 class="font-serif text-lg sm:text-xl font-light text-white mb-2.5 tracking-wide">
+                  {item.title}
+                </h3>
+                <p class="text-neutral-300 text-sm sm:text-base font-light leading-relaxed mb-4">
+                  {item.description}
+                </p>
+
+                {item.hasLink && (
+                  <div class="pt-3.5 border-t border-white/15">
+                    <a
+                      href={item.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="btn btn-secondary btn-sm"
+                    >
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d={githubPath} />
+                      </svg>
+                      <span>{locale === 'en' ? 'VIEW REPO' : 'VER REPOSITORIO'}</span>
+                    </a>
+                  </div>
+                )}
+              </article>
+            </li>
           ))
         }
-      </div>
+      </ol>
     </div>
   </div>
 </section>

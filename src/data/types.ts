@@ -36,8 +36,11 @@ export interface Certificate {
   link: string;
 }
 
+export type JourneyCategory = 'education' | 'work' | 'research' | 'marketing';
+
 export interface JourneyEntry {
   id: number;
+  category: JourneyCategory;
   dateEs: string;
   dateEn: string;
   titleEs: string;

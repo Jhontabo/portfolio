@@ -50,7 +50,13 @@
     "title": "Professional Journey",
     "subtitle": "Timeline of education, academic representation, and hands-on experience.",
     "viewGithub": "View on GitHub",
-    "githubProfile": "Open my GitHub profile"
+    "githubProfile": "Open my GitHub profile",
+    "categories": {
+      "education": "Education",
+      "work": "Experience",
+      "research": "Research",
+      "marketing": "Marketing"
+    }
   },
   "footer": {
     "rights": "All rights reserved.",

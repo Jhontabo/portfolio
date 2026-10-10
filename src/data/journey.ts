@@ -3,6 +3,7 @@ import type { JourneyEntry } from './types';
 export const journeyTimeline: JourneyEntry[] = [
   {
     id: 1,
+    category: 'education',
     dateEs: '2021',
     dateEn: '2021',
     titleEs: 'Inicio en la Universidad Mariana',
@@ -14,6 +15,7 @@ export const journeyTimeline: JourneyEntry[] = [
   },
   {
     id: 2,
+    category: 'work',
     dateEs: 'Febrero - Mayo 2025',
     dateEn: 'February - May 2025',
     titleEs: 'Prácticas en hospital como desarrollador Flutter',
@@ -27,6 +29,7 @@ export const journeyTimeline: JourneyEntry[] = [
   },
   {
     id: 3,
+    category: 'research',
     dateEs: 'Mayo 2025',
     dateEn: 'May 2025',
     titleEs: 'Encuentro Departamental de Semilleros de Investigación',
@@ -38,6 +41,7 @@ export const journeyTimeline: JourneyEntry[] = [
   },
   {
     id: 4,
+    category: 'research',
     dateEs: 'Octubre 2025',
     dateEn: 'October 2025',
     titleEs: 'Encuentro Departamental de Semilleros de Investigación',
@@ -49,6 +53,7 @@ export const journeyTimeline: JourneyEntry[] = [
   },
   {
     id: 5,
+    category: 'work',
     dateEs: 'Agosto 2025 - Abril 2026',
     dateEn: 'August 2025 - April 2026',
     titleEs: 'Auxiliar de crédito en Cofinal',
@@ -60,6 +65,7 @@ export const journeyTimeline: JourneyEntry[] = [
   },
   {
     id: 6,
+    category: 'education',
     dateEs: 'Junio 2026',
     dateEn: 'June 2026',
     titleEs: 'Grado como Ingeniero de Sistemas',
@@ -71,6 +77,7 @@ export const journeyTimeline: JourneyEntry[] = [
   },
   {
     id: 7,
+    category: 'marketing',
     dateEs: 'Septiembre 2026',
     dateEn: 'September 2026',
     titleEs: 'Pitcher de marketing con Meta Ads en Valencia One',

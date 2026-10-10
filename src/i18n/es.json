@@ -50,7 +50,13 @@
     "title": "Ruta Profesional",
     "subtitle": "Línea de tiempo de formación, representación académica y experiencia aplicada.",
     "viewGithub": "Ver en GitHub",
-    "githubProfile": "Ir a mi perfil de GitHub"
+    "githubProfile": "Ir a mi perfil de GitHub",
+    "categories": {
+      "education": "Educación",
+      "work": "Experiencia",
+      "research": "Investigación",
+      "marketing": "Marketing"
+    }
   },
   "footer": {
     "rights": "Todos los derechos reservados.",
