@@ -11,55 +11,59 @@ const { locale } = Astro.props;
 
 <section
   id="home"
-  class="relative w-full min-h-[70svh] sm:min-h-[85svh] lg:h-[100svh] lg:min-h-[640px] flex items-center justify-center overflow-hidden bg-[#050505]"
+  class="relative w-full h-[100svh] min-h-[580px] flex items-center justify-center overflow-hidden bg-[#050505]"
 >
-  <!-- H1 accesible para motores de búsqueda y accesibilidad -->
-  <h1 class="sr-only">Jhon Tajumbina — Portafolio Oficial</h1>
-
-  <!-- 1. Banner con wrapper que adapta dimensiones exactas en cualquier dispositivo -->
-  <div class="hero-image-wrapper relative z-0 w-full flex items-center justify-center select-none">
-    <img
-      src="/Desing-final.webp"
-      alt="Jhon Tajumbina"
-      width="2400"
-      height="1260"
-      loading="eager"
-      fetchpriority="high"
-      decoding="sync"
-      class="hero-banner object-center pointer-events-none"
-    />
-
-    <!-- Fundido perimetral superior (suaviza el borde superior del banner con #050505) -->
+  <!-- Retrato cinemático con zoom e impacto visual centrado -->
+  <div class="relative z-0 w-full h-full flex items-center justify-center overflow-hidden">
+    <!-- Halo sutil de fondo para profundidad editorial -->
     <div
-      class="absolute inset-x-0 top-0 h-14 sm:h-20 md:h-28 bg-gradient-to-b from-[#050505] via-[#050505]/70 to-transparent pointer-events-none z-10"
+      class="absolute top-[42%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[340px] sm:w-[500px] md:w-[650px] h-[340px] sm:h-[500px] md:h-[650px] rounded-full bg-slate-800/20 blur-3xl pointer-events-none -z-10"
       aria-hidden="true"
     >
     </div>
 
-    <!-- Fundido perimetral inferior (suaviza el borde inferior del banner con #050505) -->
+    <img
+      src="/jhon-hero.webp"
+      alt="Jhon Tajumbina"
+      width="1000"
+      height="1160"
+      loading="eager"
+      fetchpriority="high"
+      decoding="sync"
+      class="h-[68svh] sm:h-[76svh] md:h-[82svh] lg:h-[86svh] w-auto max-w-[95vw] object-contain object-top select-none pointer-events-none translate-y-[-2%] sm:translate-y-0"
+    />
+
+    <!-- Fundido inferior hacia el fondo negro #050505 -->
     <div
-      class="absolute inset-x-0 bottom-0 h-16 sm:h-24 md:h-32 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent pointer-events-none z-10"
+      class="absolute inset-x-0 bottom-0 h-44 sm:h-56 md:h-64 bg-gradient-to-t from-[#050505] via-[#050505]/85 to-transparent pointer-events-none z-10"
       aria-hidden="true"
     >
     </div>
   </div>
 
-  <!-- Fundido superior global fijo bajo el header navbar -->
+  <!-- Fundido superior bajo el navbar fijo -->
   <div
-    class="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/80 to-transparent pointer-events-none z-10"
+    class="absolute inset-x-0 top-0 h-28 bg-gradient-to-b from-black/80 via-black/30 to-transparent pointer-events-none z-10"
     aria-hidden="true"
   >
+  </div>
+
+  <!-- Tipografía Serif mayúscula y cinematográfica superpuesta sobre el torso -->
+  <div class="absolute inset-x-0 bottom-14 sm:bottom-16 md:bottom-20 z-20 flex flex-col items-center justify-center text-center pointer-events-none px-4">
+    <h1 class="font-serif font-light text-4xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl tracking-[0.16em] sm:tracking-[0.22em] text-white uppercase select-none drop-shadow-[0_4px_30px_rgba(0,0,0,0.9)] max-w-6xl leading-[1.05]">
+      Jhon Tajumbina
+    </h1>
+    <p class="mt-2.5 sm:mt-3.5 text-[10px] sm:text-xs font-medium uppercase tracking-[0.3em] text-neutral-400 select-none">
+      {locale === 'en' ? 'Software Engineering & Digital Strategy' : 'Ingeniería de Sistemas & Estrategia Digital'}
+    </p>
   </div>
 
   <!-- Indicador discreto de scroll (Estilo editorial de alta gama) -->
   <a
     href="#about"
     aria-label={locale === 'en' ? 'Scroll down to about' : 'Desplazarse a sobre mí'}
-    class="absolute bottom-5 sm:bottom-7 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-1.5 text-neutral-400 hover:text-white transition-colors duration-300 pointer-events-auto group"
+    class="absolute bottom-3 sm:bottom-5 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center gap-1 text-neutral-400 hover:text-white transition-colors duration-300 pointer-events-auto group"
   >
-    <span class="text-[9px] uppercase tracking-[0.3em] font-medium text-neutral-400 group-hover:text-white transition-colors">
-      {locale === 'en' ? 'SCROLL' : 'DESCUBRIR'}
-    </span>
     <svg
       class="w-3.5 h-3.5 text-neutral-400 group-hover:text-white transition-transform group-hover:translate-y-0.5"
       viewBox="0 0 24 24"
@@ -72,33 +76,3 @@ const { locale } = Astro.props;
     </svg>
   </a>
 </section>
-
-<style>
-  .hero-image-wrapper {
-    height: auto;
-    max-width: 100%;
-  }
-
-  .hero-banner {
-    width: 100%;
-    height: auto;
-    max-height: 85vh;
-    object-fit: contain;
-    display: block;
-  }
-
-  /* En pantallas panorámicas (widescreen desktop/laptop): cubre toda la pantalla */
-  @media (min-aspect-ratio: 16/10) {
-    .hero-image-wrapper {
-      height: 100%;
-      width: 100%;
-    }
-
-    .hero-banner {
-      width: 100%;
-      height: 100%;
-      max-height: none;
-      object-fit: cover;
-    }
-  }
-</style>
