@@ -20,6 +20,7 @@ interface CategoryStyle {
   icon: string;
   chip: string;
   dot: string;
+  branch: string;
 }
 
 const categoryStyles: Record<JourneyCategory, CategoryStyle> = {
@@ -27,21 +28,25 @@ const categoryStyles: Record<JourneyCategory, CategoryStyle> = {
     icon: 'graduation-cap',
     chip: 'text-cyan-300 bg-cyan-400/10 border-cyan-400/30',
     dot: 'border-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.5)]',
+    branch: 'from-cyan-400/60',
   },
   work: {
     icon: 'briefcase',
     chip: 'text-sky-300 bg-sky-400/10 border-sky-400/30',
     dot: 'border-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.5)]',
+    branch: 'from-sky-400/60',
   },
   research: {
     icon: 'award',
     chip: 'text-amber-300 bg-amber-400/10 border-amber-400/30',
     dot: 'border-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.5)]',
+    branch: 'from-amber-400/60',
   },
   marketing: {
     icon: 'megaphone',
     chip: 'text-rose-300 bg-rose-400/10 border-rose-400/30',
     dot: 'border-rose-400 shadow-[0_0_12px_rgba(251,113,133,0.5)]',
+    branch: 'from-rose-400/60',
   },
 };
 
@@ -71,12 +76,20 @@ const entries = journeyTimeline.map((item, index) => {
       />
     </div>
 
-    <div class="relative mt-12 sm:mt-14">
+    <div class="relative mt-12 sm:mt-14" data-tree>
       <!-- Línea vertical de la ruta -->
       <div
         class="absolute left-2.5 top-3 bottom-3 w-[2px] bg-gradient-to-b from-white/30 via-white/20 to-white/5"
         aria-hidden="true"
       >
+        <!-- Relleno del tronco que crece con el scroll (solo desktop) -->
+        <div
+          data-tree-fill
+          class="absolute left-0 top-0 w-full bg-gradient-to-b from-white/70 via-white/40 to-white/20"
+          style="height: 0%"
+          aria-hidden="true"
+        >
+        </div>
       </div>
 
       <ol class="relative space-y-7 sm:space-y-9">
@@ -88,7 +101,13 @@ const entries = journeyTimeline.map((item, index) => {
               style={`--reveal-delay: ${item.delay}ms`}
             >
               <span
-                class={`absolute left-2.5 top-7 sm:top-8 -translate-x-1/2 w-3.5 h-3.5 rounded-full border-2 bg-[#050505] ${item.category.dot}`}
+                class={`tree-node absolute left-2.5 top-7 sm:top-8 -translate-x-1/2 w-3.5 h-3.5 rounded-full border-2 bg-[#050505] ${item.category.dot}`}
+                aria-hidden="true"
+              />
+
+              <!-- Ramita hacia la tarjeta (solo desktop) -->
+              <span
+                class={`tree-branch hidden md:block absolute left-2.5 top-[34px] sm:top-[38px] h-[2px] w-8 sm:w-10 origin-left bg-gradient-to-r ${item.category.branch} to-transparent`}
                 aria-hidden="true"
               />
 
@@ -135,3 +154,39 @@ const entries = journeyTimeline.map((item, index) => {
     </div>
   </div>
 </section>
+
+<style>
+  /* Animación de árbol: solo en versión web, el móvil queda intacto */
+  @media (min-width: 768px) {
+    .tree-branch {
+      transform: scaleX(0);
+      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    li.is-visible .tree-branch {
+      transform: scaleX(1);
+    }
+
+    li.is-visible .tree-node {
+      animation: tree-pop 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    }
+  }
+
+  @keyframes tree-pop {
+    0% {
+      scale: 0.3;
+    }
+    60% {
+      scale: 1.35;
+    }
+    100% {
+      scale: 1;
+    }
+  }
+</style>
+
+<script>
+  import { initJourneyTree } from '../../scripts/journey-tree';
+
+  initJourneyTree();
+</script>
