@@ -61,6 +61,10 @@ const entries = journeyTimeline.map((item, index, arr) => {
     hasLink: item.linkType === 'github' || !!item.link,
   };
 });
+
+// Fecha de hoy (mes + año) para la insignia del trabajo actual.
+const now = new Date();
+const todayLabel = `${new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'es-CO', { month: 'long' }).format(now)} ${now.getFullYear()}`;
 ---
 
 <section
@@ -76,8 +80,15 @@ const entries = journeyTimeline.map((item, index, arr) => {
       />
     </div>
 
-    <!-- Origen de la rama: círculo centrado -->
+    <!-- Banderín del primer año, encima del círculo origen -->
     <div class="flex justify-center mt-12 sm:mt-14" data-reveal>
+      <span class="flag-marker font-mono text-sm sm:text-base md:text-lg font-semibold tracking-[0.25em] text-black bg-gradient-to-b from-amber-300 to-amber-500 px-8 md:px-12 py-2.5 md:py-3 drop-shadow-[0_0_18px_rgba(234,179,8,0.35)]">
+        {entries[0].year}
+      </span>
+    </div>
+
+    <!-- Origen de la rama: círculo centrado -->
+    <div class="flex justify-center mt-8 sm:mt-10" data-reveal>
       <button
         type="button"
         data-journey-toggle
@@ -231,6 +242,15 @@ const entries = journeyTimeline.map((item, index, arr) => {
                     <span class={`font-serif ${item.isLast ? 'text-[17px]' : 'text-xs'} leading-snug font-light text-white ${item.isLast ? '' : 'line-clamp-3'}`}>
                       {item.short}
                     </span>
+                    {item.isLast && (
+                      <span class="inline-flex items-center gap-1.5 rounded-full border border-[#4ade80]/50 bg-[#4ade80]/10 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.2em] text-[#86efac]">
+                        <span class="relative flex h-1.5 w-1.5" aria-hidden="true">
+                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4ade80] opacity-75"></span>
+                          <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#4ade80]"></span>
+                        </span>
+                        {locale === 'en' ? `Now · ${todayLabel}` : `Actual · ${todayLabel}`}
+                      </span>
+                    )}
                   </button>
                   </div>
                   <div id={item.desktopPanelId} class="expandable w-full max-w-[280px]" data-journey-panel>
@@ -279,8 +299,19 @@ const entries = journeyTimeline.map((item, index, arr) => {
                   class="w-full flex items-center justify-between gap-4 text-left"
                 >
                   <span>
-                    <span class="inline-block text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em] text-neutral-300 bg-white/[0.06] border border-white/15 px-2.5 py-1 rounded-full mb-2.5">
-                      {item.date}
+                    <span class="inline-flex flex-wrap items-center gap-2 mb-2.5">
+                      <span class="inline-block text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em] text-neutral-300 bg-white/[0.06] border border-white/15 px-2.5 py-1 rounded-full">
+                        {item.date}
+                      </span>
+                      {item.isLast && (
+                        <span class="inline-flex items-center gap-1.5 rounded-full border border-[#4ade80]/50 bg-[#4ade80]/10 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-[#86efac]">
+                          <span class="relative flex h-1.5 w-1.5" aria-hidden="true">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4ade80] opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#4ade80]"></span>
+                          </span>
+                          {locale === 'en' ? `Now · ${todayLabel}` : `Actual · ${todayLabel}`}
+                        </span>
+                      )}
                     </span>
                     <h3 class="font-serif text-lg sm:text-xl font-light text-white tracking-wide">
                       {item.title}
