@@ -1,5 +1,6 @@
 ---
 import LanguageSwitcher from '../LanguageSwitcher.astro';
+import ContactMenu from '../ui/ContactMenu.astro';
 import { personalInfo } from '../../data/personal';
 import type { Locale, Messages } from '../../i18n';
 
@@ -24,7 +25,7 @@ const allNavLinks = [...leftLinks, ...rightLinks];
 ---
 
 <header
-  class="fixed top-0 left-0 right-0 z-50 w-full bg-gradient-to-b from-black/80 via-black/40 to-transparent transition-all duration-300 pointer-events-auto"
+  class="fixed top-0 left-0 right-0 z-50 w-full bg-black/70 backdrop-blur-md border-b border-white/10 transition-all duration-300 pointer-events-auto"
 >
   <nav
     data-navbar
@@ -37,7 +38,7 @@ const allNavLinks = [...leftLinks, ...rightLinks];
         leftLinks.map((link) => (
           <a
             href={link.href}
-            class="text-[11px] font-medium uppercase tracking-[0.25em] text-neutral-400 hover:text-white transition-colors duration-200"
+            class="text-xs font-semibold uppercase tracking-[0.25em] text-white hover:text-neutral-300 transition-colors duration-200"
           >
             {link.name}
           </a>
@@ -49,7 +50,7 @@ const allNavLinks = [...leftLinks, ...rightLinks];
     <div class="flex items-center justify-center text-center">
       <a
         href="#home"
-        class="font-serif text-xs sm:text-sm tracking-[0.25em] sm:tracking-[0.28em] uppercase text-neutral-200 hover:text-white transition-colors duration-200 select-none font-normal"
+        class="font-serif text-sm sm:text-base tracking-[0.25em] sm:tracking-[0.28em] uppercase text-white hover:text-neutral-200 transition-colors duration-200 select-none font-normal"
       >
         JHON TAJUMBINA
       </a>
@@ -60,23 +61,27 @@ const allNavLinks = [...leftLinks, ...rightLinks];
       {
         rightLinks.map((link) =>
           link.href.startsWith('mailto:') ? (
-            <a
-              href={link.href}
-              class="btn btn-secondary btn-sm"
-            >
-              {link.name}
-            </a>
+            <ContactMenu locale={locale} align="right">
+              <button
+                type="button"
+                aria-haspopup="true"
+                class="btn btn-secondary btn-sm"
+                slot="trigger"
+              >
+                {link.name}
+              </button>
+            </ContactMenu>
           ) : (
             <a
               href={link.href}
-              class="text-[11px] font-medium uppercase tracking-[0.25em] text-neutral-400 hover:text-white transition-colors duration-200"
+              class="text-xs font-semibold uppercase tracking-[0.25em] text-white hover:text-neutral-300 transition-colors duration-200"
             >
               {link.name}
             </a>
           )
         )
       }
-      <div class="h-3 w-px bg-white/10" aria-hidden="true"></div>
+      <div class="h-3 w-px bg-white/25" aria-hidden="true"></div>
       <LanguageSwitcher locale={locale} />
     </div>
 
@@ -87,7 +92,7 @@ const allNavLinks = [...leftLinks, ...rightLinks];
       aria-expanded="false"
       aria-controls="nav-drawer"
       aria-label="Abrir menú de navegación"
-      class="md:hidden text-neutral-300 hover:text-white p-2 transition-colors focus:outline-none"
+      class="md:hidden text-white hover:text-neutral-300 p-2 transition-colors focus:outline-none"
     >
       <span data-nav-icon="menu" class="flex flex-col gap-1.5 w-5 justify-center items-end" aria-hidden="true">
         <span class="w-5 h-[1.5px] bg-neutral-300"></span>
@@ -109,12 +114,25 @@ const allNavLinks = [...leftLinks, ...rightLinks];
         {
           allNavLinks.map((link) => (
             <li>
-              <a
-                href={link.href}
-                class="font-serif text-xs uppercase tracking-[0.28em] text-neutral-300 hover:text-white transition-colors py-1 block"
-              >
-                {link.name}
-              </a>
+              {link.href.startsWith('mailto:') ? (
+                <ContactMenu locale={locale}>
+                  <button
+                    type="button"
+                    aria-haspopup="true"
+                    class="font-serif text-xs uppercase tracking-[0.28em] text-neutral-300 hover:text-white transition-colors py-1 block"
+                    slot="trigger"
+                  >
+                    {link.name}
+                  </button>
+                </ContactMenu>
+              ) : (
+                <a
+                  href={link.href}
+                  class="font-serif text-xs uppercase tracking-[0.28em] text-neutral-300 hover:text-white transition-colors py-1 block"
+                >
+                  {link.name}
+                </a>
+              )}
             </li>
           ))
         }
