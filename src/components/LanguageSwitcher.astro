@@ -1,5 +1,6 @@
 ---
 import Icon from './ui/Icon.astro';
+import FlagIcon from './ui/FlagIcon.astro';
 import type { Locale } from '../i18n';
 
 export interface Props {
@@ -9,9 +10,9 @@ export interface Props {
 
 const { locale, label } = Astro.props;
 
-const options: { code: Locale; name: string; flag: string }[] = [
-  { code: 'es', name: 'Español', flag: '🇨🇴' },
-  { code: 'en', name: 'English', flag: '🇺🇸' },
+const options: { code: Locale; name: string }[] = [
+  { code: 'es', name: 'Español' },
+  { code: 'en', name: 'English' },
 ];
 
 const current = options.find((o) => o.code === locale) ?? options[0];
@@ -28,9 +29,9 @@ const current = options.find((o) => o.code === locale) ?? options[0];
       aria-label="Select language"
       class="flex items-center gap-1.5 text-neutral-200 hover:text-white transition-colors text-xs font-semibold tracking-[0.25em] uppercase py-1 px-1.5 rounded focus:outline-none"
     >
-      <span class="text-xs" aria-hidden="true">{current.flag}</span>
+      <FlagIcon code={current.code} class="w-5 h-auto rounded-[3px] shadow-sm" />
       <span>{current.code}</span>
-      <Icon name="chevron-down" size={10} class="transition-transform duration-200 text-neutral-500" data-lang-chevron />
+      <Icon name="chevron-down" size={14} strokeWidth={2.5} class="transition-transform duration-200 text-neutral-200" data-lang-chevron />
     </button>
 
     <div
@@ -51,9 +52,7 @@ const current = options.find((o) => o.code === locale) ?? options[0];
               option.code === locale && 'text-white bg-white/[0.08]',
             ]}
           >
-            <span class="text-xs" aria-hidden="true">
-              {option.flag}
-            </span>
+            <FlagIcon code={option.code} class="w-5 h-auto rounded-[3px] shadow-sm shrink-0" />
             <span>{option.name}</span>
           </a>
         ))

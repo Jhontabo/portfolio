@@ -1,0 +1,43 @@
+---
+import type { Locale } from '../../i18n';
+
+export interface Props {
+  code: Locale;
+  class?: string;
+}
+
+const { code, class: className } = Astro.props;
+---
+
+{
+  code === 'es' ? (
+    <svg
+      viewBox="0 0 20 14"
+      class={className}
+      aria-hidden="true"
+      focusable="false"
+      role="img"
+    >
+      <rect width="20" height="14" rx="2" fill="#AA151B" />
+      <rect y="3.5" width="20" height="7" fill="#F1BF00" />
+    </svg>
+  ) : (
+    <svg
+      viewBox="0 0 20 14"
+      class={className}
+      aria-hidden="true"
+      focusable="false"
+      role="img"
+    >
+      <rect width="20" height="14" rx="2" fill="#FFFFFF" />
+      {Array.from({ length: 7 }).map((_, i) => (
+        <rect y={i * 2} width="20" height="1" fill={i % 2 === 0 ? '#B31942' : '#FFFFFF'} />
+      ))}
+      <rect width="9" height="7" rx="1" fill="#0A3161" />
+      {Array.from({ length: 12 }).map((_, i) => (
+        <circle cx={1.3 + (i % 4) * 2.1} cy={1.5 + Math.floor(i / 4) * 2} r="0.55" fill="#FFFFFF" />
+      ))}
+      <rect width="20" height="14" rx="2" fill="none" stroke="rgba(0,0,0,0.2)" stroke-width="0.5" />
+    </svg>
+  )
+}
