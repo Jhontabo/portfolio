@@ -7,6 +7,8 @@ export interface Props {
   variant?: 'window' | 'plain';
   panelClass?: string;
   bodyClass?: string;
+  closeLabel?: string;
+  expandedLabel?: string;
 }
 
 const {
@@ -15,6 +17,8 @@ const {
   variant = 'window',
   panelClass = 'w-full max-w-4xl h-[85vh] bg-[#0a0a0a] rounded-2xl border border-white/10 overflow-hidden flex flex-col shadow-2xl',
   bodyClass = '',
+  closeLabel = 'Cerrar modal',
+  expandedLabel = 'Vista ampliada',
 } = Astro.props;
 
 const labelledBy = `modal-title-${id}`;
@@ -24,7 +28,7 @@ const labelledBy = `modal-title-${id}`;
   {id}
   class="modal fixed inset-0 z-50 m-0 h-full max-h-none w-full max-w-none bg-transparent p-4 backdrop:bg-transparent"
   aria-labelledby={title ? labelledBy : undefined}
-  aria-label={title ? undefined : 'Vista ampliada'}
+  aria-label={title ? undefined : expandedLabel}
 >
   <div
     class:list={[
@@ -42,7 +46,7 @@ const labelledBy = `modal-title-${id}`;
             type="button"
             data-modal-close
             class="shrink-0 text-neutral-400 hover:text-white transition-colors p-1"
-            aria-label="Cerrar modal"
+            aria-label={closeLabel}
           >
             <Icon name="x" size={16} />
           </button>
@@ -56,7 +60,7 @@ const labelledBy = `modal-title-${id}`;
           type="button"
           data-modal-close
           class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-black/60 border border-white/10 text-white/80 hover:text-white flex items-center justify-center text-lg leading-none transition-all"
-          aria-label="Cerrar"
+          aria-label={closeLabel}
         >
           <Icon name="x" size={16} />
         </button>

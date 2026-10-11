@@ -63,7 +63,9 @@ const current = options.find((o) => o.code === locale) ?? options[0];
 </div>
 
 <script>
-  document.querySelectorAll<HTMLElement>('[data-lang-switcher]').forEach((switcher) => {
+  if (!document.documentElement.dataset.langSwitcherInit) {
+    document.documentElement.dataset.langSwitcherInit = 'true';
+    document.querySelectorAll<HTMLElement>('[data-lang-switcher]').forEach((switcher) => {
     const toggle = switcher.querySelector<HTMLButtonElement>('[data-lang-toggle]');
     const menu = switcher.querySelector<HTMLElement>('[data-lang-menu]');
     const chevron = switcher.querySelector<HTMLElement>('[data-lang-chevron]');
@@ -111,4 +113,5 @@ const current = options.find((o) => o.code === locale) ?? options[0];
       }
     });
   });
+  }
 </script>

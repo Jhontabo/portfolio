@@ -39,6 +39,7 @@ const thumb = getThumbnailUrl(cert.link);
             height={300}
             loading="lazy"
             decoding="async"
+            referrerpolicy="no-referrer"
             class="w-full max-h-56 object-contain group-hover:scale-[1.02] transition-transform duration-500"
           />
         </div>
@@ -67,13 +68,19 @@ const thumb = getThumbnailUrl(cert.link);
     </div>
   </div>
 
-  <Modal id={modalId} title={name} bodyClass="flex-1 min-h-0 bg-neutral-900">
+  <Modal
+    id={modalId}
+    title={name}
+    bodyClass="flex-1 min-h-0 bg-neutral-900"
+    closeLabel={locale === 'en' ? 'Close dialog' : 'Cerrar modal'}
+  >
     <iframe
-      src={getPreviewUrl(cert.link) ?? cert.link}
+      data-deferred-src={getPreviewUrl(cert.link) ?? cert.link}
       title={name}
       class="w-full h-full min-h-0 flex-1 border-0"
       allow="autoplay"
       loading="lazy"
+      referrerpolicy="no-referrer"
     ></iframe>
   </Modal>
 </div>

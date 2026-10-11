@@ -49,10 +49,11 @@ const options = [
 ];
 ---
 
-<div class="group relative inline-flex">
+<div class="group relative inline-flex" data-contact-menu>
   <slot name="trigger" />
   <div
-    class={`invisible opacity-0 ${hiddenTranslate} group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 absolute ${positionClass} ${alignClass} w-64 rounded-2xl border border-white/15 bg-[#0a0a0a]/95 backdrop-blur-xl shadow-2xl p-2 z-30 transition-all duration-300 flex flex-col gap-1.5`}
+    data-contact-panel
+    class={`invisible opacity-0 ${hiddenTranslate} group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 absolute ${positionClass} ${alignClass} w-64 rounded-2xl border border-white/15 bg-[#0a0a0a]/95 backdrop-blur-md shadow-2xl p-2 z-30 transition-all duration-300 flex flex-col gap-1.5`}
   >
     {
       options.map((option) => (
@@ -89,3 +90,41 @@ const options = [
   }
 </div>
 </div>
+
+<script>
+  // Menú operable por click/teclado (además de hover): necesario en táctil y lectores.
+  if (!document.documentElement.dataset.contactMenuInit) {
+    document.documentElement.dataset.contactMenuInit = 'true';
+    document.addEventListener('click', (event) => {
+      const menus = [...document.querySelectorAll<HTMLElement>('[data-contact-menu]')];
+      const clickedTrigger = (event.target as HTMLElement).closest<HTMLElement>(
+        '[data-contact-menu] [data-contact-trigger]',
+      );
+      menus.forEach((menu) => {
+        const panel = menu.querySelector<HTMLElement>('[data-contact-panel]');
+        const trigger = menu.querySelector<HTMLElement>('[data-contact-trigger]');
+        if (!panel || !trigger) return;
+        const isOwner = clickedTrigger && menu.contains(clickedTrigger);
+        const shouldOpen = !!isOwner && panel.classList.contains('invisible');
+        if (shouldOpen) {
+          panel.classList.remove('invisible', 'opacity-0');
+          trigger.setAttribute('aria-expanded', 'true');
+        } else if (!menu.contains(event.target as Node) || isOwner) {
+          panel.classList.add('invisible', 'opacity-0');
+          trigger.setAttribute('aria-expanded', 'false');
+        }
+      });
+    });
+    document.addEventListener('keydown', (event) => {
+      if (event.key !== 'Escape') return;
+      document.querySelectorAll<HTMLElement>('[data-contact-menu]').forEach((menu) => {
+        menu.querySelector('[data-contact-panel]')?.classList.add('invisible', 'opacity-0');
+        menu.querySelector('[data-contact-trigger]')?.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+  document.querySelectorAll<HTMLElement>('[data-contact-menu] [data-contact-trigger]').forEach((trigger) => {
+    if (!trigger.hasAttribute('aria-expanded')) trigger.setAttribute('aria-expanded', 'false');
+    if (!trigger.hasAttribute('aria-haspopup')) trigger.setAttribute('aria-haspopup', 'true');
+  });
+</script>

@@ -14,6 +14,8 @@ export function getThumbnailUrl(link: string): string | null {
 
 export function getDriveImageUrl(link: string): string {
   const id = getDriveId(link);
-  if (id) return `https://drive.google.com/uc?export=view&id=${id}`;
+  // thumbnail con sz grande: mismo archivo, sin el endpoint uc?export=view (deprecado),
+  // w1600 da margen retina para el modal de 1200px sin reescalar hacia arriba.
+  if (id) return `https://drive.google.com/thumbnail?id=${id}&sz=w1600`;
   return link;
 }

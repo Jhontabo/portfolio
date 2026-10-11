@@ -6,7 +6,13 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://jhon-tajumbina.vercel.app',
   trailingSlash: 'always',
-  integrations: [sitemap({ filter: (page) => !page.includes('/404') })],
+  integrations: [
+    sitemap({
+      // '/404' no existe como ruta real y '/' es un redirect noindex: fuera del sitemap
+      filter: (page) =>
+        !page.includes('/404') && page !== 'https://jhon-tajumbina.vercel.app/',
+    }),
+  ],
   vite: { plugins: [tailwindcss()] },
   build: { format: 'directory' },
   fonts: [
@@ -31,15 +37,6 @@ export default defineConfig({
     {
       name: 'Cinzel',
       cssVariable: '--font-cinzel',
-      provider: fontProviders.google(),
-      weights: [400, 500, 600, 700],
-      styles: ['normal'],
-      subsets: ['latin'],
-      display: 'swap',
-    },
-    {
-      name: 'Playfair Display',
-      cssVariable: '--font-playfair',
       provider: fontProviders.google(),
       weights: [400, 500, 600, 700],
       styles: ['normal'],

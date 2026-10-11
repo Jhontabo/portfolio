@@ -13,16 +13,26 @@ function lockScroll(locked: boolean): void {
 }
 
 export function initModals(): void {
+  if (document.documentElement.dataset.modalsInit === 'true') return;
+  document.documentElement.dataset.modalsInit = 'true';
+
   const dialogs = document.querySelectorAll<HTMLDialogElement>('dialog.modal');
   if (dialogs.length === 0) return;
 
   const openers = document.querySelectorAll<HTMLElement>('[data-modal-open]');
   const closers = document.querySelectorAll<HTMLElement>('[data-modal-close]');
+  const lastOpener = new WeakMap<HTMLDialogElement, HTMLElement>();
 
-  const open = (id: string): void => {
+  const open = (id: string, opener?: HTMLElement): void => {
     const dialog = document.getElementById(id) as HTMLDialogElement | null;
     if (!dialog) return;
+    if (opener) lastOpener.set(dialog, opener);
+    // Carga diferida del visor de Drive: evita 8 iframes precargados
+    const pending = dialog.querySelector<HTMLIFrameElement>('iframe[data-deferred-src]');
+    if (pending && !pending.src) pending.src = pending.dataset.deferredSrc ?? '';
     if (!dialog.open) dialog.showModal();
+    const firstFocus = dialog.querySelector<HTMLElement>('[data-modal-close]');
+    (firstFocus ?? dialog).focus();
     lockScroll(true);
   };
 
@@ -35,7 +45,7 @@ export function initModals(): void {
     if (!target) return;
     opener.addEventListener('click', (event) => {
       event.preventDefault();
-      open(target);
+      open(target, opener);
     });
   });
 
@@ -53,6 +63,8 @@ export function initModals(): void {
 
     dialog.addEventListener('close', () => {
       if (!document.querySelector('dialog.modal[open]')) lockScroll(false);
+      // Devuelve el foco al botón que abrió el modal (a11y)
+      lastOpener.get(dialog)?.focus({ preventScroll: true });
     });
   });
 
