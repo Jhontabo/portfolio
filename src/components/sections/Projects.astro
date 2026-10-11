@@ -55,6 +55,7 @@ const githubPath =
                       height={420}
                       loading="lazy"
                       decoding="async"
+                      referrerpolicy="no-referrer"
                       class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
                     <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent opacity-60" />
@@ -116,13 +117,19 @@ const githubPath =
               </div>
 
               {image && (
-                <Modal id={modalId} variant="plain">
+                <Modal
+                  id={modalId}
+                  variant="plain"
+                  closeLabel={locale === 'en' ? 'Close dialog' : 'Cerrar modal'}
+                  expandedLabel={name}
+                >
                   <img
                     src={image}
                     alt={name}
                     width={1200}
                     height={800}
                     decoding="async"
+                    referrerpolicy="no-referrer"
                     class="max-h-[85vh] max-w-full object-contain shadow-2xl rounded-lg"
                   />
                 </Modal>
@@ -137,31 +144,6 @@ const githubPath =
 
 <script>
   import { initModals } from '../../scripts/modal';
-  import { hintTour, isEnglish } from '../../scripts/hint';
 
   initModals();
-
-  const en = isEnglish();
-  hintTour('portfolio', {
-    key: 'jtour-projects-v1',
-    doneText: en ? 'Got it' : 'Entendido',
-    steps: [
-      {
-        getTarget: () =>
-          document.querySelector<HTMLElement>('#portfolio [data-modal-open]'),
-        title: en ? 'Zoom in' : 'Ampliar',
-        description: en
-          ? 'Click the image to see it bigger.'
-          : 'Haz clic en la imagen para verla en grande.',
-      },
-      {
-        getTarget: () =>
-          document.querySelector<HTMLElement>('#portfolio [data-project-code]'),
-        title: en ? 'Source code' : 'Código fuente',
-        description: en
-          ? 'Check the source code on GitHub.'
-          : 'Mira el código fuente en GitHub.',
-      },
-    ],
-  });
 </script>

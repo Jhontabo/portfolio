@@ -66,13 +66,6 @@ const entries = journeyTimeline.map((item, index, arr) => {
 <section
   id="journey"
   class="py-24 sm:py-32 bg-[#050505] overflow-hidden scroll-mt-24 border-t border-white/5"
-  data-tour-title={locale === 'en' ? 'Explore my journey' : 'Explora mi ruta'}
-  data-tour-desc={
-    locale === 'en'
-      ? 'Click the gold circles to see each stage in detail.'
-      : 'Haz clic en los círculos dorados para ver el detalle de cada etapa.'
-  }
-  data-tour-done={locale === 'en' ? 'Got it' : 'Entendido'}
 >
   <div class="max-w-3xl mx-auto px-6 sm:px-8">
     <div data-reveal>
@@ -410,10 +403,8 @@ const entries = journeyTimeline.map((item, index, arr) => {
     initOriginConnector,
     initSnakePath,
   } from '../../scripts/journey-expand';
-  import { initJourneyTour } from '../../scripts/journey-tour';
 
   initJourneyExpand();
   initOriginConnector();
   initSnakePath();
-  initJourneyTour();
 </script>

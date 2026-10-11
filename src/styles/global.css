@@ -1,46 +1,4 @@
 @import 'tailwindcss';
-@import 'driver.js/dist/driver.css';
-
-/* Tour guiado (driver.js) en blanco profesional */
-.jtour-popover.driver-popover {
-  background-color: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 14px;
-  color: #111111;
-  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.55);
-}
-
-.jtour-popover .driver-popover-title {
-  color: #111111;
-  font-family: var(--font-cinzel, 'Cinzel', serif);
-  font-size: 15px;
-  letter-spacing: 0.08em;
-}
-
-.jtour-popover .driver-popover-description {
-  color: #4b5563;
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-.jtour-popover .driver-popover-close-btn {
-  color: #9ca3af;
-}
-
-.jtour-popover .driver-popover-close-btn:hover {
-  color: #111111;
-}
-
-.jtour-popover .driver-popover-footer button {
-  background-color: #111111;
-  border-color: #111111;
-  color: #ffffff;
-  text-shadow: none;
-}
-
-.jtour-popover .driver-popover-arrow {
-  border-color: #ffffff;
-}
 
 :root {
   --background: #050505;
@@ -59,12 +17,11 @@
   --color-surface: var(--surface);
   --font-sans: var(--font-sora, system-ui);
   --font-mono: var(--font-space-grotesk, ui-monospace);
-  --font-serif: var(--font-cinzel, var(--font-playfair, 'Cinzel', 'Playfair Display', Georgia, serif));
-  --font-playfair: var(--font-playfair, 'Playfair Display', Georgia, serif);
+  --font-serif: var(--font-cinzel, 'Cinzel', Georgia, serif);
   --font-cinzel: var(--font-cinzel, 'Cinzel', serif);
 }
 
-* {
+html {
   scroll-behavior: smooth;
 }
 
@@ -94,51 +51,6 @@ body {
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-}
-
-.hypr-gradient-border {
-  border-color: rgba(255, 255, 255, 0.15);
-}
-
-/* Luxury Editorial Cards */
-.tiling-window {
-  background: rgba(12, 12, 12, 0.75);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(16px);
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow: hidden;
-}
-
-.tiling-window:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.8);
-}
-
-.tiling-window.active-cyan,
-.tiling-window.active-purple,
-.tiling-window.active-blue {
-  border-color: rgba(255, 255, 255, 0.12);
-}
-
-/* Editorial Minimalist Buttons */
-.glow-btn-cyan,
-.glow-btn-purple {
-  position: relative;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  color: #fff;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.glow-btn-cyan:hover,
-.glow-btn-purple:hover {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
-  transform: translateY(-1px);
 }
 
 /* CTA Buttons (mayor contraste sobre fondo oscuro) */
@@ -233,12 +145,6 @@ body {
   }
 }
 
-/* Accent Grid / Dot Effects */
-.dot-grid {
-  background-size: 24px 24px;
-  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-}
-
 /* Hide scrollbar */
 @utility scrollbar-hide {
   -ms-overflow-style: none;
@@ -246,23 +152,6 @@ body {
   &::-webkit-scrollbar {
     display: none;
   }
-}
-
-/* Navbar pill */
-.navbar-pill {
-  background: rgba(11, 12, 16, 0.4);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-  transition:
-    background 0.3s ease,
-    border-color 0.3s ease,
-    box-shadow 0.3s ease;
-}
-
-.navbar-pill.is-scrolled {
-  background: rgba(11, 12, 16, 0.8);
-  border-color: rgba(0, 229, 208, 0.2);
-  box-shadow: 0 10px 30px rgba(0, 229, 208, 0.05);
 }
 
 /* Reveal on scroll */
@@ -302,28 +191,6 @@ body {
 
 .animate-nav-drop {
   animation: nav-drop 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-}
-
-@keyframes fade-in-left {
-  from {
-    opacity: 0;
-    transform: translateX(-30px);
-  }
-}
-
-@keyframes fade-in-right {
-  from {
-    opacity: 0;
-    transform: translateX(30px);
-  }
-}
-
-.animate-fade-in-left {
-  animation: fade-in-left 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) both;
-}
-
-.animate-fade-in-right {
-  animation: fade-in-right 0.7s cubic-bezier(0.2, 0.8, 0.2, 1) 0.2s both;
 }
 
 @keyframes drawer-in {
