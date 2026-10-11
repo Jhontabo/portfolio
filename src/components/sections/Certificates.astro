@@ -39,14 +39,6 @@ const visible = certificates.slice(0, INITIAL_CERT_COUNT);
         href={certificatesFolderUrl}
         target="_blank"
         rel="noopener noreferrer"
-        data-cert-folder
-        data-tour-title={locale === 'en' ? 'Everything in one place' : 'Todo en un solo lugar'}
-        data-tour-desc={
-          locale === 'en'
-            ? 'Open the Drive folder with the rest of my certifications.'
-            : 'Abre la carpeta de Drive con el resto de mis certificaciones.'
-        }
-        data-tour-done={locale === 'en' ? 'Got it' : 'Entendido'}
         class="folder-cta group relative w-full sm:w-auto sm:min-w-[560px] flex items-center gap-6 bg-[#38bdf8]/[0.06] border border-[#38bdf8]/40 hover:border-[#38bdf8] rounded-2xl px-8 sm:px-10 py-7 sm:py-8 transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_60px_rgba(56,189,248,0.28)] overflow-hidden"
       >
         <span
@@ -139,73 +131,7 @@ const visible = certificates.slice(0, INITIAL_CERT_COUNT);
 </style>
 
 <script>
-  import { driver } from 'driver.js';
   import { initModals } from '../../scripts/modal';
 
   initModals();
-
-  // Tour de un paso hacia la carpeta: una sola vez, cuando entra en pantalla.
-  const folder = document.querySelector<HTMLElement>('[data-cert-folder]');
-  const KEY = 'jtour-cert-folder-v1';
-  let seen = false;
-  try {
-    seen = localStorage.getItem(KEY) === '1';
-  } catch {
-    seen = false;
-  }
-  const mark = (): void => {
-    try {
-      localStorage.setItem(KEY, '1');
-    } catch {
-      /* almacenamiento no disponible */
-    }
-  };
-
-  if (folder && !seen) {
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduceMotion) {
-      mark();
-    } else {
-      const show = (): void => {
-        if (!folder || folder.getBoundingClientRect().width === 0) {
-          mark();
-          return;
-        }
-        driver({
-          popoverClass: 'jtour-popover',
-          stagePadding: 8,
-          allowClose: true,
-          showProgress: false,
-          doneBtnText: folder.getAttribute('data-tour-done') ?? 'OK',
-          onDestroyed: mark,
-          steps: [
-            {
-              element: folder,
-              popover: {
-                title: folder.getAttribute('data-tour-title') ?? '',
-                description: folder.getAttribute('data-tour-desc') ?? '',
-                side: 'top',
-                align: 'center',
-              },
-            },
-          ],
-        }).drive();
-      };
-      if ('IntersectionObserver' in window) {
-        const io = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (!entry.isIntersecting) return;
-              io.disconnect();
-              window.setTimeout(show, 600);
-            });
-          },
-          { threshold: 0.4 },
-        );
-        io.observe(folder);
-      } else {
-        show();
-      }
-    }
-  }
 </script>
