@@ -46,6 +46,7 @@ const roles = t.hero.roles;
             <button
               type="button"
               aria-haspopup="true"
+              data-contact-trigger
               class="btn btn-secondary"
               slot="trigger"
             >
@@ -96,3 +97,18 @@ const roles = t.hero.roles;
     </div>
   </div>
 </section>
+
+<script>
+  import { hintOnce, isEnglish } from '../../scripts/hint';
+
+  const en = isEnglish();
+  hintOnce('about', {
+    key: 'jtour-contact-v1',
+    getTarget: () => document.querySelector<HTMLElement>('#about [data-contact-trigger]'),
+    title: en ? 'Contact me' : 'Contáctame',
+    description: en
+      ? 'Hover or tap to choose: Instagram, LinkedIn or email.'
+      : 'Pasa el cursor o toca para elegir: Instagram, LinkedIn o correo.',
+    doneText: en ? 'Got it' : 'Entendido',
+  });
+</script>

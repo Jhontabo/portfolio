@@ -73,7 +73,20 @@ const hidden = certificates.slice(INITIAL_CERT_COUNT);
 <script>
   import { initCertificates } from '../../scripts/certificates';
   import { initModals } from '../../scripts/modal';
+  import { hintOnce, isEnglish } from '../../scripts/hint';
 
   initCertificates();
   initModals();
+
+  const en = isEnglish();
+  hintOnce('certificates', {
+    key: 'jtour-certs-v1',
+    getTarget: () =>
+      document.querySelector<HTMLElement>('#certificates [data-cert-toggle]'),
+    title: en ? 'There is more' : 'Hay más',
+    description: en
+      ? 'Click to see all certificates.'
+      : 'Pulsa para ver todos los certificados.',
+    doneText: en ? 'Got it' : 'Entendido',
+  });
 </script>

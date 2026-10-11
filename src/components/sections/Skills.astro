@@ -103,6 +103,18 @@ const categoryIcons: Record<SkillCategory, string> = {
 
 <script>
   import { initSkills } from '../../scripts/skills';
+  import { hintOnce, isEnglish } from '../../scripts/hint';
 
   initSkills();
+
+  const en = isEnglish();
+  hintOnce('skills', {
+    key: 'jtour-skills-v1',
+    getTarget: () => document.querySelector<HTMLElement>('#skills [data-skills-toggle]'),
+    title: en ? 'See more' : 'Ver más',
+    description: en
+      ? 'Expand each category to see all skills.'
+      : 'Despliega cada categoría para ver todas las habilidades.',
+    doneText: en ? 'Got it' : 'Entendido',
+  });
 </script>

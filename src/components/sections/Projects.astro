@@ -102,6 +102,7 @@ const githubPath =
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
+                        data-project-code
                         class="btn btn-secondary btn-sm"
                       >
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -136,6 +137,31 @@ const githubPath =
 
 <script>
   import { initModals } from '../../scripts/modal';
+  import { hintTour, isEnglish } from '../../scripts/hint';
 
   initModals();
+
+  const en = isEnglish();
+  hintTour('portfolio', {
+    key: 'jtour-projects-v1',
+    doneText: en ? 'Got it' : 'Entendido',
+    steps: [
+      {
+        getTarget: () =>
+          document.querySelector<HTMLElement>('#portfolio [data-modal-open]'),
+        title: en ? 'Zoom in' : 'Ampliar',
+        description: en
+          ? 'Click the image to see it bigger.'
+          : 'Haz clic en la imagen para verla en grande.',
+      },
+      {
+        getTarget: () =>
+          document.querySelector<HTMLElement>('#portfolio [data-project-code]'),
+        title: en ? 'Source code' : 'Código fuente',
+        description: en
+          ? 'Check the source code on GitHub.'
+          : 'Mira el código fuente en GitHub.',
+      },
+    ],
+  });
 </script>
