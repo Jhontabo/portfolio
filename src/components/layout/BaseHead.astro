@@ -1,7 +1,7 @@
 ---
 import { Font } from 'astro:assets';
 import { ogLocale, type Locale } from '../../i18n';
-import { META, SITE_NAME, SITE_URL } from '../../lib/seo';
+import { META_LOCALIZED, OG_IMAGE, SITE_NAME, SITE_URL } from '../../lib/seo';
 
 export interface Props {
   locale: Locale;
@@ -13,15 +13,17 @@ const origin = Astro.site ?? new URL(SITE_URL);
 const canonical = new URL(`/${locale}/`, origin);
 const esUrl = new URL('/es/', origin);
 const enUrl = new URL('/en/', origin);
+const meta = META_LOCALIZED[locale];
 ---
 
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <meta name="generator" content={Astro.generator} />
 <meta name="google" content="notranslate" />
+<meta name="theme-color" content="#050505" />
 
-<title>{META.title}</title>
-<meta name="description" content={META.description} />
+<title>{meta.title}</title>
+<meta name="description" content={meta.description} />
 <meta name="author" content="Jhon Tajumbina" />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href={canonical.href} />
@@ -31,20 +33,50 @@ const enUrl = new URL('/en/', origin);
 <link rel="alternate" hreflang="x-default" href={esUrl.href} />
 
 <meta property="og:type" content="website" />
-<meta property="og:title" content={META.title} />
-<meta property="og:description" content={META.description} />
+<meta property="og:title" content={meta.title} />
+<meta property="og:description" content={meta.description} />
 <meta property="og:url" content={canonical.href} />
 <meta property="og:site_name" content={SITE_NAME} />
+<meta property="og:image" content={OG_IMAGE} />
 <meta property="og:locale" content={ogLocale[locale]} />
 <meta property="og:locale:alternate" content={ogLocale[locale === 'es' ? 'en' : 'es']} />
 
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content={META.title} />
-<meta name="twitter:description" content={META.description} />
+<meta name="twitter:title" content={meta.title} />
+<meta name="twitter:description" content={meta.description} />
+<meta name="twitter:image" content={OG_IMAGE} />
+
+<link
+  rel="preload"
+  as="image"
+  href="/Desing-final-1600.webp"
+  imagesrcset="/Desing-final-1200.webp 1200w, /Desing-final-1600.webp 1600w, /Desing-final.webp 2400w"
+  imagesizes="100vw"
+  fetchpriority="high"
+/>
+<link rel="preconnect" href="https://drive.google.com" crossorigin />
+<link rel="dns-prefetch" href="https://drive.google.com" />
+<link rel="preconnect" href="https://formsubmit.co" crossorigin />
+<link rel="dns-prefetch" href="https://formsubmit.co" />
 
 <Font cssVariable="--font-sora" preload />
 <Font cssVariable="--font-space-grotesk" preload />
 <Font cssVariable="--font-cinzel" preload />
-<Font cssVariable="--font-playfair" preload />
 
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="manifest" href="/site.webmanifest" />
+<script type="application/ld+json" set:html={JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  name: 'Jhon Tajumbina',
+  url: canonical.href,
+  jobTitle: 'Full-Stack Developer',
+  address: { '@type': 'PostalAddress', addressCountry: 'CO' },
+  sameAs: [
+    'https://github.com/Jhontabo',
+    'https://www.linkedin.com/in/jhon-tajumbina-8917922a3',
+    'https://www.instagram.com/jhon_tajumbina/',
+  ],
+})} />

@@ -9,8 +9,11 @@ import { SITE_NAME } from '../lib/seo';
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#050505" />
     <title>404 | {SITE_NAME}</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
   </head>
   <body class="antialiased bg-[#050505] text-neutral-200 selection:bg-white selection:text-black">
     <div class="min-h-screen flex items-center justify-center px-6 relative overflow-hidden">
@@ -24,16 +27,23 @@ import { SITE_NAME } from '../lib/seo';
         <p class="font-serif text-7xl sm:text-8xl font-light tracking-[0.15em] text-white mb-4">
           404
         </p>
-        <h1 class="font-serif text-xl sm:text-2xl text-neutral-200 font-light tracking-wide mb-3">
+        <h1 data-404-title-es class="font-serif text-xl sm:text-2xl text-neutral-200 font-light tracking-wide mb-3">
           Página no encontrada
         </h1>
-        <p class="text-neutral-400 text-sm font-light leading-relaxed mb-8">
+        <h1 data-404-title-en hidden class="font-serif text-xl sm:text-2xl text-neutral-200 font-light tracking-wide mb-3">
+          Page not found
+        </h1>
+        <p data-404-desc-es class="text-neutral-400 text-sm font-light leading-relaxed mb-8">
           La página solicitada no está disponible o ha sido trasladada.
+        </p>
+        <p data-404-desc-en hidden class="text-neutral-400 text-sm font-light leading-relaxed mb-8">
+          The requested page is unavailable or has been moved.
         </p>
 
         <div class="flex items-center justify-center gap-4">
           <a
             href="/es/"
+            data-404-cta
             class="btn btn-primary"
           >
             Volver al inicio
@@ -41,5 +51,23 @@ import { SITE_NAME } from '../lib/seo';
         </div>
       </div>
     </div>
+
+    <script>
+      // 404 bilingüe: si viene de /en/ o el navegador está en inglés, mostrar EN
+      const isEn =
+        document.referrer.includes('/en/') || (!document.referrer && navigator.language.startsWith('en'));
+      if (isEn) {
+        document.documentElement.lang = 'en';
+        document.querySelector('[data-404-title-es]')?.setAttribute('hidden', '');
+        document.querySelector('[data-404-desc-es]')?.setAttribute('hidden', '');
+        document.querySelector('[data-404-title-en]')?.removeAttribute('hidden');
+        document.querySelector('[data-404-desc-en]')?.removeAttribute('hidden');
+        const cta = document.querySelector('[data-404-cta]');
+        if (cta) {
+          cta.setAttribute('href', '/en/');
+          cta.textContent = 'Back to home';
+        }
+      }
+    </script>
   </body>
 </html>
