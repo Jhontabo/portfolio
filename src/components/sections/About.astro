@@ -1,5 +1,4 @@
 ---
-import Icon from '../ui/Icon.astro';
 import { personalInfo } from '../../data/personal';
 import type { Locale, Messages } from '../../i18n';
 
@@ -8,11 +7,9 @@ export interface Props {
   t: Messages;
 }
 
-const { locale, t } = Astro.props;
+const { locale } = Astro.props;
 
 const bio = locale === 'en' ? personalInfo.bioEn : personalInfo.bioEs;
-const roles = t.hero.roles;
-const roleIcons = ['terminal', 'server', 'code-xml', 'wrench', 'megaphone'];
 ---
 
 <section id="about" class="py-32 sm:py-40 bg-[#050505] relative overflow-hidden border-t border-white/5 scroll-mt-20">
@@ -31,29 +28,8 @@ const roleIcons = ['terminal', 'server', 'code-xml', 'wrench', 'megaphone'];
 
         <div class="w-14 h-[2px] bg-gradient-to-r from-white/60 to-transparent mb-8" aria-hidden="true"></div>
 
-        <p class="text-base sm:text-lg text-neutral-300 font-light leading-relaxed mb-8 text-justify">
+        <p class="text-base sm:text-lg text-neutral-300 font-light leading-relaxed text-justify">
           {bio}
-        </p>
-
-        <ul class="flex flex-wrap gap-2.5 mb-8" aria-label={locale === 'en' ? 'Roles' : 'Roles'}>
-          {
-            roles.map((role, i) => (
-              <li class="group inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-gradient-to-r from-white/[0.06] to-white/[0.02] py-2 pl-2 pr-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#38bdf8]/60 hover:shadow-[0_0_20px_rgba(56,189,248,0.25)]">
-                <span class="flex h-7 w-7 items-center justify-center rounded-full border border-[#38bdf8]/30 bg-[#38bdf8]/10 text-[#7dd3fc] transition-transform duration-300 group-hover:scale-110">
-                  <Icon name={roleIcons[i % roleIcons.length]} size={14} />
-                </span>
-                <span class="text-[11px] font-medium uppercase tracking-[0.18em] text-neutral-200">
-                  {role}
-                </span>
-              </li>
-            ))
-          }
-        </ul>
-
-        <p class="text-sm text-neutral-400 font-light leading-relaxed border-l-2 border-white/20 pl-4 text-justify">
-          {locale === 'en'
-            ? 'Driven by precision, clean architectures, and high-conversion strategies that bridge engineering excellence with measurable business growth.'
-            : 'Arquitecturas limpias, rendimiento técnico y estrategias de conversión que unen la excelencia en ingeniería con resultados de negocio medibles.'}
         </p>
       </div>
 

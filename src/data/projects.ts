@@ -33,9 +33,10 @@ export const projects: Project[] = [
       'Aplicación Flutter desarrollada para la unidad de cuidados intensivos (U.C.I.) del Hospital Departamental Universitario de Nariño.',
     descriptionEn:
       'Flutter application developed for the intensive care unit (ICU) of the Hospital Departamental Universitario de Nariño.',
-    technologies: ['Flutter', 'Dart'],
+    technologies: ['Flutter', 'Dart', 'Firebase'],
     demo: '#',
     github: 'https://github.com/Jhontabo/Registro-UCI',
+    imageUrl: '/registro-uci.webp',
   },
   {
     id: 4,
