@@ -1,4 +1,5 @@
 ---
+import Icon from '../ui/Icon.astro';
 import { personalInfo } from '../../data/personal';
 import type { Locale, Messages } from '../../i18n';
 
@@ -11,6 +12,7 @@ const { locale, t } = Astro.props;
 
 const bio = locale === 'en' ? personalInfo.bioEn : personalInfo.bioEs;
 const roles = t.hero.roles;
+const roleIcons = ['terminal', 'server', 'code-xml', 'wrench', 'megaphone'];
 ---
 
 <section id="about" class="py-32 sm:py-40 bg-[#050505] relative overflow-hidden border-t border-white/5 scroll-mt-20">
@@ -35,9 +37,14 @@ const roles = t.hero.roles;
 
         <ul class="flex flex-wrap gap-2.5 mb-8" aria-label={locale === 'en' ? 'Roles' : 'Roles'}>
           {
-            roles.map((role) => (
-              <li class="text-[11px] font-medium uppercase tracking-[0.18em] px-3.5 py-2 rounded-full border border-white/15 bg-white/[0.03] text-neutral-300">
-                {role}
+            roles.map((role, i) => (
+              <li class="group inline-flex items-center gap-2.5 rounded-full border border-white/15 bg-gradient-to-r from-white/[0.06] to-white/[0.02] py-2 pl-2 pr-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#38bdf8]/60 hover:shadow-[0_0_20px_rgba(56,189,248,0.25)]">
+                <span class="flex h-7 w-7 items-center justify-center rounded-full border border-[#38bdf8]/30 bg-[#38bdf8]/10 text-[#7dd3fc] transition-transform duration-300 group-hover:scale-110">
+                  <Icon name={roleIcons[i % roleIcons.length]} size={14} />
+                </span>
+                <span class="text-[11px] font-medium uppercase tracking-[0.18em] text-neutral-200">
+                  {role}
+                </span>
               </li>
             ))
           }
