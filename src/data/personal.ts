@@ -1,7 +1,7 @@
 export const personalInfo = {
   name: 'Jhon Tajumbina',
   title: 'Full-Stack Developer | React · Express · Laravel',
-  email: 'jhon.tajumbina@email.com',
+  email: 'jhonse.tajumbina@gmail.com',
   linkedin: 'https://www.linkedin.com/in/jhon-tajumbina-8917922a3',
   github: 'https://github.com/Jhontabo',
   instagram: 'https://www.instagram.com/jhon_tajumbina/',

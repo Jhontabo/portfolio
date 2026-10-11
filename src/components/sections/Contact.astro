@@ -29,7 +29,8 @@ const labelClass =
 
     <form
       data-contact-form
-      data-endpoint="https://formsubmit.co/ajax/jhon.tajumbina@email.com"
+      data-endpoint={`https://formsubmit.co/ajax/${personalInfo.email}`}
+      data-email={personalInfo.email}
       class="space-y-5"
       data-reveal
       novalidate
@@ -74,6 +75,12 @@ const labelClass =
       </div>
 
       <p data-contact-status class="hidden text-sm font-light" role="status" aria-live="polite"></p>
+      <p data-contact-error class="hidden text-sm font-light text-rose-300" role="alert"></p>
+
+      <!-- Honeypot anti-spam (oculto para humanos) -->
+      <div class="hidden" aria-hidden="true">
+        <label>Empresa <input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
+      </div>
 
       <div>
         <button
@@ -82,6 +89,9 @@ const labelClass =
           data-sending={c.sending}
           data-success={c.success}
           data-error={c.error}
+          data-error-required={c.errorRequired}
+          data-error-invalid={c.errorInvalid}
+          data-fallback={c.fallback}
           class="btn btn-primary btn-block disabled:opacity-60 disabled:cursor-not-allowed"
         >
           {c.send}
@@ -91,7 +101,12 @@ const labelClass =
 
     <p class="mt-8 text-center text-sm text-neutral-400 font-light" data-reveal>
       {c.orWrite}{' '}
-      <span class="text-neutral-200 select-all">{personalInfo.email}</span>
+      <a
+        href={`mailto:${personalInfo.email}`}
+        class="text-neutral-200 select-all underline decoration-white/30 underline-offset-4 hover:text-white hover:decoration-white/70 transition-colors"
+      >
+        {personalInfo.email}
+      </a>
     </p>
   </div>
 </section>
@@ -100,8 +115,10 @@ const labelClass =
   const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
   const submit = form?.querySelector<HTMLButtonElement>('[data-contact-submit]');
   const status = form?.querySelector<HTMLElement>('[data-contact-status]');
+  const errorBox = form?.querySelector<HTMLElement>('[data-contact-error]');
 
   const originalLabel = submit?.textContent?.trim() ?? '';
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   function showStatus(message: string, ok: boolean): void {
     if (!status) return;
@@ -110,22 +127,62 @@ const labelClass =
     status.classList.add(ok ? 'text-emerald-300' : 'text-rose-300');
   }
 
+  function showError(message: string): void {
+    if (!errorBox) return;
+    if (!message) {
+      errorBox.textContent = '';
+      errorBox.classList.add('hidden');
+      return;
+    }
+    errorBox.textContent = message;
+    errorBox.classList.remove('hidden');
+  }
+
+  function showFallback(to: string, fromName: string, fromEmail: string, body: string): void {
+    if (!errorBox || !to) return;
+    errorBox.textContent = '';
+    const label = document.createElement('span');
+    label.textContent = `${submit?.getAttribute('data-fallback') ?? 'Open email app'}: `;
+    const link = document.createElement('a');
+    link.href = `mailto:${to}?subject=${encodeURIComponent(`Mensaje del portafolio — ${fromName}`)}&body=${encodeURIComponent(`${body}\n\n— ${fromName} (${fromEmail})`)}`;
+    link.className = 'underline underline-offset-4 text-neutral-200 hover:text-white';
+    link.textContent = to;
+    errorBox.append(label, link);
+    errorBox.classList.remove('hidden');
+  }
+
   form?.addEventListener('submit', async (event) => {
     event.preventDefault();
     if (!form || !submit) return;
 
     const endpoint = form.getAttribute('data-endpoint') ?? '';
     const data = new FormData(form);
+    // Si el honeypot viene relleno, es un bot: simular éxito sin enviar
+    if (String(data.get('company') ?? '').trim()) {
+      showStatus(submit.getAttribute('data-success') ?? 'OK', true);
+      form.reset();
+      return;
+    }
     const name = String(data.get('name') ?? '').trim();
     const email = String(data.get('email') ?? '').trim();
     const message = String(data.get('message') ?? '').trim();
-    if (!name || !email || !message) return;
+    if (!name || !email || !message) {
+      showError(submit.getAttribute('data-error-required') ?? 'Completa todos los campos.');
+      return;
+    }
+    if (!emailRe.test(email) || message.length < 10) {
+      showError(submit.getAttribute('data-error-invalid') ?? 'Revisa tu correo y escribe al menos 10 caracteres.');
+      return;
+    }
+    showError('');
 
     const sendingLabel = submit.getAttribute('data-sending') ?? '...';
     submit.disabled = true;
     submit.textContent = sendingLabel;
 
     try {
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 15000);
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
@@ -137,14 +194,30 @@ const labelClass =
           _template: 'table',
           _captcha: 'false',
         }),
+        signal: controller.signal,
       });
+      window.clearTimeout(timeout);
       if (!response.ok) throw new Error('send failed');
+      // FormSubmit responde HTTP 200 incluso cuando NO envía:
+      // hay que leer el JSON y comprobar `success` ("true"/true).
+      let sent = false;
+      let failReason = `http ${response.status}`;
+      try {
+        const result = (await response.json()) as { success?: boolean | string; message?: string };
+        sent = result?.success === true || result?.success === 'true';
+        if (!sent) failReason = result?.message ?? JSON.stringify(result).slice(0, 140);
+      } catch {
+        sent = false;
+      }
+      if (!sent) throw new Error(failReason);
       const okMsg = submit.getAttribute('data-success') ?? 'OK';
       showStatus(okMsg, true);
       form.reset();
-    } catch {
+    } catch (err) {
+      console.warn('[contacto] envío fallido:', err);
       const errMsg = submit.getAttribute('data-error') ?? 'Error';
       showStatus(errMsg, false);
+      showFallback(form.getAttribute('data-email') ?? '', name, email, message);
     } finally {
       submit.disabled = false;
       submit.textContent = originalLabel;

@@ -8,7 +8,13 @@
   },
   "hero": {
     "role": "Full-Stack Developer",
-    "roles": ["Full-Stack Developer", "Ingeniero de Sistemas", "Software Engineer", "React · Express · Laravel", "Pitcher de Marketing · Meta Ads"],
+    "roles": [
+      "Full-Stack Developer",
+      "Ingeniero de Sistemas",
+      "Software Engineer",
+      "React · Express · Laravel",
+      "Pitcher de Marketing · Meta Ads"
+    ],
     "viewProjects": "Ver proyectos",
     "downloadCV": "Descargar CV",
     "contactMe": "Contactarme"
@@ -75,6 +81,9 @@
     "sending": "Enviando...",
     "success": "¡Mensaje enviado! Te responderé pronto.",
     "error": "No se pudo enviar. Intenta de nuevo.",
-    "orWrite": "O escríbeme directamente a"
+    "orWrite": "O escríbeme directamente a",
+    "errorRequired": "Completa todos los campos.",
+    "errorInvalid": "Revisa tu correo y escribe al menos 10 caracteres.",
+    "fallback": "Abrir en mi correo con el mensaje listo"
   }
 }

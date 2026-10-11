@@ -8,7 +8,13 @@
   },
   "hero": {
     "role": "Full-Stack Developer",
-    "roles": ["Full-Stack Developer", "Systems Engineer", "Software Engineer", "React · Express · Laravel", "Pitcher de Marketing · Meta Ads"],
+    "roles": [
+      "Full-Stack Developer",
+      "Systems Engineer",
+      "Software Engineer",
+      "React · Express · Laravel",
+      "Pitcher de Marketing · Meta Ads"
+    ],
     "viewProjects": "View Projects",
     "downloadCV": "Download CV",
     "contactMe": "Contact Me"
@@ -75,6 +81,9 @@
     "sending": "Sending...",
     "success": "Message sent! I'll get back to you soon.",
     "error": "Could not send. Please try again.",
-    "orWrite": "Or write to me directly at"
+    "orWrite": "Or write to me directly at",
+    "errorRequired": "Please fill in all fields.",
+    "errorInvalid": "Check your email and write at least 10 characters.",
+    "fallback": "Open in my email app with the message ready"
   }
 }

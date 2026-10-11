@@ -22,7 +22,7 @@ export const projects: Project[] = [
     descriptionEn:
       'Comprehensive inventory management system designed for university laboratories. Built with Laravel and Filament, it provides efficient control over equipment, resources, bookings, and loans with role-based access control and detailed reporting.',
     technologies: ['Laravel', 'Filament', 'PHP', 'MySQL'],
-    demo: 'https://inventorymanager-production-900a.up.railway.app/admin/login',
+    demo: '#',
     github: 'https://github.com/Jhontabo/InventoryManager',
   },
   {
