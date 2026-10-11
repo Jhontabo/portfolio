@@ -19,45 +19,42 @@ const githubPath =
 interface CategoryStyle {
   icon: string;
   chip: string;
-  dot: string;
-  branch: string;
 }
 
 const categoryStyles: Record<JourneyCategory, CategoryStyle> = {
   education: {
     icon: 'graduation-cap',
     chip: 'text-cyan-300 bg-cyan-400/10 border-cyan-400/30',
-    dot: 'border-cyan-400 shadow-[0_0_12px_rgba(34,211,238,0.5)]',
-    branch: 'from-cyan-400/60',
   },
   work: {
     icon: 'briefcase',
     chip: 'text-sky-300 bg-sky-400/10 border-sky-400/30',
-    dot: 'border-sky-400 shadow-[0_0_12px_rgba(56,189,248,0.5)]',
-    branch: 'from-sky-400/60',
   },
   research: {
     icon: 'award',
     chip: 'text-amber-300 bg-amber-400/10 border-amber-400/30',
-    dot: 'border-amber-400 shadow-[0_0_12px_rgba(251,191,36,0.5)]',
-    branch: 'from-amber-400/60',
   },
   marketing: {
     icon: 'megaphone',
     chip: 'text-rose-300 bg-rose-400/10 border-rose-400/30',
-    dot: 'border-rose-400 shadow-[0_0_12px_rgba(251,113,133,0.5)]',
-    branch: 'from-rose-400/60',
   },
 };
 
-const entries = journeyTimeline.map((item, index) => {
+const entries = journeyTimeline.map((item, index, arr) => {
   const category = categoryStyles[item.category];
   return {
     ...item,
     category,
+    showYear: index > 0 && item.year !== arr[index - 1].year,
     delay: index * 60,
+    isOrigin: index === 0,
+    isLast: index === journeyTimeline.length - 1,
+    side: item.category === 'education' || item.category === 'research' ? 'left' : 'right',
+    panelId: `journey-panel-${item.id}`,
+    desktopPanelId: `journey-panel-d-${item.id}`,
     date: locale === 'en' ? item.dateEn : item.dateEs,
     title: locale === 'en' ? item.titleEn : item.titleEs,
+    short: locale === 'en' ? item.shortEn : item.shortEs,
     description: locale === 'en' ? item.descriptionEn : item.descriptionEs,
     label: t.journey.categories[item.category],
     href: item.link ?? personalInfo.github,
@@ -66,7 +63,17 @@ const entries = journeyTimeline.map((item, index) => {
 });
 ---
 
-<section id="journey" class="py-24 sm:py-32 bg-[#050505] overflow-hidden scroll-mt-24 border-t border-white/5">
+<section
+  id="journey"
+  class="py-24 sm:py-32 bg-[#050505] overflow-hidden scroll-mt-24 border-t border-white/5"
+  data-tour-title={locale === 'en' ? 'Explore my journey' : 'Explora mi ruta'}
+  data-tour-desc={
+    locale === 'en'
+      ? 'Click the gold circles to see each stage in detail.'
+      : 'Haz clic en los círculos dorados para ver el detalle de cada etapa.'
+  }
+  data-tour-done={locale === 'en' ? 'Got it' : 'Entendido'}
+>
   <div class="max-w-3xl mx-auto px-6 sm:px-8">
     <div data-reveal>
       <SectionHeader
@@ -76,78 +83,261 @@ const entries = journeyTimeline.map((item, index) => {
       />
     </div>
 
-    <div class="relative mt-12 sm:mt-14" data-tree>
-      <!-- Línea vertical de la ruta -->
-      <div
-        class="absolute left-2.5 top-3 bottom-3 w-[2px] bg-gradient-to-b from-white/30 via-white/20 to-white/5"
-        aria-hidden="true"
+    <!-- Origen de la rama: círculo centrado -->
+    <div class="flex justify-center mt-12 sm:mt-14" data-reveal>
+      <button
+        type="button"
+        data-journey-toggle
+        data-origin-circle
+        aria-expanded="false"
+        aria-controls={entries[0].panelId}
+        aria-label={entries[0].title}
+        class="node-btn md:hidden w-16 h-16 rounded-full border-2 border-[#eab308] text-[#fcd34d] shadow-[0_0_18px_rgba(234,179,8,0.3)] bg-[#050505] flex items-center justify-center transition-all duration-300 hover:scale-105"
       >
-        <!-- Relleno del tronco que crece con el scroll (solo desktop) -->
-        <div
-          data-tree-fill
-          class="absolute left-0 top-0 w-full bg-gradient-to-b from-white/70 via-white/40 to-white/20"
-          style="height: 0%"
-          aria-hidden="true"
-        >
+        <Icon name={entries[0].category.icon} size={26} />
+      </button>
+      <button
+        type="button"
+        data-journey-toggle
+        data-origin-circle
+        data-circle
+        aria-expanded="false"
+        aria-controls={entries[0].desktopPanelId}
+        aria-label={entries[0].title}
+        class="milestone-circle hidden md:flex w-60 h-60 rounded-full border-[3px] border-[#eab308] text-[#fcd34d] shadow-[0_0_18px_rgba(234,179,8,0.3)] bg-[#0a0a0a] flex-col items-center justify-center text-center p-8 gap-2 cursor-pointer"
+      >
+        <Icon name={entries[0].category.icon} size={30} />
+        <span class="text-[11px] font-mono uppercase tracking-[0.2em] text-neutral-300">
+          {entries[0].date}
+        </span>
+        <span class="font-serif text-[17px] leading-snug font-light text-white">
+          {entries[0].short}
+        </span>
+      </button>
+    </div>
+
+    <!-- Detalle del origen (solo desktop, centrado) -->
+    <div class="hidden md:block max-w-xl mx-auto">
+      <div id={entries[0].desktopPanelId} class="expandable" data-journey-panel>
+        <div>
+          <div class="pt-6 pb-10">
+            <div class="rounded-2xl border border-white/15 bg-neutral-900/60 p-6 sm:p-8 text-left">
+              <h4 class="font-serif text-xl font-light text-white tracking-wide">
+                {entries[0].title}
+              </h4>
+              <span
+                class={`inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.18em] px-2.5 py-1 rounded-full border mt-3 ${entries[0].category.chip}`}
+              >
+                <Icon name={entries[0].category.icon} size={13} />
+                {entries[0].label}
+              </span>
+              <p class="text-neutral-300 text-base font-light leading-relaxed mt-3">
+                {entries[0].description}
+              </p>
+            </div>
+          </div>
         </div>
       </div>
+    </div>
 
-      <ol class="relative space-y-7 sm:space-y-9">
+    <!-- Conector del origen hacia la línea de la rama (solo móvil; en desktop el sendero nace del origen) -->
+    <div class="relative h-[60px] -mb-3 md:hidden" data-connector-wrap aria-hidden="true">
+      <svg class="absolute inset-0 h-full w-full">
+        <defs>
+          <linearGradient id="origin-connector-fade" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#ffffff" stop-opacity="0.5"></stop>
+            <stop offset="1" stop-color="#ffffff" stop-opacity="0.2"></stop>
+          </linearGradient>
+        </defs>
+        <path
+          data-connector-path
+          d=""
+          fill="none"
+          stroke="url(#origin-connector-fade)"
+          stroke-width="2"
+        >
+        </path>
+      </svg>
+    </div>
+
+    <!-- Rama principal -->
+    <div class="relative">
+      <!-- Línea vertical de la rama (solo móvil; en desktop manda el sendero en S) -->
+      <div
+        data-timeline-line
+        class="absolute left-2.5 md:left-1/2 md:-translate-x-1/2 top-3 bottom-3 w-[2px] bg-gradient-to-b from-white/30 via-white/20 to-white/5 md:hidden"
+        aria-hidden="true"
+      >
+      </div>
+
+      <!-- Sendero en S que une los círculos (solo desktop) -->
+      <svg
+        data-snake-svg
+        class="hidden md:block absolute inset-0 h-full w-full overflow-visible"
+        aria-hidden="true"
+      >
+        <path
+          data-snake-path
+          d=""
+          fill="none"
+          stroke="rgba(255,255,255,0.28)"
+          stroke-width="2"
+          stroke-linecap="round"
+        >
+        </path>
+      </svg>
+
+      <ol class="relative space-y-7 sm:space-y-9 md:space-y-32">
         {
           entries.map((item) => (
+            <>
+              {item.showYear && (
+                <li aria-hidden="true" class="relative flex justify-center" data-reveal>
+                  <span class="flag-marker font-mono text-sm sm:text-base md:text-lg font-semibold tracking-[0.25em] text-black bg-gradient-to-b from-amber-300 to-amber-500 px-8 md:px-12 py-2.5 md:py-3 drop-shadow-[0_0_18px_rgba(234,179,8,0.35)]">
+                    {item.year}
+                  </span>
+                </li>
+              )}
             <li
-              class="relative pl-9 sm:pl-12"
+              class={`relative pl-12 sm:pl-14 md:pl-0 md:grid md:grid-cols-2 md:gap-x-32 ${item.isOrigin ? 'md:hidden' : ''}`}
               data-reveal
               style={`--reveal-delay: ${item.delay}ms`}
             >
-              <span
-                class={`tree-node absolute left-2.5 top-7 sm:top-8 -translate-x-1/2 w-3.5 h-3.5 rounded-full border-2 bg-[#050505] ${item.category.dot}`}
-                aria-hidden="true"
-              />
+              {!item.isOrigin && (
+                <button
+                  type="button"
+                  data-journey-toggle
+                  aria-expanded="false"
+                  aria-controls={item.panelId}
+                  aria-label={item.title}
+                  class="node-btn md:hidden absolute left-2.5 md:left-1/2 top-4 sm:top-5 -translate-x-1/2 w-10 h-10 rounded-full border-2 border-[#eab308] text-[#fcd34d] shadow-[0_0_18px_rgba(234,179,8,0.3)] bg-[#050505] flex items-center justify-center transition-all duration-300 hover:scale-110"
+                >
+                  <Icon name={item.category.icon} size={17} />
+                </button>
+              )}
 
-              <!-- Ramita hacia la tarjeta (solo desktop) -->
-              <span
-                class={`tree-branch hidden md:block absolute left-2.5 top-[34px] sm:top-[38px] h-[2px] w-8 sm:w-10 origin-left bg-gradient-to-r ${item.category.branch} to-transparent`}
-                aria-hidden="true"
-              />
-
-              <article class="group bg-neutral-900/60 border border-white/15 hover:border-white/30 rounded-2xl p-5 sm:p-7 transition-colors duration-300">
-                <div class="flex flex-wrap items-center gap-2.5 mb-3.5">
-                  <span
-                    class={`inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.18em] px-2.5 py-1 rounded-full border ${item.category.chip}`}
+              {/* Círculo grande (solo desktop) */}
+              {!item.isOrigin && (
+                <div
+                  class={`hidden md:flex md:col-start-${item.side === 'left' ? '1' : '2'} md:row-start-1 flex-col items-center`}
+                >
+                  <div class={`flex items-center w-full ${item.side === 'left' ? 'justify-end' : 'justify-start'}`}>
+                    <button
+                      type="button"
+                      data-journey-toggle
+                      data-circle
+                      aria-expanded="false"
+                      aria-controls={item.desktopPanelId}
+                      aria-label={item.title}
+                    class={`milestone-circle ${item.isLast ? 'w-60 h-60 p-8 gap-2' : 'w-36 h-36 p-4 gap-1'} shrink-0 rounded-full border-[3px] border-[#eab308] text-[#fcd34d] shadow-[0_0_18px_rgba(234,179,8,0.3)] bg-[#0a0a0a] flex flex-col items-center justify-center text-center cursor-pointer`}
                   >
-                    <Icon name={item.category.icon} size={13} />
-                    {item.label}
-                  </span>
-                  <span class="text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em] text-neutral-300 bg-white/[0.06] border border-white/15 px-2.5 py-1 rounded-full">
-                    {item.date}
-                  </span>
-                </div>
-
-                <h3 class="font-serif text-lg sm:text-xl font-light text-white mb-2.5 tracking-wide">
-                  {item.title}
-                </h3>
-                <p class="text-neutral-300 text-sm sm:text-base font-light leading-relaxed mb-4">
-                  {item.description}
-                </p>
-
-                {item.hasLink && (
-                  <div class="pt-3.5 border-t border-white/15">
-                    <a
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="btn btn-secondary btn-sm"
-                    >
-                      <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d={githubPath} />
-                      </svg>
-                      <span>{locale === 'en' ? 'VIEW REPO' : 'VER REPOSITORIO'}</span>
-                    </a>
+                    <Icon name={item.category.icon} size={item.isLast ? 30 : 26} />
+                    <span class={`${item.isLast ? 'text-[11px]' : 'text-[10px]'} font-mono uppercase tracking-[0.2em] text-neutral-300`}>
+                      {item.date}
+                    </span>
+                    <span class={`font-serif ${item.isLast ? 'text-[17px]' : 'text-xs'} leading-snug font-light text-white ${item.isLast ? '' : 'line-clamp-3'}`}>
+                      {item.short}
+                    </span>
+                  </button>
                   </div>
-                )}
+                  <div id={item.desktopPanelId} class="expandable w-full max-w-[280px]" data-journey-panel>
+                    <div>
+                      <div class="pt-5 text-left">
+                        <h4 class="font-serif text-xl font-light text-white tracking-wide">
+                          {item.title}
+                        </h4>
+                        <span
+                          class={`inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-[0.18em] px-2.5 py-1 rounded-full border mt-3 ${item.category.chip}`}
+                        >
+                          <Icon name={item.category.icon} size={13} />
+                          {item.label}
+                        </span>
+                        <p class="text-neutral-300 text-sm font-light leading-relaxed mt-3 mb-4">
+                          {item.description}
+                        </p>
+                        {item.hasLink && (
+                          <div class="pt-3.5 border-t border-white/15">
+                            <a
+                              href={item.href}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              class="btn btn-secondary btn-sm"
+                            >
+                              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                                <path d={githubPath} />
+                              </svg>
+                              <span>{locale === 'en' ? 'VIEW REPO' : 'VER REPOSITORIO'}</span>
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <article class={`${item.side === 'left' ? 'md:col-start-1' : 'md:col-start-2'} md:row-start-1 md:hidden group bg-neutral-900/60 border border-white/15 hover:border-white/30 rounded-2xl p-5 sm:p-7 transition-colors duration-300`}>
+                <!-- Cabecera: solo fecha y título -->
+                <button
+                  type="button"
+                  data-journey-toggle
+                  aria-expanded="false"
+                  aria-controls={item.panelId}
+                  class="w-full flex items-center justify-between gap-4 text-left"
+                >
+                  <span>
+                    <span class="inline-block text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em] text-neutral-300 bg-white/[0.06] border border-white/15 px-2.5 py-1 rounded-full mb-2.5">
+                      {item.date}
+                    </span>
+                    <h3 class="font-serif text-lg sm:text-xl font-light text-white tracking-wide">
+                      {item.title}
+                    </h3>
+                  </span>
+                  <Icon
+                    name="chevron-down"
+                    size={18}
+                    class="toggle-chevron shrink-0 text-neutral-400"
+                  />
+                </button>
+
+                <!-- Detalle completo al desplegar -->
+                <div id={item.panelId} class="expandable" data-journey-panel>
+                  <div>
+                    <div class="pt-4">
+                      <span
+                        class={`inline-flex items-center gap-1.5 text-[10px] sm:text-[11px] font-medium uppercase tracking-[0.18em] px-2.5 py-1 rounded-full border ${item.category.chip}`}
+                      >
+                        <Icon name={item.category.icon} size={13} />
+                        {item.label}
+                      </span>
+                      <p class="text-neutral-300 text-sm sm:text-base font-light leading-relaxed mt-3 mb-4">
+                        {item.description}
+                      </p>
+                      {item.hasLink && (
+                        <div class="pt-3.5 border-t border-white/15">
+                          <a
+                            href={item.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="btn btn-secondary btn-sm"
+                          >
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                              <path d={githubPath} />
+                            </svg>
+                            <span>{locale === 'en' ? 'VIEW REPO' : 'VER REPOSITORIO'}</span>
+                          </a>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </article>
+              <div
+                class={`hidden md:block md:row-start-1 ${item.side === 'left' ? 'md:col-start-2' : 'md:col-start-1'}`}
+                aria-hidden="true"
+              />
             </li>
+            </>
           ))
         }
       </ol>
@@ -156,37 +346,74 @@ const entries = journeyTimeline.map((item, index) => {
 </section>
 
 <style>
-  /* Animación de árbol: solo en versión web, el móvil queda intacto */
+  /* Banderín de año con corte inferior en V */
+  .flag-marker {
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), 50% 100%, 0 calc(100% - 12px));
+  }
+
+  /* Círculos en oro; el seleccionado brilla más intenso */
+  .node-btn[aria-expanded='true'] {
+    border-color: #eab308;
+    color: #fde68a;
+    background: rgba(234, 179, 8, 0.1);
+    box-shadow: 0 0 22px rgba(234, 179, 8, 0.55);
+  }
+
+  [data-journey-toggle] .toggle-chevron {
+    transition: transform 0.3s ease;
+  }
+
+  [data-journey-toggle][aria-expanded='true'] .toggle-chevron {
+    transform: rotate(180deg);
+  }
+
+  /* Círculos grandes: aparecen con pop al hacer scroll y zoom al hover (solo desktop) */
   @media (min-width: 768px) {
-    .tree-branch {
-      transform: scaleX(0);
-      transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    .milestone-circle {
+      transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease,
+        background-color 0.3s ease;
     }
 
-    li.is-visible .tree-branch {
-      transform: scaleX(1);
+    li[data-reveal].is-visible .milestone-circle {
+      animation: circle-pop 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+      animation-delay: var(--reveal-delay, 0ms);
     }
 
-    li.is-visible .tree-node {
-      animation: tree-pop 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+    .milestone-circle:hover {
+      transform: scale(1.07);
+    }
+
+    .milestone-circle[aria-expanded='true'] {
+      border-color: #eab308;
+      color: #fde68a;
+      background: rgba(234, 179, 8, 0.1);
+      box-shadow: 0 0 40px rgba(234, 179, 8, 0.55);
     }
   }
 
-  @keyframes tree-pop {
-    0% {
-      scale: 0.3;
+  @keyframes circle-pop {
+    from {
+      scale: 0.4;
     }
-    60% {
-      scale: 1.35;
-    }
-    100% {
+    to {
       scale: 1;
     }
   }
 </style>
 
 <script>
-  import { initJourneyTree } from '../../scripts/journey-tree';
+  import {
+    initJourneyExpand,
+    initOriginConnector,
+    initSnakePath,
+  } from '../../scripts/journey-expand';
+  import { initJourneyTour } from '../../scripts/journey-tour';
 
-  initJourneyTree();
+  initJourneyExpand();
+  initOriginConnector();
+  initSnakePath();
+  initJourneyTour();
 </script>

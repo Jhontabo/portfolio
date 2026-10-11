@@ -43,8 +43,11 @@ export interface JourneyEntry {
   category: JourneyCategory;
   dateEs: string;
   dateEn: string;
+  year: string;
   titleEs: string;
   titleEn: string;
+  shortEs: string;
+  shortEn: string;
   descriptionEs: string;
   descriptionEn: string;
   linkType?: 'github';
