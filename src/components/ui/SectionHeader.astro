@@ -6,30 +6,45 @@ export interface Props {
   gradient?: 'cyan' | 'purple';
   id?: string;
   class?: string;
+  align?: 'left' | 'center' | 'right';
 }
 
-const { title, subtitle, kicker, id, class: className } = Astro.props;
+const { title, subtitle, kicker, id, class: className, align = 'center' } = Astro.props;
+
+// La alternancia izq/der aplica solo en desktop: en móvil todo centrado,
+// que es donde los encabezados laterales se ven rotos.
+const alignWrapper =
+  align === 'left'
+    ? 'text-center sm:text-left'
+    : align === 'right'
+      ? 'text-center sm:text-right'
+      : 'text-center';
+const alignBlock =
+  align === 'left' ? 'mx-auto sm:ml-0' : align === 'right' ? 'mx-auto sm:mr-0' : 'mx-auto';
 ---
 
-<div class:list={['text-center mb-16 sm:mb-20', className]}>
+<div class:list={['mb-20 sm:mb-24', alignWrapper, className]}>
   {kicker && (
-    <p class="text-[11px] sm:text-xs font-medium uppercase tracking-[0.3em] text-neutral-300 mb-4">
+    <p class="text-xs sm:text-sm font-medium uppercase tracking-[0.3em] text-neutral-300 mb-4">
       {kicker}
     </p>
   )}
   <h2
     id={id}
-    class="font-serif text-4xl sm:text-5xl md:text-6xl font-light tracking-[0.1em] uppercase hypr-gradient-text drop-shadow-[0_2px_24px_rgba(255,255,255,0.12)] mb-5"
+    class="font-serif text-5xl sm:text-6xl md:text-7xl font-light tracking-[0.1em] uppercase hypr-gradient-text drop-shadow-[0_2px_24px_rgba(255,255,255,0.12)] mb-5"
   >
     {title}
   </h2>
   {subtitle && (
-    <p class="max-w-2xl mx-auto text-sm sm:text-base text-neutral-400 font-light leading-relaxed">
+    <p class:list={['max-w-2xl text-base sm:text-lg text-neutral-400 font-light leading-relaxed', alignBlock]}>
       {subtitle}
     </p>
   )}
   <div
-    class="w-14 h-[2px] bg-gradient-to-r from-transparent via-white/50 to-transparent mx-auto mt-7"
+    class:list={[
+      'w-14 h-[2px] bg-gradient-to-r from-transparent via-white/50 to-transparent mt-7',
+      alignBlock,
+    ]}
     aria-hidden="true"
   >
   </div>

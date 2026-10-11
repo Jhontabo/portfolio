@@ -9,6 +9,7 @@ import Certificates from '../../components/sections/Certificates.astro';
 import Skills from '../../components/sections/Skills.astro';
 import Contact from '../../components/sections/Contact.astro';
 import Footer from '../../components/layout/Footer.astro';
+import FloatingCV from '../../components/ui/FloatingCV.astro';
 import { isLocale, htmlLang, locales, t, type Locale } from '../../i18n';
 import '../../styles/global.css';
 
@@ -46,6 +47,7 @@ const messages = t(locale);
       <Contact locale={locale} t={messages} />
       <Footer locale={locale} t={messages} />
     </main>
+    <FloatingCV t={messages} />
 
     <script>
       import { initReveal } from '../../scripts/reveal';

@@ -1,6 +1,4 @@
 ---
-import Icon from '../ui/Icon.astro';
-import ContactMenu from '../ui/ContactMenu.astro';
 import { personalInfo } from '../../data/personal';
 import type { Locale, Messages } from '../../i18n';
 
@@ -15,7 +13,7 @@ const bio = locale === 'en' ? personalInfo.bioEn : personalInfo.bioEs;
 const roles = t.hero.roles;
 ---
 
-<section id="about" class="py-24 sm:py-32 bg-[#050505] relative overflow-hidden border-t border-white/5 scroll-mt-20">
+<section id="about" class="py-32 sm:py-40 bg-[#050505] relative overflow-hidden border-t border-white/5 scroll-mt-20">
   <div class="max-w-6xl mx-auto px-6 lg:px-12 w-full">
     <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-start">
       <!-- Columna Izquierda: Presentación Editorial -->
@@ -34,32 +32,6 @@ const roles = t.hero.roles;
         <p class="text-base sm:text-lg text-neutral-300 font-light leading-relaxed mb-6">
           {bio}
         </p>
-
-        <!-- Botones de Acción Editorial -->
-        <div class="flex flex-wrap gap-4 pt-4">
-          <a href="/cv.pdf" download class="btn btn-primary">
-            <Icon name="download" size={14} />
-            {t.hero.downloadCV}
-          </a>
-
-          <ContactMenu locale={locale} direction="up" align="left">
-            <button
-              type="button"
-              aria-haspopup="true"
-              data-contact-trigger
-              class="btn btn-secondary"
-              slot="trigger"
-            >
-              <Icon name="message-circle" size={14} />
-              {t.hero.contactMe}
-            </button>
-          </ContactMenu>
-
-          <a href="#portfolio" class="btn btn-secondary">
-            {t.hero.viewProjects}
-            <Icon name="arrow-right" size={14} />
-          </a>
-        </div>
       </div>
 
       <!-- Columna Derecha: Tarjetas de Especialidad / Enfoque -->

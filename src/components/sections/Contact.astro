@@ -1,5 +1,6 @@
 ---
 import SectionHeader from '../ui/SectionHeader.astro';
+import Icon from '../ui/Icon.astro';
 import { personalInfo } from '../../data/personal';
 import type { Locale, Messages } from '../../i18n';
 
@@ -17,7 +18,7 @@ const labelClass =
   'block text-[11px] font-medium uppercase tracking-[0.22em] text-neutral-300 mb-2';
 ---
 
-<section id="contacto" class="py-24 sm:py-32 bg-[#050505] scroll-mt-24 border-t border-white/5">
+<section id="contacto" class="py-32 sm:py-40 bg-[#050505] scroll-mt-24 border-t border-white/5">
   <div class="max-w-2xl mx-auto px-6 sm:px-8">
     <div data-reveal>
       <SectionHeader
@@ -94,7 +95,8 @@ const labelClass =
           data-fallback={c.fallback}
           class="btn btn-primary btn-block disabled:opacity-60 disabled:cursor-not-allowed"
         >
-          {c.send}
+          <span data-contact-label>{c.send}</span>
+          <Icon name="arrow-right" size={14} />
         </button>
       </div>
     </form>
@@ -114,10 +116,11 @@ const labelClass =
 <script>
   const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
   const submit = form?.querySelector<HTMLButtonElement>('[data-contact-submit]');
+  const label = submit?.querySelector<HTMLElement>('[data-contact-label]');
   const status = form?.querySelector<HTMLElement>('[data-contact-status]');
   const errorBox = form?.querySelector<HTMLElement>('[data-contact-error]');
 
-  const originalLabel = submit?.textContent?.trim() ?? '';
+  const originalLabel = label?.textContent?.trim() ?? '';
   const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
   function showStatus(message: string, ok: boolean): void {
@@ -178,7 +181,7 @@ const labelClass =
 
     const sendingLabel = submit.getAttribute('data-sending') ?? '...';
     submit.disabled = true;
-    submit.textContent = sendingLabel;
+    if (label) label.textContent = sendingLabel;
 
     try {
       const controller = new AbortController();
@@ -220,7 +223,7 @@ const labelClass =
       showFallback(form.getAttribute('data-email') ?? '', name, email, message);
     } finally {
       submit.disabled = false;
-      submit.textContent = originalLabel;
+      if (label) label.textContent = originalLabel;
     }
   });
 </script>
