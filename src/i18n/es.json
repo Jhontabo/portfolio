@@ -61,5 +61,20 @@
   "footer": {
     "rights": "Todos los derechos reservados.",
     "madeWith": "Hecho con"
+  },
+  "contact": {
+    "title": "Contacto",
+    "subtitle": "¿Tienes un proyecto en mente? Escríbeme y te responderé pronto.",
+    "name": "Nombre",
+    "namePlaceholder": "Tu nombre",
+    "email": "Correo",
+    "emailPlaceholder": "tu@correo.com",
+    "message": "Mensaje",
+    "messagePlaceholder": "Cuéntame sobre tu proyecto...",
+    "send": "Enviar mensaje",
+    "sending": "Enviando...",
+    "success": "¡Mensaje enviado! Te responderé pronto.",
+    "error": "No se pudo enviar. Intenta de nuevo.",
+    "orWrite": "O escríbeme directamente a"
   }
 }

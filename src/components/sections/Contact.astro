@@ -1,0 +1,153 @@
+---
+import SectionHeader from '../ui/SectionHeader.astro';
+import { personalInfo } from '../../data/personal';
+import type { Locale, Messages } from '../../i18n';
+
+export interface Props {
+  locale: Locale;
+  t: Messages;
+}
+
+const { locale, t } = Astro.props;
+const c = t.contact;
+
+const inputClass =
+  'w-full bg-neutral-900/60 border border-white/15 focus:border-white/40 rounded-xl px-4 py-3.5 text-sm text-white placeholder:text-neutral-500 outline-none transition-colors duration-300';
+const labelClass =
+  'block text-[11px] font-medium uppercase tracking-[0.22em] text-neutral-300 mb-2';
+---
+
+<section id="contacto" class="py-24 sm:py-32 bg-[#050505] scroll-mt-24 border-t border-white/5">
+  <div class="max-w-2xl mx-auto px-6 sm:px-8">
+    <div data-reveal>
+      <SectionHeader
+        kicker={locale === 'en' ? 'CONTACT' : 'CONTACTO'}
+        title={c.title}
+        subtitle={c.subtitle}
+      />
+    </div>
+
+    <form
+      data-contact-form
+      data-endpoint="https://formsubmit.co/ajax/jhon.tajumbina@email.com"
+      class="space-y-5"
+      data-reveal
+      novalidate
+    >
+      <div class="grid sm:grid-cols-2 gap-5">
+        <div>
+          <label for="contact-name" class={labelClass}>{c.name}</label>
+          <input
+            id="contact-name"
+            name="name"
+            type="text"
+            required
+            autocomplete="name"
+            placeholder={c.namePlaceholder}
+            class={inputClass}
+          />
+        </div>
+        <div>
+          <label for="contact-email" class={labelClass}>{c.email}</label>
+          <input
+            id="contact-email"
+            name="email"
+            type="email"
+            required
+            autocomplete="email"
+            placeholder={c.emailPlaceholder}
+            class={inputClass}
+          />
+        </div>
+      </div>
+
+      <div>
+        <label for="contact-message" class={labelClass}>{c.message}</label>
+        <textarea
+          id="contact-message"
+          name="message"
+          required
+          rows={5}
+          placeholder={c.messagePlaceholder}
+          class={`${inputClass} resize-y min-h-32`}
+        ></textarea>
+      </div>
+
+      <p data-contact-status class="hidden text-sm font-light" role="status" aria-live="polite"></p>
+
+      <div>
+        <button
+          type="submit"
+          data-contact-submit
+          data-sending={c.sending}
+          data-success={c.success}
+          data-error={c.error}
+          class="btn btn-primary btn-block disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          {c.send}
+        </button>
+      </div>
+    </form>
+
+    <p class="mt-8 text-center text-sm text-neutral-400 font-light" data-reveal>
+      {c.orWrite}{' '}
+      <span class="text-neutral-200 select-all">{personalInfo.email}</span>
+    </p>
+  </div>
+</section>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  const submit = form?.querySelector<HTMLButtonElement>('[data-contact-submit]');
+  const status = form?.querySelector<HTMLElement>('[data-contact-status]');
+
+  const originalLabel = submit?.textContent?.trim() ?? '';
+
+  function showStatus(message: string, ok: boolean): void {
+    if (!status) return;
+    status.textContent = message;
+    status.classList.remove('hidden', 'text-emerald-300', 'text-rose-300');
+    status.classList.add(ok ? 'text-emerald-300' : 'text-rose-300');
+  }
+
+  form?.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (!form || !submit) return;
+
+    const endpoint = form.getAttribute('data-endpoint') ?? '';
+    const data = new FormData(form);
+    const name = String(data.get('name') ?? '').trim();
+    const email = String(data.get('email') ?? '').trim();
+    const message = String(data.get('message') ?? '').trim();
+    if (!name || !email || !message) return;
+
+    const sendingLabel = submit.getAttribute('data-sending') ?? '...';
+    submit.disabled = true;
+    submit.textContent = sendingLabel;
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          _subject: `Nuevo mensaje del portafolio — ${name}`,
+          _template: 'table',
+          _captcha: 'false',
+        }),
+      });
+      if (!response.ok) throw new Error('send failed');
+      const okMsg = submit.getAttribute('data-success') ?? 'OK';
+      showStatus(okMsg, true);
+      form.reset();
+    } catch {
+      const errMsg = submit.getAttribute('data-error') ?? 'Error';
+      showStatus(errMsg, false);
+    } finally {
+      submit.disabled = false;
+      submit.textContent = originalLabel;
+    }
+  });
+</script>
