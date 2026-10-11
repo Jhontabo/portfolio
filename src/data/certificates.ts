@@ -1,5 +1,10 @@
 import type { Certificate } from './types';
 
+// Carpeta de Drive con todos los certificados
+// (Compartir → cualquier persona con el enlace puede ver).
+export const certificatesFolderUrl =
+  'https://drive.google.com/drive/folders/1alDZj0v_P3Cu0QwKgtfmRmaqRNgcAXZ4?usp=sharing';
+
 export const certificates: Certificate[] = [
   {
     id: 1,

@@ -16,7 +16,7 @@
       "Pitcher de Marketing · Meta Ads"
     ],
     "viewProjects": "Ver proyectos",
-    "downloadCV": "Descargar CV",
+    "downloadCV": "Ver mi CV",
     "contactMe": "Contactarme"
   },
   "projects": {
@@ -37,8 +37,7 @@
   },
   "certificates": {
     "title": "Certificaciones",
-    "showMore": "Mostrar más",
-    "showLess": "Mostrar menos"
+    "viewFolder": "Ver carpeta completa"
   },
   "portfolio": {
     "title": "Portafolio",
