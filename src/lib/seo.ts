@@ -5,21 +5,21 @@ export const SITE_URL = 'https://jhon-tajumbina.vercel.app';
 export const SITE_NAME = 'Jhon Tajumbina Portfolio';
 
 export const META = {
-  title: 'Jhon Tajumbina | Full-Stack Developer',
+  title: 'Jhon Tajumbina | Software Engineer & Digital Trafficker Ads',
   description:
-    'Full-Stack Developer | React · Express · Laravel - Estudiante de Ingeniería de Sistemas',
+    'Software Engineer y Pitcher de Marketing (Meta Ads) en Colombia. Desarrollo de aplicaciones web, móviles y campañas de alto impacto. Conoce mis proyectos.',
 } as const;
 
 export const META_LOCALIZED: Record<Locale, { title: string; description: string }> = {
   es: {
-    title: 'Jhon Tajumbina | Full-Stack Developer',
+    title: 'Jhon Tajumbina | Software Engineer & Digital Trafficker Ads',
     description:
-      'Full-Stack Developer | React · Express · Laravel - Estudiante de Ingeniería de Sistemas de Colombia. Apps móviles, web y sistemas a medida.',
+      'Software Engineer y Pitcher de Marketing (Meta Ads) en Colombia. Desarrollo de aplicaciones web, móviles y campañas de alto impacto. Conoce mis proyectos.',
   },
   en: {
-    title: 'Jhon Tajumbina | Full-Stack Developer',
+    title: 'Jhon Tajumbina | Software Engineer & Digital Trafficker Ads',
     description:
-      'Full-Stack Developer | React · Express · Laravel - Systems Engineer from Colombia. Mobile apps, websites and custom systems.',
+      'Software Engineer and Marketing Pitcher (Meta Ads) in Colombia. I develop custom web and mobile apps and high-impact ad campaigns. Explore my projects.',
   },
 } as const;
 

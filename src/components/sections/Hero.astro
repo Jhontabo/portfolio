@@ -13,11 +13,12 @@ const { locale } = Astro.props;
   id="home"
   class="relative w-full min-h-[70svh] sm:min-h-[85svh] lg:h-[100svh] lg:min-h-[640px] flex items-center justify-center overflow-hidden bg-[#050505]"
 >
-  <!-- Nombre visible en la parte superior del hero (encima del banner) -->
+  <!-- H1 principal con los dos pilares (SEO). Visible solo en móvil, pero legible por Google en desktop -->
   <h1
     class="absolute top-24 left-1/2 -translate-x-1/2 z-20 w-full px-6 text-center font-serif font-medium uppercase text-white text-xl tracking-[0.18em] pointer-events-none select-none [text-shadow:0_2px_20px_rgba(0,0,0,0.8)] md:hidden"
   >
     Jhon Tajumbina
+    <span class="sr-only"> — Software Engineer & Media Buyer / Pitcher de Marketing</span>
   </h1>
 
   <!-- 1. Banner con wrapper que adapta dimensiones exactas en cualquier dispositivo -->
@@ -28,7 +29,7 @@ const { locale } = Astro.props;
         src="/Desing-final.webp"
         srcset="/Desing-final-1200.webp 1200w, /Desing-final-1600.webp 1600w, /Desing-final.webp 2400w"
         sizes="100vw"
-        alt="Jhon Tajumbina"
+        alt="Jhon Tajumbina — Software Engineer & Media Buyer / Pitcher de Marketing"
         width="2400"
         height="1260"
         loading="eager"
