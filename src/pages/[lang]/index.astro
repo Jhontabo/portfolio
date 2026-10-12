@@ -1,5 +1,6 @@
 ---
 import BaseHead from '../../components/layout/BaseHead.astro';
+import Analytics from '@vercel/analytics/astro';
 import Navbar from '../../components/layout/Navbar.astro';
 import Hero from '../../components/sections/Hero.astro';
 import About from '../../components/sections/About.astro';
@@ -54,5 +55,6 @@ const messages = t(locale);
 
       initReveal();
     </script>
+    <Analytics />
   </body>
 </html>

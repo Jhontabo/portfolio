@@ -1,4 +1,5 @@
 ---
+import Analytics from '@vercel/analytics/astro';
 import '../styles/global.css';
 import { SITE_NAME } from '../lib/seo';
 ---
@@ -69,5 +70,6 @@ import { SITE_NAME } from '../lib/seo';
         }
       }
     </script>
+    <Analytics />
   </body>
 </html>
