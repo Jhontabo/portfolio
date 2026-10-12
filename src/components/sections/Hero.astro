@@ -13,8 +13,12 @@ const { locale } = Astro.props;
   id="home"
   class="relative w-full min-h-[70svh] sm:min-h-[85svh] lg:h-[100svh] lg:min-h-[640px] flex items-center justify-center overflow-hidden bg-[#050505]"
 >
-  <!-- H1 accesible para motores de búsqueda y accesibilidad -->
-  <h1 class="sr-only">Jhon Tajumbina — Portafolio Oficial</h1>
+  <!-- Nombre visible en la parte superior del hero (encima del banner) -->
+  <h1
+    class="absolute top-24 sm:top-28 lg:top-32 left-1/2 -translate-x-1/2 z-20 w-full px-6 text-center font-serif font-medium uppercase text-white text-xl sm:text-4xl lg:text-5xl tracking-[0.18em] sm:tracking-[0.3em] pointer-events-none select-none [text-shadow:0_2px_20px_rgba(0,0,0,0.8)]"
+  >
+    Jhon Tajumbina
+  </h1>
 
   <!-- 1. Banner con wrapper que adapta dimensiones exactas en cualquier dispositivo -->
   <div class="hero-image-wrapper relative z-0 w-full flex items-center justify-center select-none">
