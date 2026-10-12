@@ -4,6 +4,7 @@ import Modal from '../ui/Modal.astro';
 import Icon from '../ui/Icon.astro';
 import BrandIcon from '../ui/BrandIcon.astro';
 import { projects } from '../../data/projects';
+import { personalInfo } from '../../data/personal';
 import { getDriveImageUrl } from '../../lib/drive';
 import type { Locale, Messages } from '../../i18n';
 
@@ -158,6 +159,65 @@ const githubPath =
         })
       }
     </div>
+
+    <div data-reveal class="mt-16 sm:mt-20 flex flex-col items-center text-center">
+      <p class="text-[11px] uppercase tracking-[0.35em] font-medium text-neutral-500 mb-3">
+        {locale === 'en' ? 'WANT TO SEE MORE?' : '¿QUIERES VER MÁS?'}
+      </p>
+      <h3 class="font-serif text-2xl sm:text-3xl font-light text-white max-w-xl leading-snug">
+        {
+          locale === 'en'
+            ? 'Explore all my projects on GitHub'
+            : 'Explora todos mis proyectos en GitHub'
+        }
+      </h3>
+
+      <div class="relative mt-10 flex flex-col items-center">
+        <div class="ball-float">
+          <a
+            href={personalInfo.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={locale === 'en' ? 'View more projects on GitHub' : 'Ver más proyectos en GitHub'}
+            class="github-ball group relative flex flex-col items-center justify-center w-40 h-40 sm:w-48 sm:h-48 rounded-full bg-gradient-to-br from-white via-neutral-100 to-neutral-400 text-neutral-950 border-4 border-white/90 shadow-[0_20px_70px_rgba(255,255,255,0.28)] transition-transform duration-300 hover:scale-110 hover:shadow-[0_25px_90px_rgba(255,255,255,0.4)]"
+          >
+          <span
+            class="absolute inset-0 rounded-full border-2 border-white/40 scale-100 group-hover:scale-125 opacity-60 group-hover:opacity-0 transition-all duration-500"
+            aria-hidden="true"></span>
+          <svg
+            width="44"
+            height="44"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            aria-hidden="true"
+            class="mb-2 transition-transform duration-300 group-hover:-translate-y-1 group-hover:rotate-6"
+          >
+            <path d={githubPath} />
+          </svg>
+          <span class="text-sm sm:text-base font-extrabold uppercase tracking-[0.2em] leading-none">
+            {locale === 'en' ? 'VIEW MORE' : 'VER MÁS'}
+          </span>
+          <span class="mt-1.5 inline-flex items-center gap-1 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-semibold text-neutral-700">
+            GitHub
+            <svg
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              aria-hidden="true"
+              class="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M7 7h10v10" />
+            </svg>
+          </span>
+        </a>
+        </div>
+        <div class="ball-shadow mt-5 h-3 w-32 sm:w-36 rounded-full bg-white/15 blur-md" aria-hidden="true">
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -166,3 +226,42 @@ const githubPath =
 
   initModals();
 </script>
+
+<style>
+  .ball-float {
+    animation: ball-bounce 2.2s ease-in-out infinite;
+    will-change: transform;
+  }
+  .ball-float:hover {
+    animation-play-state: paused;
+  }
+  .ball-shadow {
+    animation: shadow-pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes ball-bounce {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-26px);
+    }
+  }
+  @keyframes shadow-pulse {
+    0%,
+    100% {
+      transform: scaleX(1);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scaleX(0.6);
+      opacity: 0.2;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ball-float,
+    .ball-shadow {
+      animation: none;
+    }
+  }
+</style>
