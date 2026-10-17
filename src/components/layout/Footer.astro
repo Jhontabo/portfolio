@@ -1,4 +1,7 @@
 ---
+import { Picture } from 'astro:assets';
+import footerDesktop from '../../assets/footer-desktop.webp';
+import heroMobile from '../../assets/hero-mobile.webp';
 import BrandIcon from '../ui/BrandIcon.astro';
 import Icon from '../ui/Icon.astro';
 import { personalInfo } from '../../data/personal';
@@ -16,18 +19,35 @@ const year = new Date().getFullYear();
 <footer id="footer" class="bg-[#050505]">
   <!-- Banner del hero reutilizado como cierre visual (misma presentación que arriba) -->
   <div class="hero-image-wrapper relative z-0 w-full flex items-center justify-center overflow-hidden select-none">
-    <picture class="contents">
-      <source media="(max-width: 767px)" srcset="/desing-mobil.webp" />
-      <img
-        src="/diseno-footer.webp"
+    <!-- Móvil: diseño vertical -->
+    <div class="md:hidden w-full flex justify-center">
+      <Picture
+        src={heroMobile}
+        formats={['avif', 'webp']}
+        fallbackFormat="webp"
+        widths={[600, 900, 1191]}
+        sizes="100vw"
         alt=""
-        width="2400"
-        height="1260"
         loading="lazy"
         decoding="async"
         class="hero-banner object-center pointer-events-none"
       />
-    </picture>
+    </div>
+
+    <!-- Desktop: banner panorámico -->
+    <div class="hidden md:flex w-full h-full items-center justify-center">
+      <Picture
+        src={footerDesktop}
+        formats={['avif', 'webp']}
+        fallbackFormat="webp"
+        widths={[1200, 1600, 2400]}
+        sizes="100vw"
+        alt=""
+        loading="lazy"
+        decoding="async"
+        class="hero-banner object-center pointer-events-none"
+      />
+    </div>
 
     <!-- Capa oscura para que los iconos sean los protagonistas -->
     <div

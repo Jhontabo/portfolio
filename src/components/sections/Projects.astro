@@ -3,9 +3,9 @@ import SectionHeader from '../ui/SectionHeader.astro';
 import Modal from '../ui/Modal.astro';
 import Icon from '../ui/Icon.astro';
 import BrandIcon from '../ui/BrandIcon.astro';
+import { Image } from 'astro:assets';
 import { projects } from '../../data/projects';
 import { personalInfo } from '../../data/personal';
-import { getDriveImageUrl } from '../../lib/drive';
 import type { Locale, Messages } from '../../i18n';
 
 export interface Props {
@@ -52,7 +52,7 @@ const githubPath =
             locale === 'en'
               ? (project.descriptionEn ?? project.description)
               : project.description;
-          const image = project.imageUrl ? getDriveImageUrl(project.imageUrl) : null;
+          const image = project.image ?? null;
           const modalId = `project-modal-${project.id}`;
 
           return (
@@ -65,14 +65,15 @@ const githubPath =
                     class="h-60 sm:h-72 bg-neutral-900/60 flex items-center justify-center relative overflow-hidden w-full cursor-zoom-in"
                     aria-label={`Ampliar imagen de ${name}`}
                   >
-                    <img
+                    <Image
                       src={image}
-                      alt={name}
-                      width={640}
-                      height={420}
+                      alt={project.imageAlt ?? name}
+                      widths={[400, 640, 900]}
+                      sizes="(min-width: 640px) 45vw, 92vw"
+                      format="webp"
+                      quality={82}
                       loading="lazy"
                       decoding="async"
-                      referrerpolicy="no-referrer"
                       class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                     />
                     <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent opacity-60" />
@@ -143,13 +144,14 @@ const githubPath =
                   closeLabel={locale === 'en' ? 'Close dialog' : 'Cerrar modal'}
                   expandedLabel={name}
                 >
-                  <img
+                  <Image
                     src={image}
-                    alt={name}
-                    width={1200}
-                    height={800}
+                    alt={project.imageAlt ?? name}
+                    widths={[800, 1200]}
+                    sizes="90vw"
+                    format="webp"
+                    quality={88}
                     decoding="async"
-                    referrerpolicy="no-referrer"
                     class="max-h-[85vh] max-w-full object-contain shadow-2xl rounded-lg"
                   />
                 </Modal>

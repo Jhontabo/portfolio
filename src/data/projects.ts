@@ -1,4 +1,7 @@
 import type { Project } from './types';
+import inventoryManager from '../assets/inventory-manager.webp';
+import registroUci from '../assets/registro-uci.webp';
+import bspwmDotfiles from '../assets/bspwm-dotfiles.webp';
 
 export const projects: Project[] = [
   {
@@ -12,7 +15,8 @@ export const projects: Project[] = [
     technologies: ['Laravel', 'Filament', 'PHP', 'MySQL', 'Google'],
     demo: '#',
     github: 'https://github.com/Jhontabo/InventoryManager',
-    imageUrl: '/inventory-manager.webp',
+    image: inventoryManager,
+    imageAlt: 'Panel de gestión de inventarios de InventoryManager',
   },
   {
     id: 3,
@@ -25,7 +29,8 @@ export const projects: Project[] = [
     technologies: ['Flutter', 'Dart', 'Firebase'],
     demo: '#',
     github: 'https://github.com/Jhontabo/Registro-UCI',
-    imageUrl: '/registro-uci.webp',
+    image: registroUci,
+    imageAlt: 'Pantalla de registro de pacientes de la aplicación Registro UCI',
   },
   {
     id: 4,
@@ -48,6 +53,7 @@ export const projects: Project[] = [
     technologies: ['BSPWM', 'Polybar', 'Zsh', 'Bash'],
     demo: '#',
     github: 'https://github.com/Jhontabo/ubuntuBspwm',
-    imageUrl: '/bspwm-dotfiles.webp',
+    image: bspwmDotfiles,
+    imageAlt: 'Escritorio BSPWM con Polybar y temática Pacman',
   },
 ];

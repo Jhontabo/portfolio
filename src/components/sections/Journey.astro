@@ -70,13 +70,6 @@ const todayLabel = `${new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'es-CO
 <section
   id="journey"
   class="py-32 sm:py-40 bg-[#050505] overflow-hidden scroll-mt-24 border-t border-white/5"
-  data-tour-title={locale === 'en' ? 'Explore my journey' : 'Explora mi ruta'}
-  data-tour-desc={
-    locale === 'en'
-      ? 'Click the gold circles to see each stage in detail.'
-      : 'Haz clic en los círculos dorados para ver el detalle de cada etapa.'
-  }
-  data-tour-done={locale === 'en' ? 'Got it' : 'Entendido'}
 >
   <div class="max-w-3xl mx-auto px-6 sm:px-8">
     <div data-reveal>
@@ -436,7 +429,6 @@ const todayLabel = `${new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'es-CO
 </style>
 
 <script>
-  import { driver } from 'driver.js';
   import {
     initJourneyExpand,
     initOriginConnector,
@@ -446,71 +438,4 @@ const todayLabel = `${new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'es-CO
   initJourneyExpand();
   initOriginConnector();
   initSnakePath();
-
-  // Tour driver.js (solo Journey): un paso sobre el círculo origen, una sola vez.
-  const journeySection = document.getElementById('journey');
-  const JOURNEY_KEY = 'jtour-journey-v1';
-  let journeySeen = false;
-  try {
-    journeySeen = localStorage.getItem(JOURNEY_KEY) === '1';
-  } catch {
-    journeySeen = false;
-  }
-  const markJourney = (): void => {
-    try {
-      localStorage.setItem(JOURNEY_KEY, '1');
-    } catch {
-      /* almacenamiento no disponible */
-    }
-  };
-
-  if (journeySection && !journeySeen) {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      markJourney();
-    } else {
-      const showJourneyTour = (): void => {
-        const target = [
-          ...document.querySelectorAll<HTMLElement>('[data-origin-circle]'),
-        ].find((el) => el.getBoundingClientRect().width > 0);
-        if (!target || !journeySection) {
-          markJourney();
-          return;
-        }
-        driver({
-          popoverClass: 'jtour-popover',
-          stagePadding: 8,
-          allowClose: true,
-          showProgress: false,
-          doneBtnText: journeySection.getAttribute('data-tour-done') ?? 'OK',
-          onDestroyed: markJourney,
-          steps: [
-            {
-              element: target,
-              popover: {
-                title: journeySection.getAttribute('data-tour-title') ?? '',
-                description: journeySection.getAttribute('data-tour-desc') ?? '',
-                side: 'bottom',
-                align: 'center',
-              },
-            },
-          ],
-        }).drive();
-      };
-      if ('IntersectionObserver' in window) {
-        const io = new IntersectionObserver(
-          (entries) => {
-            entries.forEach((entry) => {
-              if (!entry.isIntersecting) return;
-              io.disconnect();
-              window.setTimeout(showJourneyTour, 700);
-            });
-          },
-          { threshold: 0.25 },
-        );
-        io.observe(journeySection);
-      } else {
-        showJourneyTour();
-      }
-    }
-  }
 </script>

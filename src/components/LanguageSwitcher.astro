@@ -16,6 +16,7 @@ const options: { code: Locale; name: string }[] = [
 ];
 
 const current = options.find((o) => o.code === locale) ?? options[0];
+const selectLabel = locale === 'en' ? 'Select language' : 'Seleccionar idioma';
 ---
 
 <div class="flex items-center gap-2">
@@ -26,7 +27,7 @@ const current = options.find((o) => o.code === locale) ?? options[0];
       data-lang-toggle
       aria-expanded="false"
       aria-haspopup="true"
-      aria-label="Select language"
+      aria-label={selectLabel}
       class="flex items-center gap-1.5 text-neutral-200 hover:text-white transition-colors text-xs font-semibold tracking-[0.25em] uppercase py-1 px-1.5 rounded focus:outline-none"
     >
       <FlagIcon code={current.code} class="w-5 h-auto rounded-[3px] shadow-sm" />

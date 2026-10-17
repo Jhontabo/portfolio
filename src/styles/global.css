@@ -1,46 +1,4 @@
 @import 'tailwindcss';
-@import 'driver.js/dist/driver.css';
-
-/* Tour guiado (driver.js, solo Journey) en blanco profesional */
-.jtour-popover.driver-popover {
-  background-color: #ffffff;
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  border-radius: 14px;
-  color: #111111;
-  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.55);
-}
-
-.jtour-popover .driver-popover-title {
-  color: #111111;
-  font-family: var(--font-cinzel, 'Cinzel', serif);
-  font-size: 15px;
-  letter-spacing: 0.08em;
-}
-
-.jtour-popover .driver-popover-description {
-  color: #4b5563;
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-.jtour-popover .driver-popover-close-btn {
-  color: #9ca3af;
-}
-
-.jtour-popover .driver-popover-close-btn:hover {
-  color: #111111;
-}
-
-.jtour-popover .driver-popover-footer button {
-  background-color: #111111;
-  border-color: #111111;
-  color: #ffffff;
-  text-shadow: none;
-}
-
-.jtour-popover .driver-popover-arrow {
-  border-color: #ffffff;
-}
 
 :root {
   --background: #050505;
@@ -64,9 +22,21 @@
 }
 
 html {
-  /* Base 18px: letras más grandes en todo el sitio (todo usa rem) */
-  font-size: 112.5%;
+  /* Base 16px en móvil (evita texto desbordado) y escala a 18px en desktop */
+  font-size: 100%;
   scroll-behavior: smooth;
+}
+
+@media (min-width: 640px) {
+  html {
+    font-size: 106.25%;
+  }
+}
+
+@media (min-width: 1024px) {
+  html {
+    font-size: 112.5%;
+  }
 }
 
 body {
@@ -186,15 +156,6 @@ body {
     height: 100%;
     max-height: none;
     object-fit: cover;
-  }
-}
-
-/* Hide scrollbar */
-@utility scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
   }
 }
 

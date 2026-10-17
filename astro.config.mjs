@@ -11,6 +11,8 @@ export default defineConfig({
       // '/404' no existe como ruta real y '/' es un redirect noindex: fuera del sitemap
       filter: (page) =>
         !page.includes('/404') && page !== 'https://jhon-tajumbina.vercel.app/',
+      // lastmod = fecha de build (sitio estático de una sola página por idioma)
+      serialize: (item) => ({ ...item, lastmod: new Date().toISOString() }),
     }),
   ],
   vite: { plugins: [tailwindcss()] },

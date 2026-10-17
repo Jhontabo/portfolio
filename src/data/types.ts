@@ -1,3 +1,5 @@
+import type { ImageMetadata } from 'astro';
+
 export interface Project {
   id: number;
   name: string;
@@ -7,7 +9,8 @@ export interface Project {
   technologies: string[];
   demo: string;
   github: string;
-  imageUrl?: string;
+  image?: ImageMetadata;
+  imageAlt?: string;
 }
 
 export type SkillCategory =
@@ -31,8 +34,6 @@ export interface Certificate {
   nameEn: string;
   issuer: string;
   date: string;
-  description: string;
-  descriptionEn: string;
   link: string;
 }
 

@@ -6,7 +6,7 @@ import { SITE_NAME } from '../lib/seo';
 ---
 
 <!doctype html>
-<html lang="es-CO" translate="no">
+<html lang="es-CO">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -29,11 +29,9 @@ import { SITE_NAME } from '../lib/seo';
         <p class="font-serif text-7xl sm:text-8xl font-light tracking-[0.15em] text-white mb-4">
           404
         </p>
-        <h1 data-404-title-es class="font-serif text-xl sm:text-2xl text-neutral-200 font-light tracking-wide mb-3">
-          Página no encontrada
-        </h1>
-        <h1 data-404-title-en hidden class="font-serif text-xl sm:text-2xl text-neutral-200 font-light tracking-wide mb-3">
-          Page not found
+        <h1 class="font-serif text-xl sm:text-2xl text-neutral-200 font-light tracking-wide mb-3">
+          <span data-404-title-es>Página no encontrada</span>
+          <span data-404-title-en hidden>Page not found</span>
         </h1>
         <p data-404-desc-es class="text-neutral-400 text-sm font-light leading-relaxed mb-8">
           La página solicitada no está disponible o ha sido trasladada.
