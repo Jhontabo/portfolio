@@ -30,21 +30,9 @@ const allNavLinks = [...leftLinks, ...rightLinks];
     class="w-full max-w-7xl mx-auto px-6 lg:px-12 py-5 sm:py-6 flex items-center justify-between"
     aria-label="Navegación principal"
   >
-    <!-- BLOQUE 1 (Izquierda): Enlaces Desktop -->
-    <div class="hidden md:flex items-center gap-8 justify-start flex-1">
-      {leftLinks.map((link) => (
-        <a
-          href={link.href}
-          class="text-sm font-semibold uppercase tracking-[0.25em] text-white hover:text-neutral-300 transition-colors duration-200"
-        >
-          {link.name}
-        </a>
-      ))}
-    </div>
-
-    <!-- BLOQUE 3 (Derecha): Enlaces restantes + Selector de Idioma -->
-    <div class="hidden md:flex items-center gap-8 justify-end flex-1">
-      {rightLinks.map((link) =>
+    <!-- Enlaces + idioma (Desktop): agrupados y centrados -->
+    <div class="hidden md:flex items-center gap-6 lg:gap-8 justify-center flex-1">
+      {allNavLinks.map((link) =>
         link.href.startsWith('mailto:') ? (
           <ContactMenu locale={locale} align="right">
             <button
