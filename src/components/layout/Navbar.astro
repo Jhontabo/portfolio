@@ -1,7 +1,6 @@
 ---
 import LanguageSwitcher from '../LanguageSwitcher.astro';
 import ContactMenu from '../ui/ContactMenu.astro';
-import Icon from '../ui/Icon.astro';
 import { personalInfo } from '../../data/personal';
 import type { Locale, Messages } from '../../i18n';
 
@@ -25,9 +24,7 @@ const rightLinks = [
 const allNavLinks = [...leftLinks, ...rightLinks];
 ---
 
-<header
-  class="fixed top-0 left-0 right-0 z-50 w-full bg-black/70 backdrop-blur-md border-b border-white/10 transition-all duration-300 pointer-events-auto"
->
+<header class="fixed top-0 left-0 right-0 z-50 w-full bg-black/70 backdrop-blur-md border-b border-white/10 transition-all duration-300 pointer-events-auto">
   <nav
     data-navbar
     class="w-full max-w-7xl mx-auto px-6 lg:px-12 py-5 sm:py-6 flex items-center justify-between"
@@ -35,56 +32,41 @@ const allNavLinks = [...leftLinks, ...rightLinks];
   >
     <!-- BLOQUE 1 (Izquierda): Enlaces Desktop -->
     <div class="hidden md:flex items-center gap-8 justify-start flex-1">
-      {
-        leftLinks.map((link) => (
+      {leftLinks.map((link) => (
+        <a
+          href={link.href}
+          class="text-sm font-semibold uppercase tracking-[0.25em] text-white hover:text-neutral-300 transition-colors duration-200"
+        >
+          {link.name}
+        </a>
+      ))}
+    </div>
+
+    <!-- BLOQUE 3 (Derecha): Enlaces restantes + Selector de Idioma -->
+    <div class="hidden md:flex items-center gap-8 justify-end flex-1">
+      {rightLinks.map((link) =>
+        link.href.startsWith('mailto:') ? (
+          <ContactMenu locale={locale} align="right">
+            <button
+              type="button"
+              data-contact-trigger
+              aria-haspopup="true"
+              class="btn btn-primary btn-sm"
+              slot="trigger"
+            >
+              {link.name}
+            </button>
+          </ContactMenu>
+        ) : (
           <a
             href={link.href}
             class="text-sm font-semibold uppercase tracking-[0.25em] text-white hover:text-neutral-300 transition-colors duration-200"
           >
             {link.name}
           </a>
-        ))
-      }
-    </div>
-
-    <!-- BLOQUE 3 (Derecha): Enlaces restantes + Selector de Idioma -->
-    <div class="hidden md:flex items-center gap-8 justify-end flex-1">
-      {
-        rightLinks.map((link) =>
-          link.href.startsWith('mailto:') ? (
-            <ContactMenu locale={locale} align="right">
-              <button
-                type="button"
-                aria-haspopup="true"
-                class="btn btn-primary btn-sm"
-                slot="trigger"
-              >
-                {link.name}
-              </button>
-            </ContactMenu>
-          ) : (
-            <a
-              href={link.href}
-              class="text-sm font-semibold uppercase tracking-[0.25em] text-white hover:text-neutral-300 transition-colors duration-200"
-            >
-              {link.name}
-            </a>
-          )
-        )
-      }
+        ),
+      )}
       <div class="h-3 w-px bg-white/25" aria-hidden="true"></div>
-      <a
-        href="/cv.pdf"
-        download
-        class="cv-nav group/btn relative overflow-hidden btn btn-secondary btn-sm border-white/50 hover:border-white hover:shadow-[0_0_28px_rgba(255,255,255,0.18)]"
-      >
-        <span
-          class="shine pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-          aria-hidden="true"
-        ></span>
-        <Icon name="download" size={17} class="transition-transform duration-300 group-hover/btn:translate-y-0.5" />
-        {t.hero.downloadCV}
-      </a>
       <LanguageSwitcher locale={locale} />
     </div>
 
@@ -97,11 +79,20 @@ const allNavLinks = [...leftLinks, ...rightLinks];
       aria-label="Abrir menú de navegación"
       class="md:hidden ml-auto text-white hover:text-neutral-300 p-2 transition-colors focus:outline-none"
     >
-      <span data-nav-icon="menu" class="flex flex-col gap-1.5 w-5 justify-center items-end" aria-hidden="true">
+      <span
+        data-nav-icon="menu"
+        class="flex flex-col gap-1.5 w-5 justify-center items-end"
+        aria-hidden="true"
+      >
         <span class="w-5 h-[1.5px] bg-neutral-300"></span>
         <span class="w-3.5 h-[1.5px] bg-neutral-300"></span>
       </span>
-      <span data-nav-icon="x" hidden class="relative w-5 h-5 flex items-center justify-center" aria-hidden="true">
+      <span
+        data-nav-icon="x"
+        hidden
+        class="relative w-5 h-5 flex items-center justify-center"
+        aria-hidden="true"
+      >
         <span class="absolute w-5 h-[1.5px] bg-neutral-300 rotate-45"></span>
         <span class="absolute w-5 h-[1.5px] bg-neutral-300 -rotate-45"></span>
       </span>
@@ -114,50 +105,34 @@ const allNavLinks = [...leftLinks, ...rightLinks];
       class="nav-drawer absolute top-full left-0 right-0 w-full bg-[#050505]/95 backdrop-blur-md border-b border-white/10 py-8 px-6 flex-col items-center gap-6 shadow-2xl"
     >
       <ul class="flex flex-col items-center gap-5 text-center">
-        {
-          allNavLinks.map((link) => (
-            <li>
-              {link.href.startsWith('mailto:') ? (
-                <ContactMenu locale={locale}>
-                  <button
-                    type="button"
-                    aria-haspopup="true"
-                    class="btn btn-primary btn-sm"
-                    slot="trigger"
-                  >
-                    {link.name}
-                  </button>
-                </ContactMenu>
-              ) : (
-                <a
-                  href={link.href}
-                  class="font-serif text-sm uppercase tracking-[0.28em] text-neutral-300 hover:text-white transition-colors py-1 block"
+        {allNavLinks.map((link) => (
+          <li>
+            {link.href.startsWith('mailto:') ? (
+              <ContactMenu locale={locale}>
+                <button
+                  type="button"
+                  data-contact-trigger
+                  aria-haspopup="true"
+                  class="btn btn-primary btn-sm"
+                  slot="trigger"
                 >
                   {link.name}
-                </a>
-              )}
-            </li>
-          ))
-        }
+                </button>
+              </ContactMenu>
+            ) : (
+              <a
+                href={link.href}
+                class="font-serif text-sm uppercase tracking-[0.28em] text-neutral-300 hover:text-white transition-colors py-1 block"
+              >
+                {link.name}
+              </a>
+            )}
+          </li>
+        ))}
       </ul>
 
       <div class="h-px bg-white/10 w-20 my-1"></div>
-      <a
-        href="/cv.pdf"
-        download
-        class="cv-nav group/btn relative overflow-hidden btn btn-secondary btn-sm border-white/50 hover:border-white hover:shadow-[0_0_28px_rgba(255,255,255,0.18)]"
-      >
-        <span
-          class="shine pointer-events-none absolute inset-y-0 left-0 w-1/3 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-          aria-hidden="true"
-        ></span>
-        <Icon name="download" size={17} class="transition-transform duration-300 group-hover/btn:translate-y-0.5" />
-        {t.hero.downloadCV}
-      </a>
-      <LanguageSwitcher
-        locale={locale}
-        label={locale === 'es' ? 'Idioma:' : 'Language:'}
-      />
+      <LanguageSwitcher locale={locale} label={locale === 'es' ? 'Idioma:' : 'Language:'} />
     </div>
   </nav>
 </header>
@@ -167,43 +142,3 @@ const allNavLinks = [...leftLinks, ...rightLinks];
 
   initNavbar();
 </script>
-
-<style>
-  /* Pulso + barrido para que la descarga del CV no pase desapercibida */
-  @keyframes cv-pulse {
-    0%,
-    100% {
-      box-shadow: 0 0 0 rgba(56, 189, 248, 0);
-    }
-    50% {
-      box-shadow: 0 0 26px rgba(56, 189, 248, 0.4);
-    }
-  }
-
-  .cv-nav {
-    animation: cv-pulse 2.6s ease-in-out infinite;
-  }
-
-  .cv-nav:hover {
-    animation-play-state: paused;
-  }
-
-  @keyframes cv-shine {
-    0% {
-      transform: translateX(-160%) skewX(-12deg);
-    }
-    55%,
-    100% {
-      transform: translateX(420%) skewX(-12deg);
-    }
-  }
-
-  .cv-nav .shine {
-    transform: translateX(-160%) skewX(-12deg);
-    animation: cv-shine 3.8s ease-in-out infinite;
-  }
-
-  .cv-nav:hover .shine {
-    animation-play-state: paused;
-  }
-</style>
