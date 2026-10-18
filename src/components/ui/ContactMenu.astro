@@ -55,76 +55,95 @@ const options = [
     data-contact-panel
     class={`invisible opacity-0 ${hiddenTranslate} group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 absolute ${positionClass} ${alignClass} w-64 rounded-2xl border border-white/15 bg-[#0a0a0a]/95 backdrop-blur-md shadow-2xl p-2 z-30 transition-all duration-300 flex flex-col gap-1.5`}
   >
-    {
-      options.map((option) => (
+    {options.map((option) => (
       <a
         href={option.href}
         target={option.external ? '_blank' : undefined}
         rel={option.external ? 'noopener noreferrer' : undefined}
         class={`group/item flex items-center gap-3 p-2.5 rounded-xl border border-white/10 bg-white/[0.03] transition-all duration-300 hover:-translate-y-0.5 ${option.rowHover}`}
       >
-          <span
-            class={`shrink-0 w-10 h-10 rounded-full border flex items-center justify-center ${option.iconBg}`}
-          >
-            {option.icon === 'mail' ? (
-              <Icon name="mail" size={18} />
-            ) : (
-              <BrandIcon name={option.icon} size={18} color="currentColor" />
-            )}
+        <span
+          class={`shrink-0 w-10 h-10 rounded-full border flex items-center justify-center ${option.iconBg}`}
+        >
+          {option.icon === 'mail' ? (
+            <Icon name="mail" size={18} />
+          ) : (
+            <BrandIcon name={option.icon} size={18} color="currentColor" />
+          )}
+        </span>
+        <span class="flex-1 min-w-0 text-left">
+          <span class="block text-xs font-semibold uppercase tracking-[0.18em] text-white">
+            {option.name}
           </span>
-          <span class="flex-1 min-w-0 text-left">
-            <span class="block text-xs font-semibold uppercase tracking-[0.18em] text-white">
-              {option.name}
-            </span>
           <span class="block text-[11px] text-neutral-400 font-light truncate mt-0.5">
             {option.detail}
           </span>
-          </span>
-          <Icon
-            name="arrow-right"
-            size={14}
-            class="shrink-0 text-neutral-500 group-hover/item:text-white group-hover/item:translate-x-1 transition-all duration-300"
-          />
+        </span>
+        <Icon
+          name="arrow-right"
+          size={14}
+          class="shrink-0 text-neutral-500 group-hover/item:text-white group-hover/item:translate-x-1 transition-all duration-300"
+        />
       </a>
-    ))
+    ))}
+  </div>
+</div>
+
+<style>
+  /* Click/teclado: además del hover, el menú se abre con la clase is-open.
+     Solo anulamos el desplazamiento vertical (--tw-translate-y); la centración
+     horizontal (`-translate-x-1/2` en el drawer móvil) se conserva. */
+  [data-contact-menu].is-open [data-contact-panel] {
+    visibility: visible;
+    opacity: 1;
+    --tw-translate-y: 0;
   }
-</div>
-</div>
+</style>
 
 <script>
   // Menú operable por click/teclado (además de hover): necesario en táctil y lectores.
   if (!document.documentElement.dataset.contactMenuInit) {
     document.documentElement.dataset.contactMenuInit = 'true';
+
+    const close = (menu: HTMLElement): void => {
+      menu.classList.remove('is-open');
+      menu
+        .querySelector<HTMLElement>('[data-contact-trigger]')
+        ?.setAttribute('aria-expanded', 'false');
+    };
+
     document.addEventListener('click', (event) => {
-      const menus = [...document.querySelectorAll<HTMLElement>('[data-contact-menu]')];
-      const clickedTrigger = (event.target as HTMLElement).closest<HTMLElement>(
-        '[data-contact-menu] [data-contact-trigger]',
-      );
-      menus.forEach((menu) => {
-        const panel = menu.querySelector<HTMLElement>('[data-contact-panel]');
+      const target = event.target as HTMLElement;
+      document.querySelectorAll<HTMLElement>('[data-contact-menu]').forEach((menu) => {
         const trigger = menu.querySelector<HTMLElement>('[data-contact-trigger]');
-        if (!panel || !trigger) return;
-        const isOwner = clickedTrigger && menu.contains(clickedTrigger);
-        const shouldOpen = !!isOwner && panel.classList.contains('invisible');
-        if (shouldOpen) {
-          panel.classList.remove('invisible', 'opacity-0');
-          trigger.setAttribute('aria-expanded', 'true');
-        } else if (!menu.contains(event.target as Node) || isOwner) {
-          panel.classList.add('invisible', 'opacity-0');
-          trigger.setAttribute('aria-expanded', 'false');
+        if (!trigger) return;
+        // Click sobre el disparador: alterna. Click en un enlace interno: cierra.
+        if (trigger.contains(target)) {
+          const open = menu.classList.toggle('is-open');
+          trigger.setAttribute('aria-expanded', String(open));
+          return;
         }
+        if (target.closest('a') && menu.contains(target)) {
+          close(menu);
+          return;
+        }
+        // Click fuera del menú: cierra.
+        if (!menu.contains(target)) close(menu);
       });
     });
+
     document.addEventListener('keydown', (event) => {
       if (event.key !== 'Escape') return;
-      document.querySelectorAll<HTMLElement>('[data-contact-menu]').forEach((menu) => {
-        menu.querySelector('[data-contact-panel]')?.classList.add('invisible', 'opacity-0');
-        menu.querySelector('[data-contact-trigger]')?.setAttribute('aria-expanded', 'false');
-      });
+      document
+        .querySelectorAll<HTMLElement>('[data-contact-menu].is-open')
+        .forEach((menu) => close(menu));
     });
   }
-  document.querySelectorAll<HTMLElement>('[data-contact-menu] [data-contact-trigger]').forEach((trigger) => {
-    if (!trigger.hasAttribute('aria-expanded')) trigger.setAttribute('aria-expanded', 'false');
-    if (!trigger.hasAttribute('aria-haspopup')) trigger.setAttribute('aria-haspopup', 'true');
-  });
+
+  document
+    .querySelectorAll<HTMLElement>('[data-contact-menu] [data-contact-trigger]')
+    .forEach((trigger) => {
+      if (!trigger.hasAttribute('aria-expanded')) trigger.setAttribute('aria-expanded', 'false');
+      if (!trigger.hasAttribute('aria-haspopup')) trigger.setAttribute('aria-haspopup', 'true');
+    });
 </script>

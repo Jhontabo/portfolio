@@ -50,24 +50,16 @@ const year = new Date().getFullYear();
     </div>
 
     <!-- Capa oscura para que los iconos sean los protagonistas -->
-    <div
-      class="absolute inset-0 bg-black/60 pointer-events-none"
-      aria-hidden="true"
-    >
-    </div>
+    <div class="absolute inset-0 bg-black/60 pointer-events-none" aria-hidden="true"></div>
 
     <!-- Fundido perimetral superior (igual que el hero) -->
-    <div
-      class="absolute inset-x-0 top-0 h-14 sm:h-20 md:h-28 bg-gradient-to-b from-[#050505] via-[#050505]/70 to-transparent pointer-events-none z-10"
-    >
-    </div>
+    <div class="absolute inset-x-0 top-0 h-14 sm:h-20 md:h-28 bg-gradient-to-b from-[#050505] via-[#050505]/70 to-transparent pointer-events-none z-10"></div>
 
     <!-- Fundido perimetral inferior (igual que el hero) -->
     <div
       class="absolute inset-x-0 bottom-0 h-16 sm:h-24 md:h-32 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent pointer-events-none z-10"
       aria-hidden="true"
-    >
-    </div>
+    ></div>
 
     <!-- Redes sociales siempre visibles sobre la foto -->
     <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 flex items-center gap-4 sm:gap-16">
@@ -78,7 +70,12 @@ const year = new Date().getFullYear();
         aria-label="Instagram"
         class="w-14 h-14 sm:w-28 sm:h-28 rounded-full bg-black/50 backdrop-blur-md border border-[#E4405F]/60 text-[#E4405F] hover:bg-gradient-to-tr hover:from-[#F58529] hover:via-[#DD2A7B] hover:to-[#8134AF] hover:text-white hover:border-transparent hover:shadow-[0_0_36px_rgba(221,42,123,0.55)] flex items-center justify-center"
       >
-        <BrandIcon name="instagram" size={36} class="w-6 h-6 sm:w-11 sm:h-11" color="currentColor" />
+        <BrandIcon
+          name="instagram"
+          size={36}
+          class="w-6 h-6 sm:w-11 sm:h-11"
+          color="currentColor"
+        />
       </a>
       <a
         href={personalInfo.github}
@@ -119,52 +116,52 @@ const year = new Date().getFullYear();
   </div>
 
   <div class="py-24 sm:py-28 border-t border-white/10">
-  <div class="max-w-6xl mx-auto px-6 lg:px-12 flex flex-col gap-12">
-    <!-- Fila Inferior: Copyright y Navegación rápida -->
-    <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
-      <p class="text-[11px] uppercase tracking-[0.2em] text-neutral-400 font-light">
-        © {year} Jhon Tajumbina. {t.footer.rights}
-      </p>
+    <div class="max-w-6xl mx-auto px-6 lg:px-12 flex flex-col gap-12">
+      <!-- Fila Inferior: Copyright y Navegación rápida -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+        <p class="text-[11px] uppercase tracking-[0.2em] text-neutral-400 font-light">
+          © {year} Jhon Tajumbina. {t.footer.rights}
+        </p>
 
-      <div class="flex flex-wrap items-center justify-center gap-6">
-        <a
-          href="#home"
-          class="text-[11px] uppercase tracking-[0.22em] text-neutral-400 hover:text-white transition-colors"
-        >
-          {t.nav.home}
-        </a>
-        <a
-          href="#about"
-          class="text-[11px] uppercase tracking-[0.22em] text-neutral-400 hover:text-white transition-colors"
-        >
-          {t.nav.about}
-        </a>
-        <a
-          href="#journey"
-          class="text-[11px] uppercase tracking-[0.22em] text-neutral-400 hover:text-white transition-colors"
-        >
-          {t.nav.journey}
-        </a>
-        <a
-          href="#portfolio"
-          class="text-[11px] uppercase tracking-[0.22em] text-neutral-400 hover:text-white transition-colors"
-        >
-          {t.nav.portfolio}
-        </a>
-        <a
-          href="#skills"
-          class="text-[11px] uppercase tracking-[0.22em] text-neutral-400 hover:text-white transition-colors"
-        >
-          {t.skills.title}
-        </a>
-        <a
-          href="#contacto"
-          class="text-[11px] uppercase tracking-[0.22em] text-neutral-400 hover:text-white transition-colors"
-        >
-          {t.nav.contact}
-        </a>
+        <div class="flex flex-wrap items-center justify-center gap-6">
+          <a
+            href="#home"
+            class="text-[11px] uppercase tracking-[0.22em] text-neutral-400 hover:text-white transition-colors"
+          >
+            {t.nav.home}
+          </a>
+          <a
+            href="#about"
+            class="text-[11px] uppercase tracking-[0.22em] text-neutral-400 hover:text-white transition-colors"
+          >
+            {t.nav.about}
+          </a>
+          <a
+            href="#journey"
+            class="text-[11px] uppercase tracking-[0.22em] text-neutral-400 hover:text-white transition-colors"
+          >
+            {t.nav.journey}
+          </a>
+          <a
+            href="#portfolio"
+            class="text-[11px] uppercase tracking-[0.22em] text-neutral-400 hover:text-white transition-colors"
+          >
+            {t.nav.portfolio}
+          </a>
+          <a
+            href="#skills"
+            class="text-[11px] uppercase tracking-[0.22em] text-neutral-400 hover:text-white transition-colors"
+          >
+            {t.skills.title}
+          </a>
+          <a
+            href="#contacto"
+            class="text-[11px] uppercase tracking-[0.22em] text-neutral-400 hover:text-white transition-colors"
+          >
+            {t.nav.contact}
+          </a>
+        </div>
       </div>
     </div>
-  </div>
   </div>
 </footer>

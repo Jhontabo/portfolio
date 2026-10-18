@@ -28,16 +28,16 @@ estático, bilingüe (ES/EN), rápido y con una identidad visual editorial oscur
 
 ## 🧱 Stack
 
-| Área            | Tecnología                                             |
-| --------------- | ------------------------------------------------------ |
-| Framework       | [Astro 7](https://astro.build) (output estático)       |
-| Estilos         | [Tailwind CSS 4](https://tailwindcss.com) + CSS propio |
-| Tipado          | TypeScript (config strict de Astro)                    |
-| Imágenes        | `astro:assets` (sharp: AVIF/WebP)                      |
-| SEO             | `@astrojs/sitemap` + JSON-LD (`schema.org/Person`)     |
-| Analítica       | `@vercel/analytics` + `@vercel/speed-insights`         |
-| Tests           | [Vitest](https://vitest.dev) + jsdom                   |
-| Paquetes        | pnpm                                                   |
+| Área      | Tecnología                                             |
+| --------- | ------------------------------------------------------ |
+| Framework | [Astro 7](https://astro.build) (output estático)       |
+| Estilos   | [Tailwind CSS 4](https://tailwindcss.com) + CSS propio |
+| Tipado    | TypeScript (config strict de Astro)                    |
+| Imágenes  | `astro:assets` (sharp: AVIF/WebP)                      |
+| SEO       | `@astrojs/sitemap` + JSON-LD (`schema.org/Person`)     |
+| Analítica | `@vercel/analytics` + `@vercel/speed-insights`         |
+| Tests     | [Vitest](https://vitest.dev) + jsdom                   |
+| Paquetes  | pnpm                                                   |
 
 ## 🚀 Empezar
 
@@ -57,6 +57,9 @@ Otros comandos:
 | `pnpm check`        | Type-check de `.astro`/`.ts` (0 errores, 0 warnings)          |
 | `pnpm test`         | Ejecuta la suite de tests (Vitest)                            |
 | `pnpm test:watch`   | Tests en modo watch                                           |
+| `pnpm lint`         | Lint de `.astro`/`.ts` con ESLint                             |
+| `pnpm format`       | Formatea el proyecto con Prettier                             |
+| `pnpm format:check` | Verifica el formato sin escribir                              |
 | `pnpm og`           | Regenera `public/og-image.png` (1200×630) desde SVG con sharp |
 
 > 💡 El servidor de desarrollo se puede lanzar en segundo plano y gestionar con
@@ -66,6 +69,7 @@ Otros comandos:
 
 ```text
 .
+├── .github/workflows/ci.yml   # CI: lint, format:check, check, test y build
 ├── public/                    # Archivos servidos tal cual (favicons, cv.pdf, og-image.png)
 ├── scripts/
 │   └── generate-og.mjs        # Genera la tarjeta social 1200×630
@@ -88,7 +92,9 @@ Otros comandos:
 ├── tests/                     # Tests unitarios (datos, i18n, seo, drive y DOM)
 ├── astro.config.mjs
 ├── vitest.config.ts
-└── vercel.json                # Redirect raíz → /es/ y cabeceras de caché
+├── eslint.config.js           # Config flat de ESLint (TS + Astro)
+├── .prettierrc.json
+└── vercel.json                # Redirect raíz → /es/, cabeceras de seguridad y caché
 ```
 
 ## 🌍 Internacionalización
@@ -132,10 +138,12 @@ pnpm test
 
 El sitio es estático y se despliega en **Vercel**.
 
-- `vercel.json` redirige `/` → `/es/` y define cabeceras de caché para assets e imágenes.
+- `vercel.json` redirige `/` → `/es/`, aplica cabeceras de seguridad (CSP, HSTS, `nosniff`,
+  `Referrer-Policy`, `Permissions-Policy`) y de caché para assets e imágenes.
 - El dominio del sitio se define una sola vez en `astro.config.mjs` (`site`); el resto del código lo
   lee desde `import.meta.env.SITE`, evitando duplicaciones.
 - `robots.txt` y el sitemap se generan en el build.
+- `.github/workflows/ci.yml` valida `lint`, `format:check`, `check`, `test` y `build` en cada push/PR.
 
 Para desplegar en otro host estático, basta con publicar el contenido de `./dist/`.
 

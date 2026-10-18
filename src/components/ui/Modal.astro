@@ -36,36 +36,35 @@ const labelledBy = `modal-title-${id}`;
       variant === 'plain' ? 'w-full h-full items-center justify-center' : panelClass,
     ]}
   >
-    {
-      title && (
-        <div class="h-12 bg-[#050505] px-6 flex items-center justify-between border-b border-white/10 shrink-0">
-          <span id={labelledBy} class="font-serif text-sm text-neutral-300 tracking-wide truncate pr-4">
-            {title}
-          </span>
-          <button
-            type="button"
-            data-modal-close
-            class="shrink-0 text-neutral-400 hover:text-white transition-colors p-1"
-            aria-label={closeLabel}
-          >
-            <Icon name="x" size={16} />
-          </button>
-        </div>
-      )
-    }
-
-    {
-      variant === 'plain' && (
+    {title && (
+      <div class="h-12 bg-[#050505] px-6 flex items-center justify-between border-b border-white/10 shrink-0">
+        <span
+          id={labelledBy}
+          class="font-serif text-sm text-neutral-300 tracking-wide truncate pr-4"
+        >
+          {title}
+        </span>
         <button
           type="button"
           data-modal-close
-          class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-black/60 border border-white/10 text-white/80 hover:text-white flex items-center justify-center text-lg leading-none transition-all"
+          class="shrink-0 text-neutral-400 hover:text-white transition-colors p-1"
           aria-label={closeLabel}
         >
           <Icon name="x" size={16} />
         </button>
-      )
-    }
+      </div>
+    )}
+
+    {variant === 'plain' && (
+      <button
+        type="button"
+        data-modal-close
+        class="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-black/60 border border-white/10 text-white/80 hover:text-white flex items-center justify-center text-lg leading-none transition-all"
+        aria-label={closeLabel}
+      >
+        <Icon name="x" size={16} />
+      </button>
+    )}
 
     <div class:list={['flex flex-col min-h-0', bodyClass]}>
       <slot />

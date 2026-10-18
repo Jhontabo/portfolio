@@ -23,15 +23,15 @@ import { SITE_NAME } from '../lib/seo';
       <div class="w-[500px] h-[500px] rounded-full bg-white/[0.02] blur-[140px] pointer-events-none absolute -z-10"></div>
 
       <div class="max-w-md w-full text-center">
-        <p class="text-[11px] uppercase tracking-[0.3em] text-neutral-400 mb-3">
-          ERROR 404
-        </p>
+        <p class="text-[11px] uppercase tracking-[0.3em] text-neutral-400 mb-3">ERROR 404</p>
         <p class="font-serif text-7xl sm:text-8xl font-light tracking-[0.15em] text-white mb-4">
           404
         </p>
         <h1 class="font-serif text-xl sm:text-2xl text-neutral-200 font-light tracking-wide mb-3">
           <span data-404-title-es>Página no encontrada</span>
-          <span data-404-title-en hidden>Page not found</span>
+          <span data-404-title-en hidden>
+            Page not found
+          </span>
         </h1>
         <p data-404-desc-es class="text-neutral-400 text-sm font-light leading-relaxed mb-8">
           La página solicitada no está disponible o ha sido trasladada.
@@ -41,11 +41,7 @@ import { SITE_NAME } from '../lib/seo';
         </p>
 
         <div class="flex items-center justify-center gap-4">
-          <a
-            href="/es/"
-            data-404-cta
-            class="btn btn-primary"
-          >
+          <a href="/es/" data-404-cta class="btn btn-primary">
             Volver al inicio
           </a>
         </div>
@@ -55,7 +51,8 @@ import { SITE_NAME } from '../lib/seo';
     <script>
       // 404 bilingüe: si viene de /en/ o el navegador está en inglés, mostrar EN
       const isEn =
-        document.referrer.includes('/en/') || (!document.referrer && navigator.language.startsWith('en'));
+        document.referrer.includes('/en/') ||
+        (!document.referrer && navigator.language.startsWith('en'));
       if (isEn) {
         document.documentElement.lang = 'en';
         document.querySelector('[data-404-title-es]')?.setAttribute('hidden', '');

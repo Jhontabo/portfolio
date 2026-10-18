@@ -24,9 +24,7 @@ describe('proyectos', () => {
       expect(project.description.length).toBeGreaterThan(20);
       expect(project.technologies.length).toBeGreaterThan(0);
       expect(project.demo === '#' || project.demo.startsWith('http')).toBe(true);
-      expect(project.github === '#' || project.github.startsWith('https://github.com/')).toBe(
-        true,
-      );
+      expect(project.github === '#' || project.github.startsWith('https://github.com/')).toBe(true);
     }
   });
 

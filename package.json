@@ -14,6 +14,10 @@
     "check": "astro check",
     "test": "vitest run",
     "test:watch": "vitest",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "og": "node scripts/generate-og.mjs",
     "astro": "astro"
   },
@@ -27,9 +31,16 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.4",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.13.0",
+    "eslint-plugin-astro": "^3.2.1",
+    "globals": "^17.13.0",
     "jsdom": "^30.1.2",
+    "prettier": "^3.9.10",
+    "prettier-plugin-astro": "^1.1.1",
     "sharp": "^0.35.5",
     "typescript": "^5.9.3",
+    "typescript-eslint": "^8.71.2",
     "vitest": "^5.0.5"
   }
 }

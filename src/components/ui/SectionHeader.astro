@@ -36,7 +36,12 @@ const alignBlock =
     {title}
   </h2>
   {subtitle && (
-    <p class:list={['max-w-2xl text-base sm:text-lg text-neutral-400 font-light leading-relaxed', alignBlock]}>
+    <p
+      class:list={[
+        'max-w-2xl text-base sm:text-lg text-neutral-400 font-light leading-relaxed',
+        alignBlock,
+      ]}
+    >
       {subtitle}
     </p>
   )}
@@ -46,6 +51,5 @@ const alignBlock =
       alignBlock,
     ]}
     aria-hidden="true"
-  >
-  </div>
+  ></div>
 </div>

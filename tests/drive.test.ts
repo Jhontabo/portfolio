@@ -1,7 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { getDriveId, getPreviewUrl, getThumbnailUrl } from '../src/lib/drive';
 
-const FILE_LINK = 'https://drive.google.com/file/d/1AbCdEfGh_IjKlMnOpQrStUvWxYz01234/view?usp=sharing';
+const FILE_LINK =
+  'https://drive.google.com/file/d/1AbCdEfGh_IjKlMnOpQrStUvWxYz01234/view?usp=sharing';
 const ID = '1AbCdEfGh_IjKlMnOpQrStUvWxYz01234';
 
 describe('getDriveId', () => {
@@ -31,9 +32,7 @@ describe('getPreviewUrl', () => {
 
 describe('getThumbnailUrl', () => {
   it('construye el endpoint /thumbnail con tamaño', () => {
-    expect(getThumbnailUrl(FILE_LINK)).toBe(
-      `https://drive.google.com/thumbnail?id=${ID}&sz=w800`,
-    );
+    expect(getThumbnailUrl(FILE_LINK)).toBe(`https://drive.google.com/thumbnail?id=${ID}&sz=w800`);
   });
 
   it('devuelve null cuando no hay id', () => {

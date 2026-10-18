@@ -32,7 +32,13 @@ const selectLabel = locale === 'en' ? 'Select language' : 'Seleccionar idioma';
     >
       <FlagIcon code={current.code} class="w-5 h-auto rounded-[3px] shadow-sm" />
       <span>{current.code}</span>
-      <Icon name="chevron-down" size={14} strokeWidth={2.5} class="transition-transform duration-200 text-neutral-200" data-lang-chevron />
+      <Icon
+        name="chevron-down"
+        size={14}
+        strokeWidth={2.5}
+        class="transition-transform duration-200 text-neutral-200"
+        data-lang-chevron
+      />
     </button>
 
     <div
@@ -40,24 +46,22 @@ const selectLabel = locale === 'en' ? 'Select language' : 'Seleccionar idioma';
       hidden
       class="absolute top-full right-0 mt-2 w-32 bg-[#0a0a0a]/95 backdrop-blur-md border border-white/10 rounded-md shadow-2xl overflow-hidden z-50 py-1"
     >
-      {
-        options.map((option) => (
-          <a
-            href={`/${option.code}/`}
-            data-lang-option
-            hreflang={option.code}
-            lang={option.code}
-            aria-current={option.code === locale ? 'true' : undefined}
-            class:list={[
-              'w-full flex items-center gap-2 px-3 py-2 text-left text-[11px] uppercase tracking-[0.18em] text-neutral-400 hover:text-white hover:bg-white/5 transition-colors',
-              option.code === locale && 'text-white bg-white/[0.08]',
-            ]}
-          >
-            <FlagIcon code={option.code} class="w-5 h-auto rounded-[3px] shadow-sm shrink-0" />
-            <span>{option.name}</span>
-          </a>
-        ))
-      }
+      {options.map((option) => (
+        <a
+          href={`/${option.code}/`}
+          data-lang-option
+          hreflang={option.code}
+          lang={option.code}
+          aria-current={option.code === locale ? 'true' : undefined}
+          class:list={[
+            'w-full flex items-center gap-2 px-3 py-2 text-left text-[11px] uppercase tracking-[0.18em] text-neutral-400 hover:text-white hover:bg-white/5 transition-colors',
+            option.code === locale && 'text-white bg-white/[0.08]',
+          ]}
+        >
+          <FlagIcon code={option.code} class="w-5 h-auto rounded-[3px] shadow-sm shrink-0" />
+          <span>{option.name}</span>
+        </a>
+      ))}
     </div>
   </div>
 </div>
@@ -66,52 +70,52 @@ const selectLabel = locale === 'en' ? 'Select language' : 'Seleccionar idioma';
   if (!document.documentElement.dataset.langSwitcherInit) {
     document.documentElement.dataset.langSwitcherInit = 'true';
     document.querySelectorAll<HTMLElement>('[data-lang-switcher]').forEach((switcher) => {
-    const toggle = switcher.querySelector<HTMLButtonElement>('[data-lang-toggle]');
-    const menu = switcher.querySelector<HTMLElement>('[data-lang-menu]');
-    const chevron = switcher.querySelector<HTMLElement>('[data-lang-chevron]');
-    if (!toggle || !menu) return;
+      const toggle = switcher.querySelector<HTMLButtonElement>('[data-lang-toggle]');
+      const menu = switcher.querySelector<HTMLElement>('[data-lang-menu]');
+      const chevron = switcher.querySelector<HTMLElement>('[data-lang-chevron]');
+      if (!toggle || !menu) return;
 
-    const setOpen = (open: boolean): void => {
-      menu.hidden = !open;
-      toggle.setAttribute('aria-expanded', String(open));
-      chevron?.classList.toggle('rotate-180', open);
-    };
+      const setOpen = (open: boolean): void => {
+        menu.hidden = !open;
+        toggle.setAttribute('aria-expanded', String(open));
+        chevron?.classList.toggle('rotate-180', open);
+      };
 
-    toggle.addEventListener('click', (event) => {
-      event.stopPropagation();
-      setOpen(menu.hidden);
-    });
-
-    const options = [...menu.querySelectorAll<HTMLAnchorElement>('[data-lang-option]')];
-    const withHash = (): string => window.location.hash;
-
-    options.forEach((option) => {
-      option.addEventListener('click', () => {
-        window.location.href = `${option.getAttribute('href') ?? '/'}${withHash()}`;
+      toggle.addEventListener('click', (event) => {
+        event.stopPropagation();
+        setOpen(menu.hidden);
       });
-    });
 
-    const syncHref = (): void => {
+      const options = [...menu.querySelectorAll<HTMLAnchorElement>('[data-lang-option]')];
+      const withHash = (): string => window.location.hash;
+
       options.forEach((option) => {
-        const base = option.getAttribute('href')?.split('#')[0] ?? '/';
-        option.href = `${base}${withHash()}`;
+        option.addEventListener('click', () => {
+          window.location.href = `${option.getAttribute('href') ?? '/'}${withHash()}`;
+        });
       });
-    };
 
-    syncHref();
-    window.addEventListener('hashchange', syncHref);
+      const syncHref = (): void => {
+        options.forEach((option) => {
+          const base = option.getAttribute('href')?.split('#')[0] ?? '/';
+          option.href = `${base}${withHash()}`;
+        });
+      };
 
-    document.addEventListener('mousedown', (event) => {
-      if (menu.hidden) return;
-      if (!switcher.contains(event.target as Node)) setOpen(false);
+      syncHref();
+      window.addEventListener('hashchange', syncHref);
+
+      document.addEventListener('mousedown', (event) => {
+        if (menu.hidden) return;
+        if (!switcher.contains(event.target as Node)) setOpen(false);
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && !menu.hidden) {
+          setOpen(false);
+          toggle.focus();
+        }
+      });
     });
-
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && !menu.hidden) {
-        setOpen(false);
-        toggle.focus();
-      }
-    });
-  });
   }
 </script>

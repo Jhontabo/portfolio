@@ -38,7 +38,9 @@ const labelClass =
     >
       <div class="grid sm:grid-cols-2 gap-5">
         <div>
-          <label for="contact-name" class={labelClass}>{c.name}</label>
+          <label for="contact-name" class={labelClass}>
+            {c.name}
+          </label>
           <input
             id="contact-name"
             name="name"
@@ -50,7 +52,9 @@ const labelClass =
           />
         </div>
         <div>
-          <label for="contact-email" class={labelClass}>{c.email}</label>
+          <label for="contact-email" class={labelClass}>
+            {c.email}
+          </label>
           <input
             id="contact-email"
             name="email"
@@ -64,7 +68,9 @@ const labelClass =
       </div>
 
       <div>
-        <label for="contact-message" class={labelClass}>{c.message}</label>
+        <label for="contact-message" class={labelClass}>
+          {c.message}
+        </label>
         <textarea
           id="contact-message"
           name="message"
@@ -80,7 +86,9 @@ const labelClass =
 
       <!-- Honeypot anti-spam (oculto para humanos) -->
       <div class="hidden" aria-hidden="true">
-        <label>Empresa <input type="text" name="company" tabindex="-1" autocomplete="off" /></label>
+        <label>
+          Empresa <input type="text" name="company" tabindex="-1" autocomplete="off" />
+        </label>
       </div>
 
       <div>
@@ -174,7 +182,10 @@ const labelClass =
       return;
     }
     if (!emailRe.test(email) || message.length < 10) {
-      showError(submit.getAttribute('data-error-invalid') ?? 'Revisa tu correo y escribe al menos 10 caracteres.');
+      showError(
+        submit.getAttribute('data-error-invalid') ??
+          'Revisa tu correo y escribe al menos 10 caracteres.',
+      );
       return;
     }
     showError('');

@@ -19,12 +19,13 @@ const target = new URL(`/${defaultLocale}/`, Astro.site ?? new URL(SITE_URL));
       content="Software Engineer y Pitcher de Marketing (Meta Ads) en Colombia. Desarrollo de aplicaciones web, móviles y campañas de alto impacto. Conoce mis proyectos."
     />
   </head>
-  <body
-    style="background:#050505;color:#a3a3a3;font-family:system-ui,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;letter-spacing:0.15em;text-transform:uppercase;font-size:11px"
-  >
+  <body style="background:#050505;color:#a3a3a3;font-family:system-ui,sans-serif;display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;letter-spacing:0.15em;text-transform:uppercase;font-size:11px">
     <p>
       Redirigiendo a
-      <a href={`/${defaultLocale}/`} style="color:#ffffff;text-decoration:underline">/{defaultLocale}/</a>…
+      <a href={`/${defaultLocale}/`} style="color:#ffffff;text-decoration:underline">
+        /{defaultLocale}/
+      </a>
+      …
     </p>
   </body>
 </html>

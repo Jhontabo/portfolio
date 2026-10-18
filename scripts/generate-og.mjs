@@ -40,6 +40,8 @@ const svg = `
 </svg>
 `;
 
-await sharp(Buffer.from(svg)).png({ compressionLevel: 9 }).toFile(resolve(root, 'public/og-image.png'));
+await sharp(Buffer.from(svg))
+  .png({ compressionLevel: 9 })
+  .toFile(resolve(root, 'public/og-image.png'));
 
 console.log('Generated public/og-image.png (1200x630)');

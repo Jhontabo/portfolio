@@ -45,121 +45,121 @@ const githubPath =
     </div>
 
     <div class="grid sm:grid-cols-2 gap-8 lg:gap-10">
-      {
-        projects.map((project, index) => {
-          const name = locale === 'en' ? (project.nameEn ?? project.name) : project.name;
-          const description =
-            locale === 'en'
-              ? (project.descriptionEn ?? project.description)
-              : project.description;
-          const image = project.image ?? null;
-          const modalId = `project-modal-${project.id}`;
+      {projects.map((project, index) => {
+        const name = locale === 'en' ? (project.nameEn ?? project.name) : project.name;
+        const description =
+          locale === 'en' ? (project.descriptionEn ?? project.description) : project.description;
+        const image = project.image ?? null;
+        const modalId = `project-modal-${project.id}`;
 
-          return (
-            <div data-reveal style={`--reveal-delay: ${index * 80}ms`}>
-              <div class="bg-neutral-950/70 border border-white/10 hover:border-white/25 rounded-2xl overflow-hidden transition-all duration-500 flex flex-col h-full group">
-                {image ? (
-                  <button
-                    type="button"
-                    data-modal-open={modalId}
-                    class="h-60 sm:h-72 bg-neutral-900/60 flex items-center justify-center relative overflow-hidden w-full cursor-zoom-in"
-                    aria-label={`Ampliar imagen de ${name}`}
-                  >
-                    <Image
-                      src={image}
-                      alt={project.imageAlt ?? name}
-                      widths={[400, 640, 900]}
-                      sizes="(min-width: 640px) 45vw, 92vw"
-                      format="webp"
-                      quality={82}
-                      loading="lazy"
-                      decoding="async"
-                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
-                    />
-                    <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent opacity-60" />
-                  </button>
-                ) : (
-                  <div class="h-60 sm:h-72 bg-neutral-900/40 flex items-center justify-center relative overflow-hidden">
-                    <Icon
-                      name="folder"
-                      size={36}
-                      class="text-neutral-600 group-hover:text-neutral-300 transition-colors duration-300"
-                    />
-                  </div>
-                )}
-
-                <div class="p-6 sm:p-8 flex-1 flex flex-col">
-                  <h3 class="font-serif text-xl sm:text-2xl font-light text-white mb-3 group-hover:text-neutral-200 transition-colors line-clamp-1">
-                    {name}
-                  </h3>
-                  <p class="text-neutral-400 text-sm font-light leading-relaxed mb-6">
-                    {description}
-                  </p>
-
-                  <div class="flex flex-wrap gap-2 mb-6 mt-auto">
-                    {project.technologies.map((tech) => (
-                      <span class="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.2em] font-medium px-2.5 py-1 bg-white/[0.03] border border-white/10 text-neutral-400 rounded">
-                        {techIcons[tech] && (
-                          <BrandIcon name={techIcons[tech]} size={13} />
-                        )}
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div class="flex flex-wrap items-center gap-3 pt-5 border-t border-white/10">
-                    {project.demo !== '#' && (
-                      <a
-                        href={project.demo}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        class="btn btn-primary btn-sm"
-                      >
-                        <span>{locale === 'en' ? 'LIVE DEMO' : 'DEMO EN VIVO'}</span>
-                        <Icon name="external-link" size={13} />
-                      </a>
-                    )}
-                    {project.github !== '#' && (
-                      <a
-                        href={project.github}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        data-project-code
-                        class="btn btn-secondary btn-sm"
-                      >
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                          <path d={githubPath} />
-                        </svg>
-                        <span>{locale === 'en' ? 'CODE' : 'CÓDIGO'}</span>
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {image && (
-                <Modal
-                  id={modalId}
-                  variant="plain"
-                  closeLabel={locale === 'en' ? 'Close dialog' : 'Cerrar modal'}
-                  expandedLabel={name}
+        return (
+          <div data-reveal style={`--reveal-delay: ${index * 80}ms`}>
+            <div class="bg-neutral-950/70 border border-white/10 hover:border-white/25 rounded-2xl overflow-hidden transition-all duration-500 flex flex-col h-full group">
+              {image ? (
+                <button
+                  type="button"
+                  data-modal-open={modalId}
+                  class="h-60 sm:h-72 bg-neutral-900/60 flex items-center justify-center relative overflow-hidden w-full cursor-zoom-in"
+                  aria-label={`Ampliar imagen de ${name}`}
                 >
                   <Image
                     src={image}
                     alt={project.imageAlt ?? name}
-                    widths={[800, 1200]}
-                    sizes="90vw"
+                    widths={[400, 640, 900]}
+                    sizes="(min-width: 640px) 45vw, 92vw"
                     format="webp"
-                    quality={88}
+                    quality={82}
+                    loading="lazy"
                     decoding="async"
-                    class="max-h-[85vh] max-w-full object-contain shadow-2xl rounded-lg"
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
-                </Modal>
+                  <div class="absolute inset-0 bg-gradient-to-t from-neutral-950 via-transparent to-transparent opacity-60" />
+                </button>
+              ) : (
+                <div class="h-60 sm:h-72 bg-neutral-900/40 flex items-center justify-center relative overflow-hidden">
+                  <Icon
+                    name="folder"
+                    size={36}
+                    class="text-neutral-600 group-hover:text-neutral-300 transition-colors duration-300"
+                  />
+                </div>
               )}
+
+              <div class="p-6 sm:p-8 flex-1 flex flex-col">
+                <h3 class="font-serif text-xl sm:text-2xl font-light text-white mb-3 group-hover:text-neutral-200 transition-colors line-clamp-1">
+                  {name}
+                </h3>
+                <p class="text-neutral-400 text-sm font-light leading-relaxed mb-6">
+                  {description}
+                </p>
+
+                <div class="flex flex-wrap gap-2 mb-6 mt-auto">
+                  {project.technologies.map((tech) => (
+                    <span class="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-[0.2em] font-medium px-2.5 py-1 bg-white/[0.03] border border-white/10 text-neutral-400 rounded">
+                      {techIcons[tech] && <BrandIcon name={techIcons[tech]} size={13} />}
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                <div class="flex flex-wrap items-center gap-3 pt-5 border-t border-white/10">
+                  {project.demo !== '#' && (
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="btn btn-primary btn-sm"
+                    >
+                      <span>{locale === 'en' ? 'LIVE DEMO' : 'DEMO EN VIVO'}</span>
+                      <Icon name="external-link" size={13} />
+                    </a>
+                  )}
+                  {project.github !== '#' && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-project-code
+                      class="btn btn-secondary btn-sm"
+                    >
+                      <svg
+                        width="14"
+                        height="14"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        aria-hidden="true"
+                      >
+                        <path d={githubPath} />
+                      </svg>
+                      <span>{locale === 'en' ? 'CODE' : 'CÓDIGO'}</span>
+                    </a>
+                  )}
+                </div>
+              </div>
             </div>
-          );
-        })
-      }
+
+            {image && (
+              <Modal
+                id={modalId}
+                variant="plain"
+                closeLabel={locale === 'en' ? 'Close dialog' : 'Cerrar modal'}
+                expandedLabel={name}
+              >
+                <Image
+                  src={image}
+                  alt={project.imageAlt ?? name}
+                  widths={[800, 1200]}
+                  sizes="90vw"
+                  format="webp"
+                  quality={88}
+                  decoding="async"
+                  class="max-h-[85vh] max-w-full object-contain shadow-2xl rounded-lg"
+                />
+              </Modal>
+            )}
+          </div>
+        );
+      })}
     </div>
 
     <div data-reveal class="mt-16 sm:mt-20 flex flex-col items-center text-center">
@@ -167,11 +167,9 @@ const githubPath =
         {locale === 'en' ? 'WANT TO SEE MORE?' : '¿QUIERES VER MÁS?'}
       </p>
       <h3 class="font-serif text-2xl sm:text-3xl font-light text-white max-w-xl leading-snug">
-        {
-          locale === 'en'
-            ? 'Explore all my projects on GitHub'
-            : 'Explora todos mis proyectos en GitHub'
-        }
+        {locale === 'en'
+          ? 'Explore all my projects on GitHub'
+          : 'Explora todos mis proyectos en GitHub'}
       </h3>
 
       <div class="relative mt-10 flex flex-col items-center">
@@ -180,44 +178,49 @@ const githubPath =
             href={personalInfo.github}
             target="_blank"
             rel="noopener noreferrer"
-            aria-label={locale === 'en' ? 'View more projects on GitHub' : 'Ver más proyectos en GitHub'}
+            aria-label={
+              locale === 'en' ? 'View more projects on GitHub' : 'Ver más proyectos en GitHub'
+            }
             class="github-ball group relative flex flex-col items-center justify-center w-40 h-40 sm:w-48 sm:h-48 rounded-full bg-gradient-to-br from-white via-neutral-100 to-neutral-400 text-neutral-950 border-4 border-white/90 shadow-[0_20px_70px_rgba(255,255,255,0.28)] transition-transform duration-300 hover:scale-110 hover:shadow-[0_25px_90px_rgba(255,255,255,0.4)]"
           >
-          <span
-            class="absolute inset-0 rounded-full border-2 border-white/40 scale-100 group-hover:scale-125 opacity-60 group-hover:opacity-0 transition-all duration-500"
-            aria-hidden="true"></span>
-          <svg
-            width="44"
-            height="44"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-            aria-hidden="true"
-            class="mb-2 transition-transform duration-300 group-hover:-translate-y-1 group-hover:rotate-6"
-          >
-            <path d={githubPath} />
-          </svg>
-          <span class="text-sm sm:text-base font-extrabold uppercase tracking-[0.2em] leading-none">
-            {locale === 'en' ? 'VIEW MORE' : 'VER MÁS'}
-          </span>
-          <span class="mt-1.5 inline-flex items-center gap-1 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-semibold text-neutral-700">
-            GitHub
-            <svg
-              width="12"
-              height="12"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.5"
+            <span
+              class="absolute inset-0 rounded-full border-2 border-white/40 scale-100 group-hover:scale-125 opacity-60 group-hover:opacity-0 transition-all duration-500"
               aria-hidden="true"
-              class="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            ></span>
+            <svg
+              width="44"
+              height="44"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              aria-hidden="true"
+              class="mb-2 transition-transform duration-300 group-hover:-translate-y-1 group-hover:rotate-6"
             >
-              <path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M7 7h10v10" />
+              <path d={githubPath} />
             </svg>
-          </span>
-        </a>
+            <span class="text-sm sm:text-base font-extrabold uppercase tracking-[0.2em] leading-none">
+              {locale === 'en' ? 'VIEW MORE' : 'VER MÁS'}
+            </span>
+            <span class="mt-1.5 inline-flex items-center gap-1 text-[10px] sm:text-[11px] uppercase tracking-[0.25em] font-semibold text-neutral-700">
+              GitHub
+              <svg
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                aria-hidden="true"
+                class="transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              >
+                <path stroke-linecap="round" stroke-linejoin="round" d="M7 17L17 7M7 7h10v10" />
+              </svg>
+            </span>
+          </a>
         </div>
-        <div class="ball-shadow mt-5 h-3 w-32 sm:w-36 rounded-full bg-white/15 blur-md" aria-hidden="true">
-        </div>
+        <div
+          class="ball-shadow mt-5 h-3 w-32 sm:w-36 rounded-full bg-white/15 blur-md"
+          aria-hidden="true"
+        ></div>
       </div>
     </div>
   </div>
