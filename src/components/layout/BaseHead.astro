@@ -37,6 +37,7 @@ const meta = META_LOCALIZED[locale];
 <meta property="og:url" content={canonical.href} />
 <meta property="og:site_name" content={SITE_NAME} />
 <meta property="og:image" content={OG_IMAGE.url} />
+<meta property="og:image:secure_url" content={OG_IMAGE.url} />
 <meta property="og:image:type" content={OG_IMAGE.type} />
 <meta property="og:image:width" content={String(OG_IMAGE.width)} />
 <meta property="og:image:height" content={String(OG_IMAGE.height)} />
@@ -63,28 +64,31 @@ const meta = META_LOCALIZED[locale];
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
 <link rel="manifest" href="/site.webmanifest" />
-<script type="application/ld+json" set:html={JSON.stringify({
-  '@context': 'https://schema.org',
-  '@type': 'Person',
-  name: 'Jhon Tajumbina',
-  url: canonical.href,
-  jobTitle: 'Software Engineer & Media Buyer / Digital Trafficker',
-  address: { '@type': 'PostalAddress', addressCountry: 'CO', addressLocality: 'Cali' },
-  knowsAbout: [
-    'Software Engineering',
-    'Full-Stack Development',
-    'React',
-    'Laravel',
-    'Flutter',
-    'Meta Ads',
-    'Paid Traffic',
-    'Digital Marketing',
-    'Marketing Automation',
-  ],
-  sameAs: [
-    'https://github.com/Jhontabo',
-    'https://www.linkedin.com/in/jhon-tajumbina-8917922a3',
-    'https://www.instagram.com/jhon_tajumbina/',
-    'https://web.facebook.com/jhon.tajumbina',
-  ],
-})} />
+<script
+  type="application/ld+json"
+  set:html={JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    name: 'Jhon Tajumbina',
+    url: canonical.href,
+    jobTitle: 'Software Engineer & Media Buyer / Digital Trafficker',
+    address: { '@type': 'PostalAddress', addressCountry: 'CO', addressLocality: 'Cali' },
+    knowsAbout: [
+      'Software Engineering',
+      'Full-Stack Development',
+      'React',
+      'Laravel',
+      'Flutter',
+      'Meta Ads',
+      'Paid Traffic',
+      'Digital Marketing',
+      'Marketing Automation',
+    ],
+    sameAs: [
+      'https://github.com/Jhontabo',
+      'https://www.linkedin.com/in/jhon-tajumbina-8917922a3',
+      'https://www.instagram.com/jhon_tajumbina/',
+      'https://web.facebook.com/jhon.tajumbina',
+    ],
+  })}
+/>
