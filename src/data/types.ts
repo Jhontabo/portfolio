@@ -13,13 +13,7 @@ export interface Project {
   imageAlt?: string;
 }
 
-export type SkillCategory =
-  | 'languages'
-  | 'frontend'
-  | 'backend'
-  | 'mobile'
-  | 'tools'
-  | 'marketing';
+export type SkillCategory = 'languages' | 'frontend' | 'backend' | 'mobile' | 'tools' | 'marketing';
 
 export interface Skill {
   name: string;
@@ -33,7 +27,6 @@ export interface Certificate {
   name: string;
   nameEn: string;
   issuer: string;
-  date: string;
   link: string;
 }
 
@@ -51,6 +44,7 @@ export interface JourneyEntry {
   shortEn: string;
   descriptionEs: string;
   descriptionEn: string;
+  current?: boolean;
   linkType?: 'github';
   link?: string;
 }

@@ -49,6 +49,7 @@ const entries = journeyTimeline.map((item, index, arr) => {
     delay: index * 60,
     isOrigin: index === 0,
     isLast: index === journeyTimeline.length - 1,
+    isCurrent: !!item.current,
     side: item.category === 'education' || item.category === 'research' ? 'left' : 'right',
     panelId: `journey-panel-${item.id}`,
     desktopPanelId: `journey-panel-d-${item.id}`,
@@ -159,8 +160,7 @@ const todayLabel = `${new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'es-CO
           fill="none"
           stroke="url(#origin-connector-fade)"
           stroke-width="2"
-        >
-        </path>
+        ></path>
       </svg>
     </div>
 
@@ -171,8 +171,7 @@ const todayLabel = `${new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'es-CO
         data-timeline-line
         class="absolute left-2.5 md:left-1/2 md:-translate-x-1/2 top-3 bottom-3 w-[2px] bg-gradient-to-b from-white/30 via-white/20 to-white/5 md:hidden"
         aria-hidden="true"
-      >
-      </div>
+      ></div>
 
       <!-- Sendero en S que une los círculos (solo desktop) -->
       <svg
@@ -187,21 +186,19 @@ const todayLabel = `${new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'es-CO
           stroke="rgba(255,255,255,0.28)"
           stroke-width="2"
           stroke-linecap="round"
-        >
-        </path>
+        ></path>
       </svg>
 
       <ol class="relative space-y-7 sm:space-y-9 md:space-y-32">
-        {
-          entries.map((item) => (
-            <>
-              {item.showYear && (
-                <li aria-hidden="true" class="relative flex justify-center" data-reveal>
-                  <span class="flag-marker font-mono text-sm sm:text-base md:text-lg font-semibold tracking-[0.25em] text-black bg-gradient-to-b from-amber-300 to-amber-500 px-8 md:px-12 py-2.5 md:py-3 drop-shadow-[0_0_18px_rgba(234,179,8,0.35)]">
-                    {item.year}
-                  </span>
-                </li>
-              )}
+        {entries.map((item) => (
+          <>
+            {item.showYear && (
+              <li aria-hidden="true" class="relative flex justify-center" data-reveal>
+                <span class="flag-marker font-mono text-sm sm:text-base md:text-lg font-semibold tracking-[0.25em] text-black bg-gradient-to-b from-amber-300 to-amber-500 px-8 md:px-12 py-2.5 md:py-3 drop-shadow-[0_0_18px_rgba(234,179,8,0.35)]">
+                  {item.year}
+                </span>
+              </li>
+            )}
             <li
               class={`relative pl-12 sm:pl-14 md:pl-0 md:grid md:grid-cols-2 md:gap-x-32 ${item.isOrigin ? 'md:hidden' : ''}`}
               data-reveal
@@ -223,9 +220,11 @@ const todayLabel = `${new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'es-CO
               {/* Círculo grande (solo desktop) */}
               {!item.isOrigin && (
                 <div
-                  class={`hidden md:flex md:col-start-${item.side === 'left' ? '1' : '2'} md:row-start-1 flex-col items-center`}
+                  class={`hidden md:flex ${item.side === 'left' ? 'md:col-start-1' : 'md:col-start-2'} md:row-start-1 flex-col items-center`}
                 >
-                  <div class={`flex items-center w-full ${item.side === 'left' ? 'justify-end' : 'justify-start'}`}>
+                  <div
+                    class={`flex items-center w-full ${item.side === 'left' ? 'justify-end' : 'justify-start'}`}
+                  >
                     <button
                       type="button"
                       data-journey-toggle
@@ -233,27 +232,35 @@ const todayLabel = `${new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'es-CO
                       aria-expanded="false"
                       aria-controls={item.desktopPanelId}
                       aria-label={item.title}
-                    class={`milestone-circle ${item.isLast ? 'w-60 h-60 p-8 gap-2' : 'w-36 h-36 p-4 gap-1'} shrink-0 rounded-full border-[3px] border-[#eab308] text-[#fcd34d] shadow-[0_0_18px_rgba(234,179,8,0.3)] bg-[#0a0a0a] flex flex-col items-center justify-center text-center cursor-pointer`}
-                  >
-                    <Icon name={item.category.icon} size={item.isLast ? 30 : 26} />
-                    <span class={`${item.isLast ? 'text-[11px]' : 'text-[10px]'} font-mono uppercase tracking-[0.2em] text-neutral-300`}>
-                      {item.date}
-                    </span>
-                    <span class={`font-serif ${item.isLast ? 'text-[17px]' : 'text-xs'} leading-snug font-light text-white ${item.isLast ? '' : 'line-clamp-3'}`}>
-                      {item.short}
-                    </span>
-                    {item.isLast && (
-                      <span class="inline-flex items-center gap-1.5 rounded-full border border-[#4ade80]/50 bg-[#4ade80]/10 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.2em] text-[#86efac]">
-                        <span class="relative flex h-1.5 w-1.5" aria-hidden="true">
-                          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4ade80] opacity-75"></span>
-                          <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#4ade80]"></span>
-                        </span>
-                        {locale === 'en' ? `Now · ${todayLabel}` : `Actual · ${todayLabel}`}
+                      class={`milestone-circle ${item.isLast ? 'w-60 h-60 p-8 gap-2' : 'w-36 h-36 p-4 gap-1'} shrink-0 rounded-full border-[3px] border-[#eab308] text-[#fcd34d] shadow-[0_0_18px_rgba(234,179,8,0.3)] bg-[#0a0a0a] flex flex-col items-center justify-center text-center cursor-pointer`}
+                    >
+                      <Icon name={item.category.icon} size={item.isLast ? 30 : 26} />
+                      <span
+                        class={`${item.isLast ? 'text-[11px]' : 'text-[10px]'} font-mono uppercase tracking-[0.2em] text-neutral-300`}
+                      >
+                        {item.date}
                       </span>
-                    )}
-                  </button>
+                      <span
+                        class={`font-serif ${item.isLast ? 'text-[17px]' : 'text-xs'} leading-snug font-light text-white ${item.isLast ? '' : 'line-clamp-3'}`}
+                      >
+                        {item.short}
+                      </span>
+                      {item.isCurrent && (
+                        <span class="inline-flex items-center gap-1.5 rounded-full border border-[#4ade80]/50 bg-[#4ade80]/10 px-2.5 py-1 font-mono text-[9px] uppercase tracking-[0.2em] text-[#86efac]">
+                          <span class="relative flex h-1.5 w-1.5" aria-hidden="true">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4ade80] opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-1.5 w-1.5 bg-[#4ade80]"></span>
+                          </span>
+                          {locale === 'en' ? `Now · ${todayLabel}` : `Actual · ${todayLabel}`}
+                        </span>
+                      )}
+                    </button>
                   </div>
-                  <div id={item.desktopPanelId} class="expandable w-full max-w-[280px]" data-journey-panel>
+                  <div
+                    id={item.desktopPanelId}
+                    class="expandable w-full max-w-[280px]"
+                    data-journey-panel
+                  >
                     <div>
                       <div class="pt-5 text-left">
                         <h4 class="font-serif text-xl font-light text-white tracking-wide">
@@ -276,7 +283,13 @@ const todayLabel = `${new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'es-CO
                               rel="noopener noreferrer"
                               class="btn btn-secondary btn-sm"
                             >
-                              <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                              <svg
+                                width="15"
+                                height="15"
+                                viewBox="0 0 24 24"
+                                fill="currentColor"
+                                aria-hidden="true"
+                              >
                                 <path d={githubPath} />
                               </svg>
                               <span>{locale === 'en' ? 'VIEW REPO' : 'VER REPOSITORIO'}</span>
@@ -289,7 +302,9 @@ const todayLabel = `${new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'es-CO
                 </div>
               )}
 
-              <article class={`${item.side === 'left' ? 'md:col-start-1' : 'md:col-start-2'} md:row-start-1 md:hidden group bg-neutral-900/60 border border-white/15 hover:border-white/30 rounded-2xl p-5 sm:p-7 transition-colors duration-300`}>
+              <article
+                class={`${item.side === 'left' ? 'md:col-start-1' : 'md:col-start-2'} md:row-start-1 md:hidden group bg-neutral-900/60 border border-white/15 hover:border-white/30 rounded-2xl p-5 sm:p-7 transition-colors duration-300`}
+              >
                 <!-- Cabecera: solo fecha y título -->
                 <button
                   type="button"
@@ -303,7 +318,7 @@ const todayLabel = `${new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'es-CO
                       <span class="inline-block text-[11px] sm:text-xs font-mono uppercase tracking-[0.18em] text-neutral-300 bg-white/[0.06] border border-white/15 px-2.5 py-1 rounded-full">
                         {item.date}
                       </span>
-                      {item.isLast && (
+                      {item.isCurrent && (
                         <span class="inline-flex items-center gap-1.5 rounded-full border border-[#4ade80]/50 bg-[#4ade80]/10 px-2.5 py-1 font-mono text-[10px] uppercase tracking-[0.18em] text-[#86efac]">
                           <span class="relative flex h-1.5 w-1.5" aria-hidden="true">
                             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#4ade80] opacity-75"></span>
@@ -345,7 +360,13 @@ const todayLabel = `${new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'es-CO
                             rel="noopener noreferrer"
                             class="btn btn-secondary btn-sm"
                           >
-                            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <svg
+                              width="15"
+                              height="15"
+                              viewBox="0 0 24 24"
+                              fill="currentColor"
+                              aria-hidden="true"
+                            >
                               <path d={githubPath} />
                             </svg>
                             <span>{locale === 'en' ? 'VIEW REPO' : 'VER REPOSITORIO'}</span>
@@ -361,9 +382,8 @@ const todayLabel = `${new Intl.DateTimeFormat(locale === 'en' ? 'en-US' : 'es-CO
                 aria-hidden="true"
               />
             </li>
-            </>
-          ))
-        }
+          </>
+        ))}
       </ol>
     </div>
   </div>

@@ -118,6 +118,7 @@ export const journeyTimeline: JourneyEntry[] = [
     titleEn: 'Marketing pitcher with Meta Ads at Valencia One',
     shortEs: 'Valencia One',
     shortEn: 'Valencia One',
+    current: true,
     descriptionEs:
       'Ingresé en Valencia One como pitcher de marketing, gestionando campañas publicitarias de Meta Ads (Facebook e Instagram) para impulsar clientes y resultados.',
     descriptionEn:

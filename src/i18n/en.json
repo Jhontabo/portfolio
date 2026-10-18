@@ -7,22 +7,7 @@
     "contact": "Contact"
   },
   "hero": {
-    "role": "Full-Stack Developer",
-    "roles": [
-      "Full-Stack Developer",
-      "Systems Engineer",
-      "Software Engineer",
-      "React · Express · Laravel",
-      "Pitcher de Marketing · Meta Ads"
-    ],
-    "viewProjects": "View Projects",
-    "downloadCV": "View my CV",
-    "contactMe": "Contact Me"
-  },
-  "projects": {
-    "title": "Projects",
-    "demo": "Demo",
-    "github": "GitHub"
+    "downloadCV": "View my CV"
   },
   "skills": {
     "title": "Skills",
@@ -41,21 +26,11 @@
   },
   "portfolio": {
     "title": "Portfolio",
-    "subtitle": "Projects, certifications, and technical stack focused on real-world products.",
-    "tabs": {
-      "projects": "Projects",
-      "certificates": "Certificates",
-      "skills": "Skills"
-    },
-    "viewCredential": "View credential",
-    "setupTitle": "My Development Setup",
-    "setupDescription": "I work with Linux Arch, BSPWM, and NvChad to keep speed and focus high. On Windows environments I use WSL to preserve a native development workflow."
+    "subtitle": "Projects, certifications, and technical stack focused on real-world products."
   },
   "journey": {
     "title": "Professional Journey",
     "subtitle": "Timeline of education, academic representation, and hands-on experience.",
-    "viewGithub": "View on GitHub",
-    "githubProfile": "Open my GitHub profile",
     "categories": {
       "education": "Education",
       "work": "Experience",
@@ -64,8 +39,7 @@
     }
   },
   "footer": {
-    "rights": "All rights reserved.",
-    "madeWith": "Made with"
+    "rights": "All rights reserved."
   },
   "contact": {
     "title": "Contact",

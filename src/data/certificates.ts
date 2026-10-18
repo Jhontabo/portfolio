@@ -14,7 +14,6 @@ export const certificates: Certificate[] = [
     name: 'Fundamentos de Ingeniería de Software',
     nameEn: 'Software Engineering Fundamentals',
     issuer: 'Platzi',
-    date: '',
     link: 'https://drive.google.com/file/d/1uRp9XQsNpzLzEe4x0h6vGzWOOSwLkYg-/view',
   },
   {
@@ -22,7 +21,6 @@ export const certificates: Certificate[] = [
     name: 'Algoritmos y Diagramas de Flujo',
     nameEn: 'Algorithms and Flowcharts',
     issuer: 'Platzi',
-    date: '',
     link: 'https://drive.google.com/file/d/1bQn9GvEEYcbpoDFkV8Z7ypb7lgL4I8JG/view',
   },
   {
@@ -30,7 +28,6 @@ export const certificates: Certificate[] = [
     name: 'Manejo de Datos, Estructuras y Funciones',
     nameEn: 'Data Handling, Structures and Functions',
     issuer: 'Platzi',
-    date: '',
     link: 'https://drive.google.com/file/d/193eI8SHPKmAfkap4JljYG92l68_WBw_7/view',
   },
   {
@@ -38,7 +35,6 @@ export const certificates: Certificate[] = [
     name: 'Prompt Engineering con ChatGPT',
     nameEn: 'Prompt Engineering with ChatGPT',
     issuer: 'Platzi',
-    date: '',
     link: 'https://drive.google.com/file/d/1Ccu849dqNb6JWRW5DP2OMbJZHmN2L4jl/view',
   },
   {
@@ -46,7 +42,6 @@ export const certificates: Certificate[] = [
     name: 'Pensamiento Computacional con Python',
     nameEn: 'Computational Thinking with Python',
     issuer: 'Platzi',
-    date: '',
     link: 'https://drive.google.com/file/d/1sTohddxFpetf0n2odyFUmWuSM7HmGExp/view',
   },
   {
@@ -54,7 +49,6 @@ export const certificates: Certificate[] = [
     name: 'Fundamentos de Python',
     nameEn: 'Python Fundamentals',
     issuer: 'Platzi',
-    date: '',
     link: 'https://drive.google.com/file/d/1iipUKTE1-FuOsiTO12cIoSQD5VOfmePx/view',
   },
   {
@@ -62,7 +56,6 @@ export const certificates: Certificate[] = [
     name: 'Introducción a la Terminal y Línea de Comandos',
     nameEn: 'Introduction to the Terminal and Command Line',
     issuer: 'Platzi',
-    date: '',
     link: 'https://drive.google.com/file/d/1XauTADGUwiFcQXsBoXgqDSTcq7_FeRkm/view',
   },
   {
@@ -70,7 +63,6 @@ export const certificates: Certificate[] = [
     name: 'NDG Linux Essentials',
     nameEn: 'NDG Linux Essentials',
     issuer: 'Cisco Networking Academy',
-    date: '',
     link: 'https://drive.google.com/file/d/1jR9lv1E1Za22wFuZoPCT9AOx2uTygtsU/view',
   },
 ];
