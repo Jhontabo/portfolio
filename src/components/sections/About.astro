@@ -14,7 +14,10 @@ const { locale } = Astro.props;
 const bio = locale === 'en' ? personalInfo.bioEn : personalInfo.bioEs;
 ---
 
-<section id="about" class="py-32 sm:py-40 bg-[#050505] relative overflow-hidden border-t border-white/5 scroll-mt-20">
+<section
+  id="about"
+  class="py-32 sm:py-40 bg-[#050505] relative overflow-hidden border-t border-white/5 scroll-mt-20"
+>
   <div class="max-w-6xl mx-auto px-6 lg:px-12 w-full">
     <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
       <!-- Columna Izquierda: Presentación Editorial (unificada) -->
@@ -24,12 +27,16 @@ const bio = locale === 'en' ? personalInfo.bioEn : personalInfo.bioEs;
         </p>
 
         <h2 class="font-serif text-4xl sm:text-6xl font-light uppercase tracking-[0.1em] text-white leading-[1.1] mb-6">
-          Jhon<br />
+          Jhon
+          <br />
           <span class="text-neutral-300">Tajumbina</span>
           <span class="sr-only"> — Software Engineer & Digital Trafficker Ads</span>
         </h2>
 
-        <div class="w-14 h-[2px] bg-gradient-to-r from-white/60 to-transparent mb-8" aria-hidden="true"></div>
+        <div
+          class="w-14 h-[2px] bg-gradient-to-r from-white/60 to-transparent mb-8"
+          aria-hidden="true"
+        ></div>
 
         <p class="text-base sm:text-lg text-neutral-300 font-light leading-relaxed text-justify">
           {bio}
@@ -46,7 +53,11 @@ const bio = locale === 'en' ? personalInfo.bioEn : personalInfo.bioEs;
           <div class="relative rounded-2xl overflow-hidden border border-white/15 shadow-[0_20px_60px_rgba(0,0,0,0.6)]">
             <Image
               src={jhonPortrait}
-              alt="Foto profesional de Jhon Tajumbina"
+              alt={
+                locale === 'en'
+                  ? 'Professional photo of Jhon Tajumbina'
+                  : 'Foto profesional de Jhon Tajumbina'
+              }
               widths={[540, 760, 1080]}
               sizes="(min-width: 1024px) 40vw, 88vw"
               format="webp"
@@ -70,4 +81,3 @@ const bio = locale === 'en' ? personalInfo.bioEn : personalInfo.bioEs;
     </div>
   </div>
 </section>
-

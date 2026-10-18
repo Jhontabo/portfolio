@@ -17,10 +17,9 @@ const heroAlt = 'Jhon Tajumbina — Software Engineer & Media Buyer / Pitcher de
   id="home"
   class="relative w-full min-h-[70svh] sm:min-h-[85svh] lg:h-[100svh] lg:min-h-[640px] flex items-center justify-center overflow-hidden bg-[#050505]"
 >
-  <!-- H1 principal con los dos pilares (SEO). Visible solo en móvil, pero legible por Google en desktop -->
-  <h1
-    class="absolute top-24 left-1/2 -translate-x-1/2 z-20 w-full px-6 text-center font-serif font-medium uppercase text-white text-xl tracking-[0.18em] pointer-events-none select-none [text-shadow:0_2px_20px_rgba(0,0,0,0.8)] md:hidden"
-  >
+  <!-- H1 principal con los dos pilares (SEO/A11y). Visible en móvil; en desktop se
+       oculta visualmente con sr-only (sigue en el árbol de accesibilidad e indexable). -->
+  <h1 class="absolute top-24 left-1/2 -translate-x-1/2 z-20 w-full px-6 text-center font-serif font-medium uppercase text-white text-xl tracking-[0.18em] pointer-events-none select-none [text-shadow:0_2px_20px_rgba(0,0,0,0.8)] md:sr-only">
     Jhon Tajumbina
     <span class="sr-only"> — Software Engineer & Media Buyer / Pitcher de Marketing</span>
   </h1>
@@ -63,23 +62,20 @@ const heroAlt = 'Jhon Tajumbina — Software Engineer & Media Buyer / Pitcher de
     <div
       class="absolute inset-x-0 top-0 h-14 sm:h-20 md:h-28 bg-gradient-to-b from-[#050505] via-[#050505]/70 to-transparent pointer-events-none z-10"
       aria-hidden="true"
-    >
-    </div>
+    ></div>
 
     <!-- Fundido perimetral inferior (suaviza el borde inferior del banner con #050505) -->
     <div
       class="absolute inset-x-0 bottom-0 h-16 sm:h-24 md:h-32 bg-gradient-to-t from-[#050505] via-[#050505]/80 to-transparent pointer-events-none z-10"
       aria-hidden="true"
-    >
-    </div>
+    ></div>
   </div>
 
   <!-- Fundido superior global fijo bajo el header navbar -->
   <div
     class="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-black/80 to-transparent pointer-events-none z-10"
     aria-hidden="true"
-  >
-  </div>
+  ></div>
 
   <!-- Indicador discreto de scroll (Estilo editorial de alta gama) -->
   <a
