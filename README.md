@@ -1,155 +1,156 @@
-# Jhon Tajumbina — Portafolio
+# Jhon Tajumbina — Portfolio
 
-Portafolio personal de **Jhon Tajumbina**, Software Engineer y Digital Trafficker Ads. Un sitio
-estático, bilingüe (ES/EN), rápido y con una identidad visual editorial oscura. Construido con
-**Astro**, **Tailwind CSS 4** y tipos estrictos de TypeScript.
+Personal portfolio of **Jhon Tajumbina**, Software Engineer and Digital Ads Trafficker. A fast,
+static, bilingual (ES/EN) site with a dark editorial visual identity. Built with **Astro**,
+**Tailwind CSS 4** and strict TypeScript.
 
-> Sitio en producción: <https://jhon-tajumbina.vercel.app>
+> Live site: <https://jhon-tajumbina.vercel.app>
 
 ---
 
-## ✨ Características
+## ✨ Features
 
-- **Bilingüe real (ES/EN)** con rutas `/es/` y `/en/`, `hreflang`, `og:locale` y selector de idioma
-  que conserva el ancla de navegación.
-- **Secciones**: Hero, Sobre mí, Proyectos, Ruta profesional, Certificaciones, Habilidades,
-  Contacto y Footer con redes sociales.
-- **Imágenes optimizadas en build** con `astro:assets`: AVIF + WebP, `srcset`/`sizes` responsivos y
-  art direction (banner vertical en móvil, panorámico en desktop).
-- **Formulario de contacto** con validación en cliente, honeypot antispam y fallback a `mailto`.
-- **Modales accesibles** (`<dialog>`) para ampliar proyectos y ver credenciales de Drive con
-  **lazy-load de iframes**.
-- **SEO completo**: `<title>`/description por idioma, Open Graph + Twitter Cards con tarjeta
-  social 1200×630, canonical, `robots.txt` generado y `sitemap` con `lastmod`.
-- **Accesibilidad**: foco visible, `aria-expanded`/`aria-controls`, `role="status"`, navegación por
-  teclado y respeto por `prefers-reduced-motion`.
-- **Analítica**: Vercel Analytics y Speed Insights.
-- **Tipografías self-hosted** vía la Fonts API de Astro (Sora, Space Grotesk, Cinzel).
+- **Fully bilingual (ES/EN)** with `/es/` and `/en/` routes, `hreflang`, `og:locale` and a language
+  switcher that keeps the current navigation anchor.
+- **Sections**: Hero, About, Projects, Career Journey, Certifications, Skills, Contact and a Footer
+  with social links.
+- **Build-time optimized images** with `astro:assets`: AVIF + WebP, responsive `srcset`/`sizes` and
+  art direction (vertical banner on mobile, panoramic on desktop).
+- **Contact form** with client-side validation, an anti-spam honeypot and a `mailto` fallback.
+- **Accessible modals** (`<dialog>`) to expand projects and view Drive credentials, with
+  **lazy-loaded iframes**.
+- **Complete SEO**: per-language `<title>`/description, Open Graph + Twitter Cards with a 1200×630
+  social card, canonical URLs, a generated `robots.txt` and a `sitemap` with `lastmod`.
+- **Accessibility**: visible focus, `aria-expanded`/`aria-controls`, `role="status"`, keyboard
+  navigation and support for `prefers-reduced-motion`.
+- **Analytics**: Vercel Analytics and Speed Insights.
+- **Self-hosted fonts** via the Astro Fonts API (Sora, Space Grotesk, Cinzel).
 
 ## 🧱 Stack
 
-| Área      | Tecnología                                             |
+| Area      | Technology                                             |
 | --------- | ------------------------------------------------------ |
-| Framework | [Astro 7](https://astro.build) (output estático)       |
-| Estilos   | [Tailwind CSS 4](https://tailwindcss.com) + CSS propio |
-| Tipado    | TypeScript (config strict de Astro)                    |
-| Imágenes  | `astro:assets` (sharp: AVIF/WebP)                      |
+| Framework | [Astro 7](https://astro.build) (static output)         |
+| Styling   | [Tailwind CSS 4](https://tailwindcss.com) + custom CSS |
+| Typing    | TypeScript (Astro strict config)                       |
+| Images    | `astro:assets` (sharp: AVIF/WebP)                      |
 | SEO       | `@astrojs/sitemap` + JSON-LD (`schema.org/Person`)     |
-| Analítica | `@vercel/analytics` + `@vercel/speed-insights`         |
+| Analytics | `@vercel/analytics` + `@vercel/speed-insights`         |
 | Tests     | [Vitest](https://vitest.dev) + jsdom                   |
-| Paquetes  | pnpm                                                   |
+| Packages  | pnpm                                                   |
 
-## 🚀 Empezar
+## 🚀 Getting started
 
-Requisitos: **Node ≥ 22.12** y **pnpm**.
+Requirements: **Node ≥ 22.12** and **pnpm**.
 
 ```sh
 pnpm install
-pnpm dev        # servidor de desarrollo en http://localhost:4321
+pnpm dev        # dev server at http://localhost:4321
 ```
 
-Otros comandos:
+Other commands:
 
-| Comando             | Acción                                                        |
-| ------------------- | ------------------------------------------------------------- |
-| `pnpm build`        | `astro check` + build de producción en `./dist/`              |
-| `pnpm preview`      | Previsualiza el build localmente                              |
-| `pnpm check`        | Type-check de `.astro`/`.ts` (0 errores, 0 warnings)          |
-| `pnpm test`         | Ejecuta la suite de tests (Vitest)                            |
-| `pnpm test:watch`   | Tests en modo watch                                           |
-| `pnpm lint`         | Lint de `.astro`/`.ts` con ESLint                             |
-| `pnpm format`       | Formatea el proyecto con Prettier                             |
-| `pnpm format:check` | Verifica el formato sin escribir                              |
-| `pnpm og`           | Regenera `public/og-image.png` (1200×630) desde SVG con sharp |
+| Command             | Action                                                          |
+| ------------------- | --------------------------------------------------------------- |
+| `pnpm build`        | `astro check` + production build to `./dist/`                   |
+| `pnpm preview`      | Preview the build locally                                       |
+| `pnpm check`        | Type-check `.astro`/`.ts` files (0 errors, 0 warnings)          |
+| `pnpm test`         | Run the test suite (Vitest)                                     |
+| `pnpm test:watch`   | Run tests in watch mode                                         |
+| `pnpm lint`         | Lint `.astro`/`.ts` files with ESLint                           |
+| `pnpm format`       | Format the project with Prettier                                |
+| `pnpm format:check` | Check formatting without writing                                |
+| `pnpm og`           | Regenerate `public/og-image.png` (1200×630) from SVG with sharp |
 
-> 💡 El servidor de desarrollo se puede lanzar en segundo plano y gestionar con
-> `astro dev --background`, `astro dev stop`, `astro dev status` y `astro dev logs`.
+> 💡 The dev server can run in the background and be managed with
+> `astro dev --background`, `astro dev stop`, `astro dev status` and `astro dev logs`.
 
-## 📁 Estructura
+## 📁 Structure
 
 ```text
 .
-├── .github/workflows/ci.yml   # CI: lint, format:check, check, test y build
-├── public/                    # Archivos servidos tal cual (favicons, cv.pdf, og-image.png)
+├── .github/workflows/ci.yml   # CI: lint, format:check, check, test and build
+├── public/                    # Files served as-is (favicons, cv.pdf, og-image.png)
 ├── scripts/
-│   └── generate-og.mjs        # Genera la tarjeta social 1200×630
+│   └── generate-og.mjs        # Generates the 1200×630 social card
 ├── src/
-│   ├── assets/                # Imágenes fuente optimizadas en build (astro:assets)
+│   ├── assets/                # Source images optimized at build time (astro:assets)
 │   ├── components/
 │   │   ├── layout/            # BaseHead, Navbar, Footer
 │   │   ├── sections/          # Hero, About, Projects, Journey, Certificates, Skills, Contact
 │   │   └── ui/                # Icon, BrandIcon, FlagIcon, Modal, SectionHeader, ContactMenu…
-│   ├── data/                  # Contenido tipado: personal, projects, journey, certificates, skills
-│   ├── i18n/                  # Diccionarios es.json / en.json + helpers
-│   ├── lib/                   # seo.ts (metadatos/OG) y drive.ts (utilidades de Google Drive)
+│   ├── data/                  # Typed content: personal, projects, journey, certificates, skills
+│   ├── i18n/                  # es.json / en.json dictionaries + helpers
+│   ├── lib/                   # seo.ts (metadata/OG) and drive.ts (Google Drive utilities)
 │   ├── pages/
-│   │   ├── [lang]/index.astro # Página bilingüe (getStaticPaths → es, en)
-│   │   ├── index.astro        # Redirecciones a /es/
-│   │   ├── 404.astro          # Página 404 bilingüe
-│   │   └── robots.txt.ts      # robots.txt generado en build
-│   ├── scripts/               # Comportamiento en cliente (navbar, modal, reveal, skills, journey)
-│   └── styles/global.css      # Tailwind + tokens de diseño + utilidades
-├── tests/                     # Tests unitarios (datos, i18n, seo, drive y DOM)
+│   │   ├── [lang]/index.astro # Bilingual page (getStaticPaths → es, en)
+│   │   ├── index.astro        # Redirects to /es/
+│   │   ├── 404.astro          # Bilingual 404 page
+│   │   └── robots.txt.ts      # robots.txt generated at build time
+│   ├── scripts/               # Client-side behavior (navbar, modal, reveal, skills, journey)
+│   └── styles/global.css      # Tailwind + design tokens + utilities
+├── tests/                     # Unit tests (data, i18n, seo, drive and DOM)
 ├── astro.config.mjs
 ├── vitest.config.ts
-├── eslint.config.js           # Config flat de ESLint (TS + Astro)
+├── eslint.config.js           # ESLint flat config (TS + Astro)
 ├── .prettierrc.json
-└── vercel.json                # Redirect raíz → /es/, cabeceras de seguridad y caché
+└── vercel.json                # Root redirect → /es/, security and cache headers
 ```
 
-## 🌍 Internacionalización
+## 🌍 Internationalization
 
-- Los idiomas viven en `src/i18n/` (`es.json`, `en.json`). `src/i18n/index.ts` expone `locales`,
-  `t()` y ayudantes de `lang`/`og:locale`.
-- La ruta dinámica `src/pages/[lang]/index.astro` genera una página por idioma vía `getStaticPaths`.
-- Un test verifica que **ES y EN tengan exactamente las mismas claves**, evitando traducciones
-  huérfanas.
-- Al cambiar de idioma se conserva el `#ancla` actual.
+- Languages live in `src/i18n/` (`es.json`, `en.json`). `src/i18n/index.ts` exposes `locales`,
+  `t()` and `lang`/`og:locale` helpers.
+- The dynamic route `src/pages/[lang]/index.astro` generates one page per language via
+  `getStaticPaths`.
+- A test checks that **ES and EN have exactly the same keys**, preventing orphaned translations.
+- Switching languages keeps the current `#anchor`.
 
-## 🖼️ Contenido e imágenes
+## 🖼️ Content and images
 
-Todo el contenido está centralizado y tipado en `src/data/`:
+All content is centralized and typed in `src/data/`:
 
-- `personal.ts` — datos de contacto y biografías.
-- `projects.ts` — proyectos (importa las imágenes desde `src/assets`).
-- `journey.ts` — línea de tiempo profesional.
-- `certificates.ts` — certificados (con enlaces a Google Drive).
-- `skills.ts` — habilidades por categoría.
+- `personal.ts` — contact details and bios.
+- `projects.ts` — projects (imports images from `src/assets`).
+- `journey.ts` — professional timeline.
+- `certificates.ts` — certificates (with Google Drive links).
+- `skills.ts` — skills by category.
 
-Para **añadir una imagen** (proyecto o banner), colócala en `src/assets/`, impórtala en el archivo de
-datos correspondiente y Astro generará automáticamente los formatos y tamaños optimizados. El
-`og-image.png` se regenera con `pnpm og`.
+To **add an image** (project or banner), place it in `src/assets/`, import it in the matching data
+file, and Astro will generate the optimized formats and sizes automatically. `og-image.png` is
+regenerated with `pnpm og`.
 
 ## ✅ Tests
 
-La suite cubre la lógica sin UI pesada:
+The suite covers logic without heavy UI:
 
-- `tests/drive.test.ts` — parseo de enlaces de Google Drive.
-- `tests/i18n.test.ts` — locales, `isLocale`, paridad de claves ES/EN.
-- `tests/seo.test.ts` — `SITE_URL`, metadatos y tarjeta Open Graph.
-- `tests/data.test.ts` — integridad de proyectos, certificados, ruta y skills.
-- `tests/scripts.test.ts` — comportamiento DOM del menú móvil y del expand de skills.
+- `tests/drive.test.ts` — Google Drive link parsing.
+- `tests/i18n.test.ts` — locales, `isLocale`, ES/EN key parity.
+- `tests/seo.test.ts` — `SITE_URL`, metadata and the Open Graph card.
+- `tests/data.test.ts` — integrity of projects, certificates, journey and skills.
+- `tests/scripts.test.ts` — DOM behavior of the mobile menu and the skills expander.
 
 ```sh
 pnpm test
 ```
 
-## 🚢 Despliegue
+## 🚢 Deployment
 
-El sitio es estático y se despliega en **Vercel**.
+The site is static and deployed on **Vercel**.
 
-- `vercel.json` redirige `/` → `/es/`, aplica cabeceras de seguridad (CSP, HSTS, `nosniff`,
-  `Referrer-Policy`, `Permissions-Policy`) y de caché para assets e imágenes.
-- El dominio del sitio se define una sola vez en `astro.config.mjs` (`site`); el resto del código lo
-  lee desde `import.meta.env.SITE`, evitando duplicaciones.
-- `robots.txt` y el sitemap se generan en el build.
-- `.github/workflows/ci.yml` valida `lint`, `format:check`, `check`, `test` y `build` en cada push/PR.
+- `vercel.json` redirects `/` → `/es/` and applies security headers (CSP, HSTS, `nosniff`,
+  `Referrer-Policy`, `Permissions-Policy`) and cache headers for assets and images.
+- The site domain is defined once in `astro.config.mjs` (`site`); the rest of the code reads it from
+  `import.meta.env.SITE`, avoiding duplication.
+- `robots.txt` and the sitemap are generated at build time.
+- `.github/workflows/ci.yml` runs `lint`, `format:check`, `check`, `test` and `build` on every
+  push/PR.
 
-Para desplegar en otro host estático, basta con publicar el contenido de `./dist/`.
+To deploy to another static host, just publish the contents of `./dist/`.
 
-## 🎨 Personalización rápida
+## 🎨 Quick customization
 
-- **Colores y tokens**: `src/styles/global.css` (`:root`, `@theme`).
-- **Textos y traducciones**: `src/i18n/es.json` y `src/i18n/en.json`.
-- **Datos personales y enlaces sociales**: `src/data/personal.ts`.
-- **Dominio/SEO**: `astro.config.mjs` y `src/lib/seo.ts`.
+- **Colors and tokens**: `src/styles/global.css` (`:root`, `@theme`).
+- **Copy and translations**: `src/i18n/es.json` and `src/i18n/en.json`.
+- **Personal data and social links**: `src/data/personal.ts`.
+- **Domain/SEO**: `astro.config.mjs` and `src/lib/seo.ts`.
