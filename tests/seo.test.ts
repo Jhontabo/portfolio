@@ -16,6 +16,7 @@ describe('seo', () => {
       expect(META_LOCALIZED[locale].title.length).toBeGreaterThan(10);
       expect(META_LOCALIZED[locale].description.length).toBeGreaterThan(40);
     }
+    expect(META_LOCALIZED.es.title).not.toBe(META_LOCALIZED.en.title);
     expect(META_LOCALIZED.es.description).not.toBe(META_LOCALIZED.en.description);
   });
 
