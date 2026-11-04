@@ -57,6 +57,21 @@
     "orWrite": "Or write to me directly at",
     "errorRequired": "Please fill in all fields.",
     "errorInvalid": "Check your email and write at least 10 characters.",
-    "fallback": "Open in my email app with the message ready"
+    "fallback": "Open in my email app with the message ready",
+    "consentTerms": "I have read and accept the {link}.",
+    "consentPrivacy": "I have read the {link} and authorize the processing of my personal data to reply to my message.",
+    "consentRequired": "You must accept the Terms and Conditions and the Privacy Policy (separate boxes) to send the message.",
+    "consentTermsRequired": "You must accept the Terms and Conditions.",
+    "consentPrivacyRequired": "You must accept the Privacy Policy.",
+    "dataNotice": "We only ask for name, email and message. We never share your data with third parties for commercial purposes.",
+    "termsLink": "Terms and Conditions",
+    "privacyLink": "Privacy Policy"
+  },
+  "legal": {
+    "back": "Back to home",
+    "version": "Version",
+    "terms": "Terms and Conditions",
+    "privacy": "Privacy Policy",
+    "cookies": "Cookie Policy"
   }
 }
