@@ -6,8 +6,3 @@ export function getPreviewUrl(link: string): string | null {
   const id = getDriveId(link);
   return id ? `https://drive.google.com/file/d/${id}/preview` : null;
 }
-
-export function getThumbnailUrl(link: string): string | null {
-  const id = getDriveId(link);
-  return id ? `https://drive.google.com/thumbnail?id=${id}&sz=w800` : null;
-}

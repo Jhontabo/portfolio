@@ -1,0 +1,115 @@
+---
+import { Font } from 'astro:assets';
+import Analytics from '@vercel/analytics/astro';
+import SpeedInsights from '@vercel/speed-insights/astro';
+import {
+  LEGAL_DOCS,
+  LEGAL_SLUGS,
+  LEGAL_VERSIONS,
+  legalContent,
+  legalPath,
+  type LegalDoc,
+} from '../../data/legal';
+import { htmlLang, locales, t, type Locale } from '../../i18n';
+import { SITE_NAME, SITE_URL } from '../../lib/seo';
+import '../../styles/global.css';
+
+export function getStaticPaths() {
+  return locales.flatMap((lang) =>
+    LEGAL_DOCS.map((doc) => ({
+      params: { lang, doc: LEGAL_SLUGS[lang][doc] },
+      props: { locale: lang as Locale, doc: doc as LegalDoc },
+    })),
+  );
+}
+
+const { locale, doc } = Astro.props;
+const content = legalContent[locale][doc];
+const messages = t(locale);
+const origin = Astro.site ?? new URL(SITE_URL);
+const canonical = new URL(legalPath(locale, doc), origin);
+const version = LEGAL_VERSIONS[doc];
+const title = `${content.title} | ${SITE_NAME}`;
+const other: Locale = locale === 'es' ? 'en' : 'es';
+---
+
+<!doctype html>
+<html lang={htmlLang[locale]} class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#050505" />
+    <meta name="robots" content="index, follow" />
+    <title>{title}</title>
+    <meta name="description" content={content.summary} />
+    <link rel="canonical" href={canonical.href} />
+    <link rel="alternate" hreflang={locale} href={canonical.href} />
+    <link rel="alternate" hreflang={other} href={new URL(legalPath(other, doc), origin).href} />
+    <Font cssVariable="--font-sora" preload />
+    <Font cssVariable="--font-cinzel" preload />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+  </head>
+  <body class="antialiased bg-[#050505] text-neutral-200 selection:bg-white selection:text-black">
+    <main class="max-w-3xl mx-auto px-6 sm:px-8 py-16 sm:py-24">
+      <nav class="mb-10 flex flex-wrap items-center justify-between gap-4 text-[11px] uppercase tracking-[0.22em]">
+        <a href={`/${locale}/`} class="text-neutral-300 hover:text-white transition-colors">
+          ← {messages.legal.back}
+        </a>
+        <a
+          href={legalPath(other, doc)}
+          hreflang={other}
+          class="text-neutral-400 hover:text-white transition-colors"
+        >
+          {other.toUpperCase()}
+        </a>
+      </nav>
+
+      <h1 class="font-serif text-3xl sm:text-4xl font-light tracking-wide text-white mb-3">
+        {content.title}
+      </h1>
+      <p class="text-neutral-400 font-light mb-2">{content.summary}</p>
+      <p class="text-xs text-neutral-500 mb-12">
+        {messages.legal.version}: {version}
+      </p>
+
+      <div class="space-y-10">
+        {content.sections.map((section) => (
+          <section>
+            <h2 class="text-lg font-medium text-white mb-3">{section.heading}</h2>
+            {section.paragraphs?.map((p) => (
+              <p class="text-neutral-300 font-light leading-relaxed mb-3">{p}</p>
+            ))}
+            {section.items && (
+              <ul class="list-disc pl-6 space-y-2 text-neutral-300 font-light leading-relaxed mb-3">
+                {section.items.map((item) => (
+                  <li>{item}</li>
+                ))}
+              </ul>
+            )}
+            {section.closing?.map((p) => (
+              <p class="text-neutral-300 font-light leading-relaxed mb-3">{p}</p>
+            ))}
+          </section>
+        ))}
+      </div>
+
+      <footer class="mt-16 pt-8 border-t border-white/10 flex flex-wrap gap-x-6 gap-y-3 text-[11px] uppercase tracking-[0.22em]">
+        {LEGAL_DOCS.map((d) => (
+          <a
+            href={legalPath(locale, d)}
+            aria-current={d === doc ? 'page' : undefined}
+            class:list={[
+              'transition-colors hover:text-white',
+              d === doc ? 'text-white' : 'text-neutral-400',
+            ]}
+          >
+            {messages.legal[d]}
+          </a>
+        ))}
+      </footer>
+    </main>
+    <Analytics />
+    <SpeedInsights />
+  </body>
+</html>

@@ -2,6 +2,7 @@
 import SectionHeader from '../ui/SectionHeader.astro';
 import Icon from '../ui/Icon.astro';
 import { personalInfo } from '../../data/personal';
+import { LEGAL_VERSIONS, legalPath } from '../../data/legal';
 import type { Locale, Messages } from '../../i18n';
 
 export interface Props {
@@ -14,6 +15,12 @@ const c = t.contact;
 
 const inputClass =
   'w-full bg-neutral-900/60 border border-white/15 focus:border-white/40 rounded-xl px-4 py-3.5 text-sm text-white placeholder:text-neutral-500 outline-none transition-colors duration-300';
+const linkClass =
+  'underline decoration-white/40 underline-offset-4 hover:text-white hover:decoration-white/80';
+const checkClass = 'mt-0.5 h-4 w-4 shrink-0 accent-white cursor-pointer';
+// "{link}" marca dónde va el enlace dentro de cada texto de consentimiento
+const [termsBefore, termsAfter] = c.consentTerms.split('{link}');
+const [privacyBefore, privacyAfter] = c.consentPrivacy.split('{link}');
 const labelClass =
   'block text-[11px] font-medium uppercase tracking-[0.22em] text-neutral-300 mb-2';
 ---
@@ -32,6 +39,9 @@ const labelClass =
       data-contact-form
       data-endpoint={`https://formsubmit.co/ajax/${personalInfo.email}`}
       data-email={personalInfo.email}
+      data-locale={locale}
+      data-terms-version={LEGAL_VERSIONS.terms}
+      data-privacy-version={LEGAL_VERSIONS.privacy}
       class="space-y-5"
       data-reveal
       novalidate
@@ -81,6 +91,42 @@ const labelClass =
         ></textarea>
       </div>
 
+      <div class="space-y-3">
+        <p class="text-xs text-neutral-400 font-light">{c.dataNotice}</p>
+        <div class="flex items-start gap-3">
+          <input
+            id="consent-terms"
+            name="consent_terms"
+            type="checkbox"
+            required
+            class={checkClass}
+          />
+          <label for="consent-terms" class="text-sm text-neutral-300 font-light leading-snug">
+            {termsBefore}
+            <a href={legalPath(locale, 'terms')} target="_blank" rel="noopener" class={linkClass}>
+              {c.termsLink}
+            </a>
+            {termsAfter}
+          </label>
+        </div>
+        <div class="flex items-start gap-3">
+          <input
+            id="consent-privacy"
+            name="consent_privacy"
+            type="checkbox"
+            required
+            class={checkClass}
+          />
+          <label for="consent-privacy" class="text-sm text-neutral-300 font-light leading-snug">
+            {privacyBefore}
+            <a href={legalPath(locale, 'privacy')} target="_blank" rel="noopener" class={linkClass}>
+              {c.privacyLink}
+            </a>
+            {privacyAfter}
+          </label>
+        </div>
+      </div>
+
       <p data-contact-status class="hidden text-sm font-light" role="status" aria-live="polite"></p>
       <p data-contact-error class="hidden text-sm font-light text-rose-300" role="alert"></p>
 
@@ -100,6 +146,8 @@ const labelClass =
           data-error={c.error}
           data-error-required={c.errorRequired}
           data-error-invalid={c.errorInvalid}
+          data-error-consent-terms={c.consentTermsRequired}
+          data-error-consent-privacy={c.consentPrivacyRequired}
           data-fallback={c.fallback}
           class="btn btn-primary btn-block disabled:opacity-60 disabled:cursor-not-allowed"
         >
@@ -188,8 +236,18 @@ const labelClass =
       );
       return;
     }
+    // Consentimiento: dos casillas independientes, ambas obligatorias
+    if (data.get('consent_terms') !== 'on') {
+      showError(submit.getAttribute('data-error-consent-terms') ?? 'Accept the terms.');
+      return;
+    }
+    if (data.get('consent_privacy') !== 'on') {
+      showError(submit.getAttribute('data-error-consent-privacy') ?? 'Accept the privacy policy.');
+      return;
+    }
     showError('');
 
+    const consentAt = new Date();
     const sendingLabel = submit.getAttribute('data-sending') ?? '...';
     submit.disabled = true;
     if (label) label.textContent = sendingLabel;
@@ -204,6 +262,17 @@ const labelClass =
           name,
           email,
           message,
+          // Registro de aceptación (prueba de cuándo y cómo se otorgó la autorización)
+          consent_terms_accepted: 'yes',
+          consent_privacy_accepted: 'yes',
+          consent_method: 'unchecked checkbox on contact form (two separate boxes)',
+          consent_at_utc: consentAt.toISOString(),
+          consent_at_local: `${consentAt.toString()} (tz ${Intl.DateTimeFormat().resolvedOptions().timeZone})`,
+          consent_terms_version: form.getAttribute('data-terms-version') ?? '',
+          consent_privacy_version: form.getAttribute('data-privacy-version') ?? '',
+          consent_site_locale: form.getAttribute('data-locale') ?? '',
+          consent_page_url: window.location.href,
+          consent_user_agent: navigator.userAgent,
           _subject: `Nuevo mensaje del portafolio — ${name}`,
           _template: 'table',
           _captcha: 'false',

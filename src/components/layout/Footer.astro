@@ -5,6 +5,7 @@ import heroMobile from '../../assets/hero-mobile.webp';
 import BrandIcon from '../ui/BrandIcon.astro';
 import Icon from '../ui/Icon.astro';
 import { personalInfo } from '../../data/personal';
+import { LEGAL_DOCS, legalPath } from '../../data/legal';
 import type { Locale, Messages } from '../../i18n';
 
 export interface Props {
@@ -12,7 +13,7 @@ export interface Props {
   t: Messages;
 }
 
-const { t } = Astro.props;
+const { t, locale } = Astro.props;
 const year = new Date().getFullYear();
 ---
 
@@ -162,6 +163,21 @@ const year = new Date().getFullYear();
           </a>
         </div>
       </div>
+
+      <!-- Documentos legales -->
+      <nav
+        aria-label="Legal"
+        class="flex flex-wrap items-center justify-center gap-x-6 gap-y-3 pt-8 border-t border-white/10"
+      >
+        {LEGAL_DOCS.map((doc) => (
+          <a
+            href={legalPath(locale, doc)}
+            class="text-[11px] uppercase tracking-[0.22em] text-neutral-400 hover:text-white transition-colors"
+          >
+            {t.legal[doc]}
+          </a>
+        ))}
+      </nav>
     </div>
   </div>
 </footer>

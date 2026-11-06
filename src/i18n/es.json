@@ -57,6 +57,21 @@
     "orWrite": "O escríbeme directamente a",
     "errorRequired": "Completa todos los campos.",
     "errorInvalid": "Revisa tu correo y escribe al menos 10 caracteres.",
-    "fallback": "Abrir en mi correo con el mensaje listo"
+    "fallback": "Abrir en mi correo con el mensaje listo",
+    "consentTerms": "He leído y acepto los {link}.",
+    "consentPrivacy": "He leído la {link} y autorizo el tratamiento de mis datos personales para responder a mi mensaje.",
+    "consentRequired": "Debes aceptar los Términos y Condiciones y la Política de Privacidad (casillas separadas) para enviar el mensaje.",
+    "consentTermsRequired": "Debes aceptar los Términos y Condiciones.",
+    "consentPrivacyRequired": "Debes aceptar la Política de Privacidad.",
+    "dataNotice": "Solo pedimos nombre, correo y mensaje. No compartimos tus datos con terceros con fines comerciales.",
+    "termsLink": "Términos y Condiciones",
+    "privacyLink": "Política de Privacidad"
+  },
+  "legal": {
+    "back": "Volver al inicio",
+    "version": "Versión",
+    "terms": "Términos y Condiciones",
+    "privacy": "Política de Privacidad",
+    "cookies": "Política de Cookies"
   }
 }
